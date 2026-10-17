@@ -1,0 +1,33 @@
+---
+title: Interactive 3D Product
+description: Pattern — orbit study, hotspots, three-point light, picking.
+---
+
+# Interactive 3D Product
+
+## Brief
+
+A product configurator / hero: orbit the object, pick hotspots, keep lighting readable, sync a code or spec panel.
+
+## Technique stack
+
+| Need | Technique |
+| --- | --- |
+| Form study | Orbit (fixed FOV) |
+| Attention | Focal point + optional DOF approx |
+| Light | Three-point teaching setup |
+| Hotspots | R3F pointer picking |
+| Copy sync | `formatSnippet` panel from live params |
+
+## Implementation notes
+
+- Cap DPR; `frameloop="demand"` until interaction.
+- Dispose geometries on route change.
+- Don’t combine heavy DOF + shadows + high DPR on mobile — provide a “simple” preset.
+
+## Related lessons
+
+- [Orbit Camera](/docs/camera/orbit)
+- [Three-Point Lighting](/docs/lighting/three-point)
+- [Raycasting](/docs/creative-web/raycasting)
+- [Depth of Field](/docs/camera/dof)
