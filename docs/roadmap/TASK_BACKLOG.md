@@ -36,10 +36,14 @@ Actionable tasks only. Statuses: `NOT STARTED` | `IN PROGRESS` | `COMPLETED` | `
   - [x] No new playground abstractions yet
 
 ### ENG-002 — Documentation system polish (template + nav hygiene)
-- **Status:** `NOT STARTED`
+- **Status:** `COMPLETED`
 - **Depends on:** ENG-001
 - **Objective:** Formalize Persian lesson MDX template; align `meta.json` titles; document MDX component registration pattern; search language plan.
-- **Acceptance:** Template doc + one example stub or pointer; search strategy noted in CONTENT_SYSTEM / status.
+- **Acceptance:**
+  - [x] Template doc + one example stub or pointer
+  - [x] `meta.json` titles / separators aligned (Persian chrome)
+  - [x] MDX registration pattern documented (`CONTENT_SYSTEM` + `mdx.tsx`)
+  - [x] Search strategy noted (`ADR-004` + multilingual `createFromSource`)
 
 ### ENG-003 — Design system control primitives
 - **Status:** `NOT STARTED`
@@ -141,7 +145,7 @@ Execute **one lesson** (DOC + DEMO if required) per run unless backlog item says
 
 | Field | Value |
 | --- | --- |
-| **ID** | `ENG-002` |
-| **Title** | Documentation system polish (template + nav hygiene) |
+| **ID** | `ENG-003` |
+| **Title** | Design system control primitives |
 | **Depends on** | ENG-001 (`COMPLETED`) |
 | **Blocked?** | No |
