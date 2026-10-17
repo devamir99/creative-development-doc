@@ -1,6 +1,6 @@
 # ADR-003 — RTL and locale strategy
 
-**Status:** Baseline implemented (`ENG-001`); search language still deferred to `ENG-002`  
+**Status:** Superseded by ADR-005 (English LTR UI)  
 **Date:** 2026-10-17
 
 ## Context

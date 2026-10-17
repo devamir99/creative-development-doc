@@ -1,6 +1,6 @@
 # ADR-001 — Accent color via semantic tokens
 
-**Status:** Implemented (`ENG-001`)  
+**Status:** Superseded by ADR-005 (yellow accent) — token *pattern* still applies  
 **Date:** 2026-10-17
 
 ## Context

@@ -1,9 +1,9 @@
-# Lesson Template — Persian standard
+# Lesson Template — English standard
 
 Use this skeleton when writing or migrating a lesson (`DOC-*` tasks).  
 Copy-paste stub: [`docs/templates/lesson.stub.mdx`](../templates/lesson.stub.mdx).
 
-**Do not** mass-rewrite English seeds; migrate one lesson per approved task.
+Product language is **English** (ADR-005). Migrate one lesson per approved task.
 
 ---
 
@@ -11,12 +11,10 @@ Copy-paste stub: [`docs/templates/lesson.stub.mdx`](../templates/lesson.stub.mdx
 
 ```yaml
 ---
-title: عنوان فارسی کوتاه
-description: یک جملهٔ دقیق دربارهٔ مفهوم (فارسی).
+title: Short lesson title
+description: One precise sentence about the concept.
 ---
 ```
-
-Keep established English terms in the body when they are the industry name (e.g. Timing, Easing, FOV).
 
 ---
 
@@ -25,41 +23,41 @@ Keep established English terms in the body when they are the industry name (e.g.
 Omit empty sections. Order is preferred, not rigid.
 
 ```mdx
-# عنوان
+# Title
 
-## مقدمه
-تعریف مفهوم به زبان روشن.
+## Introduction
+Clear definition.
 
-## چرا مهم است
-کاربرد در سینما / موشن / وب خلاق / UX — فقط موارد مرتبط.
+## Why it matters
+Cinema / motion / creative web / UX — only what applies.
 
-## توضیح بصری
-آنچه خواننده باید «ببیند» قبل از بازی با کنترل‌ها.
+## Visual explanation
+What the reader should notice before tweaking controls.
 
-## Playground تعاملی
+## Interactive playground
 <!-- required when the concept is visual / spatial / temporal -->
 <YourPlayground />
 
-## پارامترها
-جدول یا فهرست پارامترهای زنده و معنای هرکدام.
+## Parameters
+Table or list of live params and what each does.
 
-## مثال‌های عملی
-۲–۴ سناریوی کوتاه واقعی.
+## Practical examples
+2–4 short real scenarios.
 
-## پیاده‌سازی
-ساده‌ترین ابزار درست (CSS → GSAP → Canvas → R3F). کد LTR انگلیسی.
+## Implementation
+Simplest correct tool (CSS → GSAP → Canvas → R3F).
 
-## نکات Performance
-فقط وقتی relevancy دارد.
+## Performance notes
+Only when relevant.
 
-## اشتباهات رایج
+## Common mistakes
 
-## چه زمانی استفاده کنیم / نکنیم
+## When to use / avoid
 
-## جمع‌بندی
+## Key takeaways
 
-## مفاهیم مرتبط
-لینک به درس‌های هم‌خانواده در `/docs/...`
+## Related concepts
+Links to sibling lessons under `/docs/...`
 ```
 
 ---

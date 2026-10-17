@@ -14,7 +14,8 @@
 | App | `creative-lab` (Next.js 16.4.2 + Fumadocs) |
 | Playground shell | `src/components/playground` (`PlaygroundShell` + stage/toolbar/code/error) |
 | Reference demo | Timing migrated onto shell (Reset / Replay / live code string) |
-| Font | Vazirmatn: `subsets: ["arabic"]` + `weight: "variable"` (Turbopack-safe) |
+| Locale / fonts | English LTR · Syne + IBM Plex Mono (ADR-005) |
+| Accent | `rgb(250 250 5)` yellow · dark `--lab-accent-fg` (ADR-005) |
 | Blockers | None |
 
 ---
@@ -67,8 +68,8 @@ _None._
 ## Notes for next agent
 
 1. Prefer `PlaygroundShell` for all new demos; do not reinvent chrome.
-2. ENG-005 may extract/refine code panel sync beyond the inline string Timing uses.
-3. Do not reintroduce Vazirmatn multi-subset arrays.
+2. Follow ADR-005: English UI, yellow accent — do not restore violet/RTL/Vazirmatn.
+3. ENG-005 may extract/refine code panel sync beyond the inline string Timing uses.
 4. Suggest git commands only; never commit/push.
 5. After next task: STOP.
 

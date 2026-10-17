@@ -10,16 +10,17 @@
 
 ## Language policy
 
+Per **ADR-005**, product UI and lesson prose default to **English**.
+
 | Surface | Language |
 | --- | --- |
-| Instructional prose | Fluent Persian |
-| Established technical terms | English retained (Timing, Easing, FOV, …) |
-| UI chrome in docs (when customized) | Persian labels where user-facing |
-| Sidebar section titles (`meta.json`) | Persian + English term in parentheses when useful |
+| Instructional prose | Clear English |
+| Technical terms | Keep standard English (Timing, Easing, FOV, …) |
+| UI chrome / `meta.json` titles | English |
 | Code, paths, CLI, APIs | LTR English |
-| Direction | RTL for Persian lesson bodies; code blocks stay LTR |
+| Direction | LTR root; playground/code stay `lab-ltr` |
 
-**Migration rule:** Convert English seed pages to the Persian standard **when that lesson’s DOC task runs** — no mass rewrite.
+**Migration rule:** Ship one lesson per DOC task; do not mass-rewrite the curriculum in a single run.
 
 ## Default lesson skeleton
 

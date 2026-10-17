@@ -40,7 +40,7 @@ export class PlaygroundErrorBoundary extends Component<Props, State> {
             Playground error
           </p>
           <p className="text-lab-fg">
-            نمایش آزمایشی با خطا متوقف شد. می‌توانید دوباره تلاش کنید.
+            This playground hit an error. You can retry after resetting state.
           </p>
           <p className="font-mono text-xs text-lab-muted break-words">
             {this.state.error.message}

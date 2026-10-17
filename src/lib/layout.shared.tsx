@@ -11,7 +11,7 @@ export function baseOptions(): BaseLayoutProps {
     },
     links: [
       {
-        text: "نقشه راه",
+        text: "Roadmap",
         url: "/docs",
         active: "nested-url",
       },
