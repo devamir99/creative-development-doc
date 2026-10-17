@@ -1,0 +1,103 @@
+---
+title: Depth of Field & Rack Focus
+description: Selective sharpness, focus distance, and moving the sharp plane through a scene.
+---
+
+# Depth of Field & Rack Focus
+
+## Introduction
+
+**Depth of field (DOF)** is how deep the sharp zone is along the camera’s line of sight. Subjects inside that zone read crisp; nearer and farther planes soften into blur (bokeh).
+
+**Rack focus** (pull focus) moves that sharp zone during a shot — typically from a near subject to a far one (or reverse) — so attention shifts without a cut.
+
+## Why it matters
+
+- Guides the eye: blur is a hierarchy tool, not decoration.
+- Separates subject from background in product and portrait work.
+- On the web, real optical DOF is rare; most “DOF” is a **post-process approximation**. Label it honestly so learners don’t confuse shader blur with thin-lens physics.
+
+## Visual explanation
+
+```text
+  camera ──►  [Near ■]······[Mid ■]········[Far ■]
+                 ▲
+            sharp plane (moves in a rack)
+```
+
+Yellow = near, gray = mid, dark = far. The faint yellow rectangle marks the current focus plane. Toggle **DOF off** for a fully sharp comparison.
+
+## Interactive playground
+
+<DofPlayground />
+
+**Rack focus** animates the focus target (Replay in the toolbar does the same). Reduced-motion preferences jump instead of tweening.
+
+## Parameters
+
+| Parameter | Role |
+| --- | --- |
+| Focus Z | World Z of the focus target (Near / Mid / Far presets snap here) |
+| Bokeh | Blur strength (`bokehScale` on the post-process effect) |
+| Focus range | Depth of the relatively sharp band (`worldFocusRange`) |
+| DOF on/off | Bypass the effect for an A/B sharp frame |
+
+## Practical examples
+
+1. **Product hero** — sharp product, soft backdrop; keep bokeh modest so UI copy stays readable if composited.
+2. **Story beat** — rack from a prop in the foreground to a character in the mid-ground.
+3. **Scroll storytelling** — drive focus Z from scroll progress (same parameter, different input).
+
+## Implementation
+
+```js
+import { DepthOfField, EffectComposer } from "@react-three/postprocessing";
+
+<EffectComposer multisampling={0}>
+  <DepthOfField
+    target={[0, 0.55, focusZ]}
+    focalLength={0.02}
+    bokehScale={4}
+    worldFocusRange={1.2}
+    height={360}
+  />
+</EffectComposer>
+```
+
+This lab’s DOF is **not** a physically accurate aperture / CoC simulation. It is good enough to teach *where* focus sits and *how* a rack feels.
+
+## Performance notes
+
+- Post-processing costs a full-screen pass — cap DPR and `height` on the effect.
+- Prefer one Canvas; dispose composers on unmount (R3F postprocessing handles this).
+- Disable the effect when the lesson only needs a sharp reference.
+
+## Common mistakes
+
+- Claiming physical lens equivalence for a bokeh shader
+- Racking so fast the eye can’t track the handoff
+- Blurring UI chrome or text that must stay legible
+- Ignoring `prefers-reduced-motion` on auto racks
+
+## When to use / avoid
+
+**Use** when attention should select one depth plane, or when a narrative handoff is clearer than a cut.
+
+**Avoid** as default decoration on every 3D embed — constant heavy blur taxes GPUs and flattens spatial reading.
+
+## Key takeaways
+
+- DOF = depth of the sharp zone; rack focus = moving that zone over time.
+- Web demos are usually post-process approximations — say so.
+- Focus distance and blur amount are separate teaching knobs.
+
+## Related lessons
+
+- [Field of View](/docs/camera/fov)
+- [Dolly vs Zoom](/docs/camera/dolly-zoom)
+- [Orbit Camera](/docs/camera/orbit)
+- [Camera fundamentals](/docs/camera/fundamentals)
+
+## Exercise
+
+With DOF on, rack Near → Far. Then turn DOF off and scrub Focus Z — notice that without blur, the “focus” control has nothing visual to teach.
