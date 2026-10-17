@@ -8,10 +8,10 @@ Counts (planned targets, refined over time):
 
 | Domain | Lessons (approx) | Demos required (approx) | Seed pages now | Shipped gold |
 | --- | --- | --- | --- | --- |
-| Camera | 8–12 | 10+ | 1 index | 0 |
+| Camera | 8–12 | 10+ | index + fundamentals | 0 demos (DOC-CAM-001 ✓) |
 | Editing | 6–8 | 6+ | 1 index | 0 |
 | Composition | 8–10 | 8+ | 5 | 0 |
-| Motion | 10–14 | 10+ | 2 (index + timing) | 0 (timing seed only) |
+| Motion | 10–14 | 10+ | index + timing + easing | Timing + Easing gold |
 | Storytelling | 5–7 | 3+ | 1 index | 0 |
 | Lighting | 6–8 | 6+ | 1 index | 0 |
 | Creative Web | 8–12 | 8+ | 1 index | 0 |
@@ -24,7 +24,8 @@ Counts (planned targets, refined over time):
 
 | Lesson / concept | Demo? | Tech | Status | Notes |
 | --- | --- | --- | --- | --- |
-| Fundamentals / index | Y later | — | SEED | `camera/index.mdx` |
+| Fundamentals | N (demos later) | — | SHIPPED (DOC) | `camera/fundamentals.mdx` (DOC-CAM-001) |
+| Module index | N | — | SEED→updated | `camera/index.mdx` roadmap |
 | Shot types comparison | Y | R3F | NOT STARTED | |
 | Angles playground | Y | R3F | NOT STARTED | |
 | FOV | Y | R3F | NOT STARTED | |

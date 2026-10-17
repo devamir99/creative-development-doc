@@ -1,0 +1,171 @@
+---
+title: Camera Fundamentals
+description: What a camera is in cinema and on the web — frustum, shot size, angle, and movement as the eye of the experience.
+---
+
+# Camera Fundamentals
+
+## Introduction
+
+In film, the **camera** is the audience’s eye: where it stands, where it looks, how wide it sees, and how it moves. In creative web and real-time 3D, a camera is the same idea with different machinery — a **view frustum** (perspective or orthographic) that projects a 3D (or staged 2D) world onto the screen.
+
+This lesson is the vocabulary layer. Later modules (FOV, Dolly vs Zoom, Orbit, DOF) turn each idea into a playground. Here the goal is shared language so those demos mean something.
+
+> Teaching note: web “cameras” often approximate film optics. Label simplifications when you teach FOV, DOF, or lens compression — especially in Three.js / R3F.
+
+## Why it matters
+
+- **Cinema** — shot size, angle, and move decide power, intimacy, and geography before a single cut.
+- **Product / creative web** — scroll cameras, product turntables, and hero 3D scenes fail when FOV, distance, and motion are chosen by accident.
+- **Collaboration** — “push in,” “wide,” and “low angle” are faster than describing pixels.
+
+Without fundamentals, interactive demos become effect toys. With them, demos become craft.
+
+## Visual explanation
+
+Think in four coupled choices:
+
+```text
+        ┌───────── frustum (FOV / lens) ─────────┐
+   eye ●════════════════════════════════════════► subject
+        │  distance · height · angle · move path │
+        └────────────────────────────────────────┘
+```
+
+| Idea | Question it answers |
+| --- | --- |
+| **Position** | Where is the eye in space? |
+| **Orientation** | Where does it look (and how is it rolled)? |
+| **Lens / FOV** | How wide or narrow is the cone of vision? |
+| **Motion** | How do position/orientation change over time? |
+
+### Shot size (distance + framing)
+
+| Shot | Rough intent |
+| --- | --- |
+| Extreme wide / establishing | Place, scale, geography |
+| Wide / full | Body + environment relationship |
+| Medium | Action + expression balance |
+| Close-up | Emotion, detail, decision |
+| Extreme close-up | Texture, symbol, intensity |
+
+Shot size is not only “zoom.” On a real set you often **move the camera** (or the subject). Digitally you may change FOV, dolly, or crop — they are not interchangeable (see Dolly vs Zoom later).
+
+### Angle
+
+| Angle | Typical read |
+| --- | --- |
+| Eye-level | Neutral, observational |
+| Low angle | Power, monumentality, threat |
+| High angle | Vulnerability, overview, judgment |
+| Dutch / canted | Unease, instability (easy to overuse) |
+| POV | Subjective alignment with a character or user |
+
+### Movement (names you will reuse)
+
+| Move | What changes |
+| --- | --- |
+| Pan / tilt | Rotation only (yaw / pitch) |
+| Dolly / truck / pedestal | Position along an axis |
+| Zoom | Focal length / FOV — **not** the same as dolly |
+| Orbit / arc | Position around a subject while looking at it |
+| Handheld / steadicam feel | Path noise and stabilization character |
+
+## Interactive playground
+
+Camera fundamentals are spatial — interactive stages belong with specific tools:
+
+- **FOV** — `DEMO-CAM-FOV` (R3F)
+- **Dolly vs Zoom** — `DEMO-CAM-DOLLY-ZOOM` (must show the true optical/spatial difference)
+- **Orbit** — `DEMO-CAM-ORBIT`
+- **DOF / rack focus** — `DEMO-CAM-DOF`
+
+This page stays conceptual on purpose so those demos do not have to re-teach vocabulary.
+
+## Parameters
+
+Mental “control board” for any camera demo you open later:
+
+| Parameter | Role |
+| --- | --- |
+| Position `(x,y,z)` | Where the eye is |
+| Look-at / rotation | Where it aims |
+| FOV / focal length | Width of the frustum |
+| Near / far clip | What is rendered along depth |
+| Focus distance / aperture (DOF) | What is sharp |
+| Path / target | How the eye travels over time |
+
+## Practical examples
+
+1. **Product hero (web)** — slight orbit + moderate FOV (~35–45° perspective feel). Too wide distorts the object; too narrow feels telescopic and flat.
+2. **Story scroll section** — dolly-like translate of the camera (or world) with a stable look-at. Zooming FOV to “push in” usually feels fake next to true spatial move.
+3. **Dialogue coverage (film language on web)** — medium / over-the-shoulder framing with eye-level or slight low angle for status.
+4. **UI embedded 3D** — prefer calmer cameras; save Dutch angles and whip moves for narrative beats, not settings panels.
+
+## Implementation
+
+Simplest correct stack by job:
+
+| Job | Tool |
+| --- | --- |
+| 2D staged “camera” (parallax layers) | CSS / GSAP transforms |
+| True perspective / FOV / orbit | Three.js + React Three Fiber (`PerspectiveCamera`, controls) |
+| Scroll-linked camera | GSAP ScrollTrigger + R3F or mapped transforms |
+
+```tsx
+// Conceptual R3F sketch — details land in FOV / Orbit demos
+<Canvas>
+  <PerspectiveCamera makeDefault position={[0, 1.2, 4]} fov={40} />
+  {/* subject */}
+</Canvas>
+```
+
+Do not load a full WebGL canvas on text-only pages — keep heavy cameras behind lesson demos with dynamic import when those DEMO tasks ship.
+
+## Performance notes
+
+- One active WebGL context per demo is enough; dispose geometries/controls on unmount.
+- Cap pixel ratio on dense DPR displays.
+- Prefer moving the camera over re-lighting entire scenes when teaching framing.
+- Respect `prefers-reduced-motion` for camera paths (cut to key poses or shorten moves).
+
+## Common mistakes
+
+- Using FOV change when you meant a dolly (or the reverse)
+- Extremely wide FOV on product shots → ugly perspective distortion
+- Animating every axis at once with no motive
+- Dutch angle as default “style”
+- Claiming physically accurate DOF/lens behavior from a teaching approximation
+
+## When to use / avoid
+
+**Lean on clear camera craft when:**
+
+- Space, scale, or power relationships matter
+- You are teaching or selling a 3D object
+- Narrative attention should feel guided
+
+**Keep the camera quiet when:**
+
+- The user is reading dense UI
+- Motion would fight reduced-motion preferences
+- Framing is already solved by layout (don’t 3D-ify a spreadsheet)
+
+## Key takeaways
+
+- Camera = eye: position, aim, lens/FOV, and motion over time.
+- Shot size and angle are storytelling tools, not decorations.
+- Dolly ≠ zoom — spatial move vs optical change.
+- Web cameras inherit film language but often approximate optics — say so when it matters.
+- Next demos isolate one variable at a time (starting with FOV).
+
+## Related concepts
+
+- [Camera overview](/docs/camera) — module map
+- [Composition](/docs/composition) — how the frame is organized once the eye is placed
+- [Motion · Timing](/docs/motion/timing) / [Easing](/docs/motion/easing) — how camera moves feel in time
+- Upcoming: FOV · Dolly vs Zoom · Orbit · DOF playgrounds
+
+## Exercise
+
+Pick a real product photo or a frame from a film still. Write four labels only: **shot size**, **angle**, **lens feel (wide/normal/long)**, **camera move (or locked)**. Do this for three frames. That checklist is your fundamentals drill.

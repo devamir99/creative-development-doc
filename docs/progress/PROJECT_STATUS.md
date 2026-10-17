@@ -1,9 +1,9 @@
 # Project Status — Creative Lab
 
 **Last updated:** 2026-10-17  
-**Current engineering phase:** 05 Vertical Slice → **COMPLETED** (Timing + Easing gold)  
-**Active / next task:** `DOC-CAM-001` — Camera fundamentals (English)  
-**Execution state:** Waiting for user approval to start `DOC-CAM-001`
+**Current engineering phase:** 06 Foundational Modules  
+**Active / next task:** `DEMO-CAM-FOV` — FOV playground (R3F)  
+**Execution state:** Waiting for user approval to start `DEMO-CAM-FOV`
 
 ---
 
@@ -11,8 +11,8 @@
 
 | Item | Value |
 | --- | --- |
-| Vertical slice | Timing + Easing DOC/DEMO complete |
-| Easing playground | Side-by-side vs linear, curve viz, presets, synced code, reduced-motion |
+| Phase 05 | Timing + Easing gold slice complete |
+| Camera | Fundamentals lesson shipped (`/docs/camera/fundamentals`) |
 | Locale / accent | English LTR · yellow accent (ADR-005) |
 | Blockers | None |
 
@@ -22,23 +22,23 @@
 
 | ID | Name | Notes |
 | --- | --- | --- |
-| ENG-000 … ENG-005 | Foundation → code sync | |
-| DOC/DEMO-MOTION-001 | Timing | |
-| DOC/DEMO-MOTION-002 | Easing gold slice | Completes Eng Phase 05 |
+| ENG-000 … ENG-005 | Infra | |
+| DOC/DEMO-MOTION-001/002 | Vertical slice | |
+| DOC-CAM-001 | Camera fundamentals (English) | Full template; demos deferred |
 
 ---
 
 ## In progress
 
-_None (DEMO-MOTION-002 just completed)._
+_None (DOC-CAM-001 just completed)._
 
 ---
 
 ## Next up (prerequisites satisfied)
 
-1. **`DOC-CAM-001`** — Camera fundamentals (English)  
-   - Depends on: Phase 05 done ✓  
-   - Do **not** start camera demos in the same run unless the backlog pairs them
+1. **`DEMO-CAM-FOV`** — FOV playground (R3F)  
+   - Depends on: DOC-CAM-001 ✓, ENG-004 ✓  
+   - Dynamic-import Canvas; do not load WebGL on unrelated pages
 
 ---
 
@@ -48,21 +48,19 @@ _None._
 
 ---
 
-## Last validation (DEMO-MOTION-002)
+## Last validation (DOC-CAM-001)
 
 | Check | Result |
 | --- | --- |
-| Typecheck | passed |
-| Lint | passed |
 | Build | passed |
-| Browser / visual | not run — open `/docs/motion/easing` |
+| Browser | not run — open `/docs/camera/fundamentals` |
 
 ---
 
 ## Notes for next agent
 
-1. Eng Phase 05 gold slice is done; expand curriculum one lesson at a time.
-2. Prefer `PlaygroundShell` + `formatSnippet` + `usePrefersReducedMotion` for new demos.
+1. First R3F demo: lazy-load, dispose, reduced-motion, PlaygroundShell.
+2. Dolly vs Zoom must wait until FOV exists if it depends on DEMO-CAM-FOV.
 3. Suggest git only; never commit/push.
 4. STOP after one task.
 

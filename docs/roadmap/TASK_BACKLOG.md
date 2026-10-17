@@ -129,8 +129,8 @@ Execute **one lesson** (DOC + DEMO if required) per run unless backlog item says
 
 | ID | Task | Depends | Status |
 | --- | --- | --- | --- |
-| DOC-CAM-001 | Camera fundamentals (Persian) | Phase 05 done | `NOT STARTED` |
-| DEMO-CAM-FOV | FOV playground (R3F) | DOC-CAM-* + ENG-004 | `NOT STARTED` |
+| DOC-CAM-001 | Camera fundamentals (English) | Phase 05 done | `COMPLETED` |
+| DEMO-CAM-FOV | FOV playground (R3F) | DOC-CAM-001 + ENG-004 | `NOT STARTED` |
 | DEMO-CAM-DOLLY-ZOOM | Dolly vs Zoom (true optical difference) | DEMO-CAM-FOV | `NOT STARTED` |
 | DEMO-CAM-ORBIT | Orbit camera | ENG-004 | `NOT STARTED` |
 | DEMO-CAM-DOF | DOF / rack focus | ENG-004 | `NOT STARTED` |
@@ -173,7 +173,7 @@ Execute **one lesson** (DOC + DEMO if required) per run unless backlog item says
 
 | Field | Value |
 | --- | --- |
-| **ID** | `DOC-CAM-001` |
-| **Title** | Camera fundamentals (English) |
-| **Depends on** | Phase 05 vertical slice (`COMPLETED`) |
+| **ID** | `DEMO-CAM-FOV` |
+| **Title** | FOV playground (R3F) |
+| **Depends on** | DOC-CAM-001, ENG-004 (`COMPLETED`) |
 | **Blocked?** | No |
