@@ -5,56 +5,33 @@ description: How progress maps across a duration — the curve that turns timing
 
 # Easing
 
+## See it first
+
+Same distance and duration. Lane **A** = selected ease; lane **B** = linear. Change the curve and hit **Replay** — feel the character before reading.
+
+<EasingPlayground />
+
 ## Introduction
 
 **Easing** is how motion progresses *within* a duration. Timing answers “how long?” Easing answers “how does speed change along the way?”
 
-With `ease: "none"` (linear), progress is proportional to time. Most real motion is not linear: objects accelerate, decelerate, overshoot, or settle. Those patterns are easing curves (also called timing functions in CSS).
-
-> Teaching note: named easings (`power2.out`, `ease-in-out`, bounce) are conveniences. Underneath, they are mappings from time `t ∈ [0,1]` → progress `p ∈ [0,1]` (sometimes beyond 1 for overshoot).
+With `ease: "none"` (linear), progress is proportional to time. Most real motion is not linear: objects accelerate, decelerate, overshoot, or settle.
 
 ## Why it matters
 
-The same duration can feel soft, snappy, heavy, or playful solely because of the curve.
-
-- **Cinema / animation** — easing sells weight, intention, and emotion (a door that eases-out feels heavier than one that pops).
-- **UI** — standard ease-out entrances feel settled; linear motion often feels robotic or unfinished.
-- **Creative web** — mismatched easing is a common “uncanny” tell: flashy motion with the wrong curve still feels cheap.
-
-Master [Timing](/docs/motion/timing) first. Easing without a sensible duration is decoration.
+The same duration can feel soft, snappy, heavy, or playful solely because of the curve. Master [Timing](/docs/motion/timing) first.
 
 ## Visual explanation
 
-Imagine a graph: **X = time**, **Y = progress** (0 → 1).
+| Family | Feel |
+| --- | --- |
+| Linear | Mechanical |
+| Ease-in | Slow start, fast finish |
+| Ease-out | Fast start, soft land (most UI) |
+| Ease-in-out | Soft both ends |
+| Back / bounce | Playful — easy to overuse |
 
-```text
-progress
-1 |                 ●————  ease-out (fast start, soft land)
-  |            ●
-  |       ●
-  |  ●
-0 +————————————————●——————  linear
-  0              time → 1
-```
-
-| Family | Shape (intuition) | Feel |
-| --- | --- | --- |
-| Linear (`none`) | Straight diagonal | Mechanical, honest, rarely “natural” |
-| Ease-in | Slow start, fast finish | Gathering energy / falling into a cut |
-| Ease-out | Fast start, soft finish | Most UI entrances; arrives then settles |
-| Ease-in-out | Soft both ends | Symmetric moves, panels, crossfades |
-| Back / overshoot | Progress briefly > 1 | Playful emphasis — easy to overuse |
-| Bounce / elastic | Oscillates near the end | Cartoon physics — use sparingly in product UI |
-
-Hold **duration** and **distance** constant when comparing curves. Otherwise you cannot tell whether the feeling came from timing or easing.
-
-## Interactive playground
-
-Same distance and duration. Lane **A** uses the selected ease; lane **B** stays linear (`none`). The graph plots progress vs time for the active curve (solid) against linear (dashed).
-
-<EasingPlayground />
-
-Use **Replay** to re-feel the pair. Use **Reset** for `power2.out` @ `0.8s`. The code panel stays synced to the selected ease and duration.
+Hold duration and distance constant when comparing curves.
 
 ## Parameters
 

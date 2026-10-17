@@ -5,36 +5,24 @@ description: Pattern — hero camera, paced chapters, scroll-scrubbed motion.
 
 # Cinematic Landing Page
 
+## See it first
+
+Four chapters with hard cuts. Play the sequence — notice one accent and changing hold energy. This is the pattern in miniature.
+
+<CinematicLandingPlayground />
+
 ## Brief
 
-Ship a marketing landing that feels directed: one hero statement, scroll chapters with intentional cuts, and motion that respects reduced-motion.
+Ship a landing that feels directed: one hero statement, scroll chapters with intentional cuts, motion that respects reduced-motion.
 
 ## Technique stack
 
 | Beat | Technique |
 | --- | --- |
-| Hero | Locked FOV or gentle orbit; clear focal point |
-| Chapter joins | Hard cuts by default; dissolve only for soft time |
-| Scroll | ScrollTrigger progress → parallax / timeline scrub |
-| CTA | Anticipation on the primary button; one accent color |
-
-## Reusable skeleton
-
-```text
-Hero (brand + one line + CTA)
-→ Chapter A (setup hold)
-→ Cut
-→ Chapter B (product turn / orbit)
-→ Cut
-→ Proof
-→ CTA reprise
-```
-
-## Implementation notes
-
-- Lazy-load WebGL chapters; keep the first paint CSS/GSAP-only when possible.
-- One ScrollTrigger per chapter pin — avoid nested scrub fights.
-- Test `prefers-reduced-motion`: jump to end states; keep content readable.
+| Hero | Clear focal point + one CTA |
+| Chapter joins | Hard cuts by default |
+| Scroll | ScrollTrigger progress (see Creative Web) |
+| CTA | Shared accent + anticipation |
 
 ## Related lessons
 

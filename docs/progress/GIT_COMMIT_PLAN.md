@@ -6,6 +6,15 @@ Historical per-batch commands below are **logical groupings of the final working
 
 ---
 
+## Batch C — Demo-first gap fill (fundamentals, motif, direction, projects)
+
+```bash
+git add src/demos/camera/fundamentals-playground.tsx src/demos/camera/fundamentals-scene.tsx src/demos/storytelling/motif-playground.tsx src/demos/direction src/demos/projects content/docs/camera/fundamentals.mdx content/docs/storytelling/motif.mdx content/docs/direction content/docs/projects content/docs/motion/easing.mdx src/components/mdx.tsx
+git commit -m "feat(demos): add demo-first playgrounds for remaining lessons"
+```
+
+---
+
 ## Final recommended commits (regrouped)
 
 Run from repo root. Inspect with `git status` first.
