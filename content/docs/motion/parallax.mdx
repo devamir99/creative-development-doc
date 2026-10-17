@@ -1,0 +1,43 @@
+---
+title: Parallax
+description: Depth from differential motion — one progress, many amplitudes.
+---
+
+# Parallax
+
+## Introduction
+
+**Parallax** moves layers at different rates along shared progress (scroll, drag, or playhead). Near layers travel farther; far layers lag — a depth cue without true 3D.
+
+## Why it matters
+
+- Cheap depth for heroes and storytelling scrolls.
+- Easy to overdo — vestibular discomfort and noisy layouts.
+
+## Interactive playground
+
+<ParallaxPlayground />
+
+## Parameters
+
+| Control | Role |
+| --- | --- |
+| Progress | Shared 0–1 driver |
+| Far / Mid / Near amp | Pixels of travel at progress = 1 |
+
+## Implementation
+
+```js
+far.x = progress * farAmp;
+near.x = progress * nearAmp;
+```
+
+## Key takeaways
+
+- One progress value; many amplitudes.
+- Honor reduced motion — disable auto or large amplitudes.
+
+## Related lessons
+
+- [Timing](/docs/motion/timing)
+- [Camera FOV](/docs/camera/fov)

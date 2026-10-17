@@ -1,0 +1,43 @@
+---
+title: Stagger
+description: Offsetting start times across a set — rhythm without unique tweens.
+---
+
+# Stagger
+
+## Introduction
+
+**Stagger** delays each target’s start in a shared tween. One animation definition; many start clocks.
+
+## Why it matters
+
+- Lists, cards, and nav items feel alive without hand-authored timelines.
+- Too much stagger reads as slow; too little reads as a single blob.
+
+## Interactive playground
+
+<StaggerPlayground />
+
+## Parameters
+
+| Control | Role |
+| --- | --- |
+| Stagger | Seconds between successive starts |
+| Duration | Length of each item’s tween |
+
+## Implementation
+
+```js
+gsap.from(".item", { y: 40, opacity: 0, duration: 0.45, stagger: 0.08 });
+```
+
+## Key takeaways
+
+- Stagger is timing structure, not a different ease.
+- Respect reduced motion — show the final set instantly.
+
+## Related lessons
+
+- [Timing](/docs/motion/timing)
+- [Easing](/docs/motion/easing)
+- [Anticipation](/docs/motion/anticipation)
