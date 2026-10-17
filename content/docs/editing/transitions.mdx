@@ -1,0 +1,82 @@
+---
+title: Transitions
+description: Dissolve, wipe, and mask reveals as editorial glue — not decoration by default.
+---
+
+# Transitions
+
+## Introduction
+
+A **transition** is how one image becomes another when you refuse (or soften) a hard cut. Classic forms: dissolve, wipe, iris/mask. On the web they become opacity, clip-path, masks, and WebGL passes.
+
+## Why it matters
+
+- Transitions carry meaning: dissolve ≈ soft time; wipe ≈ spatial handoff; mask ≈ reveal.
+- Overuse flattens rhythm — the hard cut stays the default for a reason.
+- Performance and accessibility depend on choosing cheap techniques.
+
+## Visual explanation
+
+Same Scene A → Scene B; only the glue changes. Compare in the stage below.
+
+## Interactive playground
+
+<TransitionPlayground />
+
+## Parameters
+
+| Control | Role |
+| --- | --- |
+| Kind | Cut / dissolve / wipe / mask |
+| Duration | How long the glue lasts (cut ignores) |
+
+## Practical examples
+
+1. **Case study chapters** — wipe following scroll direction.
+2. **Flashback** — longer dissolve, desaturated B.
+3. **Product hotspots** — circular mask reveal into a detail shot.
+
+## Implementation
+
+```css
+/* Wipe idea */
+clip-path: inset(0 0% 0 0);
+
+/* Mask reveal idea */
+mask-image: radial-gradient(circle, #000 var(--r), transparent var(--r));
+```
+
+Drive `--r` or inset with GSAP / ScrollTrigger.
+
+## Performance notes
+
+- Prefer `transform`, `opacity`, `clip-path` over continuous `filter: blur`.
+- Respect `prefers-reduced-motion` — jump to the end state.
+
+## Common mistakes
+
+- Decorating every route change with a 1s dissolve
+- Wipes that fight the user’s scroll direction
+- Masks so slow they feel like loading states
+
+## When to use / avoid
+
+**Use** when the join itself is part of the story.
+
+**Avoid** when information density needs a clean cut.
+
+## Key takeaways
+
+- Transition choice is editorial, not cosmetic.
+- Match technique cost to the length of the moment.
+- Always offer a reduced-motion end state.
+
+## Related lessons
+
+- [Cuts & Continuity](/docs/editing/cuts)
+- [J-Cut / L-Cut](/docs/editing/jl-cuts)
+- [Easing](/docs/motion/easing)
+
+## Exercise
+
+Replay dissolve at 0.3s and 1.2s. Decide which still feels like an *edit* vs a *mood wash*.

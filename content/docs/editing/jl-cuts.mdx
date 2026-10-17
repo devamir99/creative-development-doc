@@ -1,0 +1,89 @@
+---
+title: J-Cut & L-Cut
+description: When picture and sound change on different beats.
+---
+
+# J-Cut & L-Cut
+
+## Introduction
+
+In a **straight cut**, picture and sound change together. A **J-cut** lets the *incoming* sound arrive before the picture. An **L-cut** lets the *outgoing* sound linger under the new picture. Named for the shape those splits make on a timeline.
+
+## Why it matters
+
+- Dialogue and ambience can pull attention before the eye arrives.
+- Smoothens scene changes without a dissolve.
+- On the web: prefetch audio / voiceover ahead of a visual chapter, or keep a bed under a UI swap.
+
+## Visual explanation
+
+```text
+J-cut:   picture  AAAAAAAAAAAAA|BBBBBBB
+         sound    AAAAA|BBBBBBBBBBBBBBB
+
+L-cut:   picture  AAAAAAAAAAAAA|BBBBBBB
+         sound    AAAAAAAAAAAAAAAA|BBBB
+```
+
+White marker = picture cut; yellow = sound cut in the playground.
+
+## Interactive playground
+
+<JlCutPlayground />
+
+## Parameters
+
+| Control | Role |
+| --- | --- |
+| Mode | J / L / straight |
+| Audio offset | How far sound leads or trails the picture cut |
+
+## Practical examples
+
+1. **Chapter VO** — J-cut: hear the next narrator line before the hero swaps.
+2. **Gallery** — L-cut: keep ambient bed under a hard image change.
+3. **Game cutscenes** — lead with impact SFX before the camera angle changes.
+
+## Implementation
+
+Track two cut times:
+
+```js
+const pictureCut = 0.5;
+const soundCut = pictureCut - offset; // J
+// const soundCut = pictureCut + offset; // L
+```
+
+Drive picture visibility from `pictureCut`, audio source from `soundCut`.
+
+## Performance notes
+
+- Decode / unlock audio early if the J-cut must fire on first gesture.
+- Don’t animate gain and picture on conflicting clocks without a shared timeline.
+
+## Common mistakes
+
+- Huge offsets that feel like a mistake, not a lead-in
+- J-cutting into silence (no “B” audio to lead with)
+- Forgetting captions when sound leads picture
+
+## When to use / avoid
+
+**Use** to glue scenes emotionally or to foreshadow.
+
+**Avoid** when the new picture must land with a synchronized hit (logo sting, UI confirm).
+
+## Key takeaways
+
+- Picture and sound are independent edit axes.
+- J leads with B sound; L trails A sound.
+- Small offsets often feel more expensive than big ones.
+
+## Related lessons
+
+- [Cuts & Continuity](/docs/editing/cuts)
+- [Transitions](/docs/editing/transitions)
+
+## Exercise
+
+Build a J-cut at ~15% offset, then the matching L-cut. Note which feels more “anticipatory.”

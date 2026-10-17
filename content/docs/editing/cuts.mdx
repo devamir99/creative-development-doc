@@ -1,0 +1,87 @@
+---
+title: Cuts & Continuity
+description: Hard cuts, jump cuts, match cuts, and keeping spatial sense across edits.
+---
+
+# Cuts & Continuity
+
+## Introduction
+
+A **cut** is the instantaneous join between two shots. Continuity editing tries to keep space, time, and action readable across those joins. Stylized edits (jump cuts, match cuts) break or bend continuity on purpose.
+
+## Why it matters
+
+- Rhythm of an experience is often decided in the edit, not the shot.
+- On the web, “cuts” appear as route changes, scroll scene swaps, and timeline seeks.
+- Bad continuity feels accidental; good discontinuity feels authored.
+
+## Visual explanation
+
+| Cut | Intent |
+| --- | --- |
+| Hard cut | Clean swap — new information now |
+| Dissolve | Soften time / memory / mood |
+| Jump cut | Compress time inside one framing language |
+| Match cut | Bridge via shared shape, motion, or idea |
+
+## Interactive playground
+
+<CutTimelinePlayground />
+
+## Parameters
+
+| Control | Role |
+| --- | --- |
+| Cut type | Which editorial grammar to rehearse |
+| Cut position | Where on the timeline the join happens |
+| Dissolve length | Overlap window (dissolve only) |
+
+## Practical examples
+
+1. **Landing scroll chapters** — hard cuts between sections; dissolve only for “memory” beats.
+2. **Product stories** — match cut from logo mark → product silhouette.
+3. **UI tutorials** — jump cuts inside one screen recording to skip idle time.
+
+## Implementation
+
+Editorial ideas map to motion code, not a film NLE:
+
+```js
+// Hard cut ≈ swap visibility / route at t
+// Dissolve ≈ crossfade opacities
+// Jump ≈ same camera language, discontinuous time
+// Match ≈ shared transform motif across A and B
+```
+
+## Performance notes
+
+- Prefer opacity / transform / clip-path over filter blur for transitions.
+- One playing timeline at a time; kill on unmount.
+
+## Common mistakes
+
+- Jump cutting without a clear time-compression reason
+- Match cuts that only share color, not structure
+- Dissolving every scene change (muddy rhythm)
+
+## When to use / avoid
+
+**Use** hard cuts for clarity; dissolves for soft time; matches for conceptual rhyme.
+
+**Avoid** stacking three transition styles in one short sequence unless parody is the point.
+
+## Key takeaways
+
+- Continuity is a contract with the viewer’s spatial sense.
+- Style cuts work when the break is intentional and readable.
+- Web edits inherit the same grammar with different tools.
+
+## Related lessons
+
+- [J-Cut / L-Cut](/docs/editing/jl-cuts)
+- [Transitions](/docs/editing/transitions)
+- [Timing](/docs/motion/timing)
+
+## Exercise
+
+Play **Match cut**, then **Jump cut**. Write one sentence naming what stayed continuous in each.
