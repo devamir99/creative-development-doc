@@ -1,9 +1,9 @@
 # Project Status — Creative Lab
 
 **Last updated:** 2026-10-17  
-**Current engineering phase:** 06 Foundational Modules  
-**Active / next task:** `DEMO-CAM-DOF` — DOF / rack focus  
-**Execution state:** Waiting for user approval to start `DEMO-CAM-DOF`
+**Current engineering phase:** 11 QA (partial)  
+**Active / next task:** Browser/WebGL manual QA; optional curriculum depth (fog, kinetic type, showroom)  
+**Execution state:** AUTONOMOUS batch complete — awaiting user git commits
 
 ---
 
@@ -11,41 +11,49 @@
 
 | Item | Value |
 | --- | --- |
-| Orbit | R3F playground with azimuth / elevation / radius · auto-orbit respects reduced-motion |
-| Blockers | None |
+| Lessons (MDX pages) | 38 including section indexes |
+| Interactive playgrounds | 21 |
+| Practical project briefs | 3 |
+| Language | English (ADR-005) |
+| Build / lint / tsc | Passed (this session) |
+| Browser checks | Not run |
+| Blockers | None for further content depth |
 
 ---
 
-## Completed (recent camera)
+## Phases covered this autonomous run
 
-| ID | Name |
+| Domain | Status |
 | --- | --- |
-| DEMO-CAM-FOV | FOV |
-| DEMO-CAM-DOLLY-ZOOM | Dolly vs Zoom |
-| DEMO-CAM-ORBIT | Orbit |
+| Camera (+ DOF) | Core playgrounds shipped |
+| Editing | Cuts, J/L, Transitions |
+| Composition | Focal, Balance, Thirds, Tension, Center |
+| Motion | Timing, Easing, Stagger, Anticipation, Parallax |
+| Storytelling | Pacing + Motif docs |
+| Lighting | Three-point playground |
+| Creative Web | ScrollTrigger + Raycast |
+| Direction | Visual language + Critique |
+| Projects | Landing / Product / Portfolio briefs |
 
 ---
 
-## Next up
-
-1. **`DEMO-CAM-DOF`** — depth of field / rack focus (R3F; label approximations vs physically accurate)  
-   - Depends on: ENG-004 ✓  
-
----
-
-## Last validation (DEMO-CAM-ORBIT)
+## Last validation
 
 | Check | Result |
 | --- | --- |
 | Typecheck | passed |
 | Lint | passed |
-| Build | passed |
-| Browser / WebGL | not run — `/docs/camera/orbit` |
+| Build | passed (44 doc routes) |
+| Unit tests | not executed (no dedicated suite invoked) |
+| Browser / WebGL | not run |
+| a11y audit | not run (patterns followed; no axe run) |
 
 ---
 
-## Notes for next agent
+## Remaining gaps (honest)
 
-1. DOF demos: teach focus distance clearly; do not overclaim physical accuracy.
-2. Suggest git only; never commit/push.
-3. STOP after one task.
+- Extra camera topics (shot types, blocking, scroll cameras)
+- Extra motion (kinetic type, morph, spring specialty)
+- Atmosphere (fog, bloom) beyond three-point
+- Digital showroom project brief
+- Live browser verification of every playground

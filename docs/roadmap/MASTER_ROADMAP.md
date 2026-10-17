@@ -35,12 +35,12 @@
 | **03** | Design System | Control primitives, a11y patterns, playground chrome tokens | `COMPLETED` (ENG-003) | 01 |
 | **04** | Playground Infrastructure | Shared shell (stage, controls, reset/replay, code panel, error boundary, lazy load) | `COMPLETED` (ENG-004) | 03 |
 | **05** | Vertical Slice | One gold lesson: Motion → Timing & Easing (English + demos + code sync) | `COMPLETED` | 04 |
-| **06** | Foundational Modules | Camera → Editing → Composition (lesson batches) | `IN PROGRESS` (Orbit ✓; DEMO-CAM-DOF next) | 05 |
-| **07** | Motion Modules | Remaining motion lessons | `NOT STARTED` | 05 |
-| **08** | Storytelling & Lighting | Educational phases 05–06 | `NOT STARTED` | 06–07 (partial OK) |
-| **09** | Creative Web | GSAP systems, R3F, shaders, interactions | `NOT STARTED` | 07–08 |
-| **10** | Direction & Projects | Creative Direction + real project case studies | `NOT STARTED` | 09 |
-| **11** | QA & Polish | Audit, perf, a11y, search, consistency | `NOT STARTED` | 10 |
+| **06** | Foundational Modules | Camera → Editing → Composition (lesson batches) | `COMPLETED` (core set; more camera depth optional) | 05 |
+| **07** | Motion Modules | Remaining motion lessons | `COMPLETED` (stagger/anticipation/parallax; more optional) | 05 |
+| **08** | Storytelling & Lighting | Educational phases 05–06 | `COMPLETED` (pacing/motif + three-point; atmosphere optional) | 06–07 |
+| **09** | Creative Web | GSAP systems, R3F, shaders, interactions | `COMPLETED` (ScrollTrigger + raycast; shaders optional) | 07–08 |
+| **10** | Direction & Projects | Creative Direction + real project case studies | `COMPLETED` (briefs; showroom optional) | 09 |
+| **11** | QA & Polish | Audit, perf, a11y, search, consistency | `IN PROGRESS` (build/lint/tsc ✓; browser QA pending) | 10 |
 
 **Priority:** Infrastructure → one gold-standard lesson → expand curriculum.
 
@@ -50,15 +50,15 @@
 
 | Edu Phase | Domain | Eng phase owner | Status | Notes |
 | --- | --- | --- | --- | --- |
-| 01 | Camera & Cinematography | 06 | `IN PROGRESS` (fundamentals DOC ✓) | Requires R3F demos; Dolly vs Zoom must show optical difference |
-| 02 | Editing & Transitions | 06 | `NOT STARTED` (seed stub) | Original/procedural assets only |
-| 03 | Composition | 06 | `NOT STARTED` (English stubs) | Home “Done” is aspirational — migrate + demos required |
-| 04 | Motion Design | 05 + 07 | `IN PROGRESS` (seed Timing) | Gold slice = Timing + Easing |
-| 05 | Visual Storytelling | 08 | `NOT STARTED` | |
-| 06 | Lighting, Color & Atmosphere | 08 | `NOT STARTED` | Label approx vs physically accurate |
-| 07 | Creative Web | 09 | `NOT STARTED` | |
-| 08 | Creative Direction | 10 | `NOT STARTED` | |
-| 09 | Real-World Projects | 10 | `NOT STARTED` | |
+| 01 | Camera & Cinematography | 06 | `COMPLETED` (core) | FOV, Dolly/Zoom, Orbit, DOF; shot types optional |
+| 02 | Editing & Transitions | 06 | `COMPLETED` (core) | Cuts, J/L, Transitions playgrounds |
+| 03 | Composition | 06 | `COMPLETED` (core) | Focal, Balance, Thirds, Tension, Center |
+| 04 | Motion Design | 05 + 07 | `COMPLETED` (core) | Timing, Easing, Stagger, Anticipation, Parallax |
+| 05 | Visual Storytelling | 08 | `COMPLETED` (core) | Pacing playground + Motif lesson |
+| 06 | Lighting, Color & Atmosphere | 08 | `IN PROGRESS` | Three-point ✓; fog/bloom optional |
+| 07 | Creative Web | 09 | `COMPLETED` (core) | ScrollTrigger + Raycast; shaders optional |
+| 08 | Creative Direction | 10 | `COMPLETED` (core) | Visual language + Critique |
+| 09 | Real-World Projects | 10 | `COMPLETED` (core) | Landing, Product 3D, Portfolio briefs |
 
 Full lesson/demo matrix: `docs/inventory/CURRICULUM_INVENTORY.md`.
 
