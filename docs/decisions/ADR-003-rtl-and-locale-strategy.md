@@ -24,5 +24,11 @@ Audience is Persian-speaking developers. Seed app uses `lang="en"` and LTR. Fuma
 
 - Root: `lang="fa"` `dir="rtl"`; body font **Vazirmatn** (`--font-body`); display **Syne** for Latin brand/headlines.
 - Global LTR isolate for `pre, code, kbd, samp` and `.lab-ltr`.
-- `TimingPlayground` root: `dir="ltr"` + `lab-ltr`.
+- `TimingPlayground` / `PlaygroundShell` root: `dir="ltr"` + `lab-ltr`.
+
+## Font note (Turbopack fix)
+
+Vazirmatn must use a **single** Google Font subset (e.g. `arabic`) plus `weight: "variable"`.  
+Multi-subset arrays (`["arabic", "latin"]`) break Next 16 Turbopack with  
+`next/font/google queries have exactly one entry`. Latin falls through to Syne via the CSS font stack.
 

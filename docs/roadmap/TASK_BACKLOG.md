@@ -56,10 +56,14 @@ Actionable tasks only. Statuses: `NOT STARTED` | `IN PROGRESS` | `COMPLETED` | `
   - [x] Documented in `docs/architecture/UI_PRIMITIVES.md`
 
 ### ENG-004 — Playground shell infrastructure
-- **Status:** `NOT STARTED`
+- **Status:** `COMPLETED`
 - **Depends on:** ENG-003
 - **Objective:** Shared `PlaygroundShell` (stage, toolbar, Reset, Replay, Pause slot, controls region, code panel slot, error boundary).
-- **Acceptance:** Contracts match `PLAYGROUND_SYSTEM.md`; Timing demo can migrate or wrap in a follow-up task (prefer migrate in ENG-004 or immediate DEMO task).
+- **Acceptance:**
+  - [x] Contracts match `PLAYGROUND_SYSTEM.md`
+  - [x] Timing demo migrated onto shell (Reset / Replay / controls / code panel)
+  - [x] Error boundary with Retry
+  - [x] Vazirmatn Turbopack font failure fixed (related blocker during verification)
 
 ### ENG-005 — Code snippet sync + copy utilities
 - **Status:** `NOT STARTED`
@@ -149,7 +153,7 @@ Execute **one lesson** (DOC + DEMO if required) per run unless backlog item says
 
 | Field | Value |
 | --- | --- |
-| **ID** | `ENG-004` |
-| **Title** | Playground shell infrastructure |
-| **Depends on** | ENG-003 (`COMPLETED`) |
+| **ID** | `ENG-005` |
+| **Title** | Code snippet sync + copy utilities |
+| **Depends on** | ENG-004 (`COMPLETED`) |
 | **Blocked?** | No |

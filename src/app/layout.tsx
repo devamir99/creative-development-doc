@@ -10,10 +10,13 @@ const display = Syne({
   weight: ["500", "600", "700", "800"],
 });
 
+// Single subset + variable axis — avoids Turbopack
+// "next/font/google queries have exactly one entry" with multi-subset arrays.
+// Latin glyphs fall through to Syne via the --font-sans stack in globals.css.
 const body = Vazirmatn({
   variable: "--font-body",
-  subsets: ["arabic", "latin"],
-  weight: ["400", "500", "600", "700"],
+  subsets: ["arabic"],
+  weight: "variable",
 });
 
 const mono = IBM_Plex_Mono({

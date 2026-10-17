@@ -33,7 +33,7 @@
 | **01** | Project Foundation | Harden tokens, typography, RTL readiness, folder conventions on existing app | `COMPLETED` (ENG-001) | 00 |
 | **02** | Documentation System | Fumadocs polish: nav meta, search language plan, lesson template, MDX map hygiene | `COMPLETED` (ENG-002) | 01 |
 | **03** | Design System | Control primitives, a11y patterns, playground chrome tokens | `COMPLETED` (ENG-003) | 01 |
-| **04** | Playground Infrastructure | Shared shell (stage, controls, reset/replay, code panel, error boundary, lazy load) | `NOT STARTED` | 03 |
+| **04** | Playground Infrastructure | Shared shell (stage, controls, reset/replay, code panel, error boundary, lazy load) | `COMPLETED` (ENG-004) | 03 |
 | **05** | Vertical Slice | One gold lesson: Motion → Timing & Easing (Persian + demos + code sync) | `NOT STARTED` | 04 |
 | **06** | Foundational Modules | Camera → Editing → Composition (lesson batches) | `NOT STARTED` | 05 |
 | **07** | Motion Modules | Remaining motion lessons | `NOT STARTED` | 05 |
@@ -79,11 +79,12 @@ Full lesson/demo matrix: `docs/inventory/CURRICULUM_INVENTORY.md`.
 - [x] ENG-002 lesson template + nav/search hygiene
 - [x] ENG-003 control primitives (`src/components/ui`)
 
-### M2 — Playground engine — acceptance
+### M2 — Playground engine — acceptance — mostly met via ENG-004
 
-- Shared `PlaygroundShell` usable from MDX
-- Reset / Replay / controls / code panel contracts in `PLAYGROUND_SYSTEM.md`
-- Heavy demos load via dynamic import pattern
+- [x] Shared `PlaygroundShell` usable from MDX (via registered demos)
+- [x] Reset / Replay / controls / code panel contracts in `PLAYGROUND_SYSTEM.md`
+- [ ] Heavy demos load via dynamic import pattern (when first R3F demo lands)
+- [ ] ENG-005 formalizes code sync utilities
 
 ### M3 — Gold vertical slice — acceptance
 
@@ -105,8 +106,8 @@ ENG-000 (planning) ✓
     └── ENG-001 (tokens + RTL/docs chrome) ✓
             ├── ENG-002 (docs system / lesson template) ✓
             ├── ENG-003 (design system controls) ✓
-            └── ENG-004 (playground shell)  ← next
-                    ├── ENG-005 (code sync + copy utils)
+            └── ENG-004 (playground shell) ✓
+                    ├── ENG-005 (code sync + copy utils)  ← next
                     └── DOC/DEMO-MOTION-001 → DOC/DEMO-MOTION-002 (vertical slice)
                             └── ENG-006+ curriculum batches
 ```
