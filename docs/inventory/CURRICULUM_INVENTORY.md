@@ -71,7 +71,7 @@ Counts (planned targets, refined over time):
 | --- | --- | --- | --- | --- |
 | Index | N | — | SEED | |
 | Timing | Y | GSAP | SHIPPED | DOC + DEMO motion-001 (English, shell, reduced-motion) |
-| Easing | Y | GSAP + curve viz | NOT STARTED | Gold vertical slice |
+| Easing | Y | GSAP + curve viz | IN PROGRESS | DOC-MOTION-002 ✓; DEMO-MOTION-002 next |
 | Spacing | Y | GSAP | NOT STARTED | |
 | Anticipation | Y | GSAP | NOT STARTED | |
 | Follow Through / Overshoot | Y | GSAP | NOT STARTED | |

@@ -1,0 +1,147 @@
+---
+title: Easing
+description: How progress maps across a duration — the curve that turns timing into character.
+---
+
+# Easing
+
+## Introduction
+
+**Easing** is how motion progresses *within* a duration. Timing answers “how long?” Easing answers “how does speed change along the way?”
+
+With `ease: "none"` (linear), progress is proportional to time. Most real motion is not linear: objects accelerate, decelerate, overshoot, or settle. Those patterns are easing curves (also called timing functions in CSS).
+
+> Teaching note: named easings (`power2.out`, `ease-in-out`, bounce) are conveniences. Underneath, they are mappings from time `t ∈ [0,1]` → progress `p ∈ [0,1]` (sometimes beyond 1 for overshoot).
+
+## Why it matters
+
+The same duration can feel soft, snappy, heavy, or playful solely because of the curve.
+
+- **Cinema / animation** — easing sells weight, intention, and emotion (a door that eases-out feels heavier than one that pops).
+- **UI** — standard ease-out entrances feel settled; linear motion often feels robotic or unfinished.
+- **Creative web** — mismatched easing is a common “uncanny” tell: flashy motion with the wrong curve still feels cheap.
+
+Master [Timing](/docs/motion/timing) first. Easing without a sensible duration is decoration.
+
+## Visual explanation
+
+Imagine a graph: **X = time**, **Y = progress** (0 → 1).
+
+```text
+progress
+1 |                 ●————  ease-out (fast start, soft land)
+  |            ●
+  |       ●
+  |  ●
+0 +————————————————●——————  linear
+  0              time → 1
+```
+
+| Family | Shape (intuition) | Feel |
+| --- | --- | --- |
+| Linear (`none`) | Straight diagonal | Mechanical, honest, rarely “natural” |
+| Ease-in | Slow start, fast finish | Gathering energy / falling into a cut |
+| Ease-out | Fast start, soft finish | Most UI entrances; arrives then settles |
+| Ease-in-out | Soft both ends | Symmetric moves, panels, crossfades |
+| Back / overshoot | Progress briefly > 1 | Playful emphasis — easy to overuse |
+| Bounce / elastic | Oscillates near the end | Cartoon physics — use sparingly in product UI |
+
+Hold **duration** and **distance** constant when comparing curves. Otherwise you cannot tell whether the feeling came from timing or easing.
+
+## Interactive playground
+
+The gold-standard **Easing playground** (presets, duration, side-by-side motion + curve, synced code, replay) ships in **`DEMO-MOTION-002`**.
+
+Until then, use the [Timing playground](/docs/motion/timing) with `ease: "none"` as your baseline, then mentally swap curves using the table above — or try the GSAP sketch in Implementation with different `ease` strings.
+
+## Parameters
+
+What the upcoming playground (and any easing demo) should expose:
+
+| Parameter | Role |
+| --- | --- |
+| `ease` | Curve preset or custom bezier / GSAP ease string |
+| `duration` | Shared clock so curves are comparable |
+| Distance / property | Held constant while comparing easings |
+| Side-by-side | Optional second stage for A/B curves |
+| Curve viz | Graph of progress vs time for the active ease |
+
+## Practical examples
+
+1. **Modal / drawer enter** — short duration + strong ease-out. Fast appearance, soft settle; user can read without waiting.
+2. **Page hero reveal** — longer duration + gentle ease-in-out or soft ease-out. The curve carries “cinematic” more than raw seconds alone.
+3. **Toggle / checkbox** — very short duration + mild ease-out (or near-linear). Overshoot here feels like a toy, not a control.
+4. **Emphasis nudge (badge, like)** — optional tiny back/overshoot once. If everything overshoots, nothing feels special.
+
+## Implementation
+
+Simplest correct tools:
+
+1. **CSS** — `transition-timing-function` / `animation-timing-function` (`ease`, `ease-out`, `cubic-bezier(...)`).
+2. **GSAP** — `ease` on tweens (`"power2.out"`, `"none"`, custom).
+
+```js
+// Compare curves with the SAME duration and distance
+gsap.to(".element", {
+  x: 240,
+  duration: 0.8,
+  ease: "power2.out", // try "none", "power2.in", "power2.inOut"
+});
+```
+
+```css
+.element {
+  transition:
+    transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); /* ease-out-ish */
+}
+```
+
+Prefer named GSAP easings or well-known beziers while learning. Custom beziers are powerful; they are also easy to make inconsistent across a product.
+
+## Performance notes
+
+- Easing math is cheap. Cost is what you animate (layout, filters, large trees).
+- Prefer compositor-friendly properties (`transform`, `opacity`).
+- Reduced motion: prefer shorter durations, simpler curves, or no motion — do not “fix” bounce under `prefers-reduced-motion: reduce`.
+
+## Common mistakes
+
+- Picking a fancy ease before the duration feels right
+- Using bounce/elastic on critical path UI (forms, navigation)
+- Different easings on every element with no shared language
+- Comparing easings while also changing duration or distance
+- Assuming “more curve” equals “more premium”
+
+## When to use / avoid
+
+**Use intentional easing when:**
+
+- You need weight, settle, or character on top of a clear duration
+- Multiple motions should feel like one system (shared ease family)
+- Side-by-side comparison teaches the eye (lab demos)
+
+**Avoid ornate easing when:**
+
+- The user is blocked waiting on the animation
+- Accessibility settings ask for reduced motion
+- The motion is tiny confirmatory chrome
+- You have not yet fixed timing
+
+## Key takeaways
+
+- Easing maps time → progress; timing sets how long that mapping runs.
+- Compare curves with fixed duration and distance.
+- Ease-out is the default workhorse for UI entrances; linear is a teaching tool and a rare production choice.
+- Overshoot and bounce are spices, not the meal.
+- Build a small shared ease vocabulary for your product — then break it on purpose.
+
+## Related concepts
+
+- [Timing](/docs/motion/timing) — duration before curve
+- [Motion Design overview](/docs/motion) — curriculum map
+- **Spacing** — distribution of motion between frames (pairs with easing in classical animation)
+- Composition under [/docs/composition](/docs/composition) — the frame being moved
+
+## Exercise
+
+Pick one duration (e.g. `0.8s`) and one distance. Animate with `none`, `power2.in`, `power2.out`, and `power2.inOut`. Write one adjective per curve. Keep that list next to your Timing vocabulary.

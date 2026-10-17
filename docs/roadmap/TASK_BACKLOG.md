@@ -99,10 +99,13 @@ Actionable tasks only. Statuses: `NOT STARTED` | `IN PROGRESS` | `COMPLETED` | `
   - [x] `prefers-reduced-motion` static fallback + preset a11y group
 
 ### DOC-MOTION-002 — Easing lesson (English)
-- **Status:** `NOT STARTED`
+- **Status:** `COMPLETED`
 - **Depends on:** DOC-MOTION-001
 - **Objective:** New Easing MDX lesson (English, ADR-005) meeting quality standard.
-- **Acceptance:** Linked from motion `meta.json`; related Timing.
+- **Acceptance:**
+  - [x] Linked from motion `meta.json`
+  - [x] Related Timing + full English template sections
+  - [x] Playground explicitly deferred to DEMO-MOTION-002 (no broken MDX tag)
 
 ### DEMO-MOTION-002 — Easing playground (gold slice)
 - **Status:** `NOT STARTED`
@@ -164,7 +167,7 @@ Execute **one lesson** (DOC + DEMO if required) per run unless backlog item says
 
 | Field | Value |
 | --- | --- |
-| **ID** | `DOC-MOTION-002` |
-| **Title** | Easing lesson (English) |
-| **Depends on** | DOC-MOTION-001 (`COMPLETED`) |
+| **ID** | `DEMO-MOTION-002` |
+| **Title** | Easing playground (gold vertical slice) |
+| **Depends on** | DOC-MOTION-002, ENG-005 (`COMPLETED`) |
 | **Blocked?** | No |
