@@ -1,0 +1,125 @@
+---
+title: Timing
+description: How long a movement takes — and why duration is the foundation of feeling before easing or stagger.
+---
+
+# Timing
+
+## Introduction
+
+**Timing** is how long a motion lasts — the duration you assign to an action before you shape its curve.
+
+Before easing, stagger, or fancy transitions: decide **how long** something moves, and **why**. Same distance, different durations, produce different feelings. Easing changes *how* time is distributed; timing decides *how much* time exists.
+
+> Teaching note: the feeling bands below are practical starting ranges, not universal laws. Taste, culture, and product context still matter.
+
+## Why it matters
+
+Duration is emotional and functional.
+
+- Too short → cheap, unfinished, or “bug-like”
+- Too long → sluggish; the user waits instead of reading the motion
+- Right length → confident, intentional, readable
+
+In **cinema**, timing serves story and camera. In **UI**, timing also serves usability. Creative web sits between both: a hero dive can be ~1.8s cinematic; a button confirmation should usually stay under ~0.3s.
+
+## Visual explanation
+
+Watch one object travel the **same distance** with **ease none**. Change only duration.
+
+| Duration | Typical feeling |
+| --- | --- |
+| ~0.15–0.2s | Snappy / mechanical / UI chrome |
+| ~0.4–0.6s | Natural interface motion |
+| ~1–2s | Cinematic / intentional reveal |
+| 3s+ | Epic, atmospheric, slow reveal |
+
+What to observe in the playground: the path length never changes — only the clock. If the motion feels different, that difference is timing.
+
+## Interactive playground
+
+<TimingPlayground />
+
+Use **Replay** to feel the same duration again. Use **Reset** to return to the default `0.6s`. The code panel stays in sync with the live `duration`.
+
+## Parameters
+
+| Parameter | Role in this demo |
+| --- | --- |
+| `duration` | Seconds for the tween (`0.2` / `0.6` / `1.6` presets) |
+| Distance (`x: 240`) | Held constant so duration is the only variable |
+| `ease: "none"` | Linear time — isolates timing from easing |
+
+## Practical examples
+
+1. **Button press / toggle** — ~0.15–0.25s. The user is waiting to continue; long timing feels broken.
+2. **Panel / drawer enter** — ~0.35–0.55s. Enough presence to read the motion; still snappy enough for repeated use.
+3. **Hero product orbit or camera settle** — ~1.2–2s. Cinema-adjacent; the duration sells weight and attention.
+4. **Atmospheric loop (fog, idle glow)** — often 3s+ or continuous. Timing becomes texture, not a one-shot message.
+
+Starting heuristics (not rules):
+
+1. **Entrance** slightly longer than **exit** — arrive with presence, leave cleanly.
+2. Large spatial moves need more time than small nudges.
+3. Important reveals deserve more time than decorative motion.
+4. If the user is blocked on interaction, prefer shorter timing.
+
+## Implementation
+
+Simplest correct tool for this lesson: **GSAP** with linear ease so duration is the only variable.
+
+```js
+gsap.to(".element", {
+  x: 300,
+  duration: 1.2, // timing lives here first
+  ease: "none", // ignore easing for now — feel duration alone
+});
+```
+
+CSS can teach the same idea (`transition-duration`), but a replayable stage with shared playground chrome is easier to compare side by side — hence GSAP in the lab demo.
+
+## Performance notes
+
+- Duration itself is cheap; cost comes from what you animate (layout thrash, filters, large DOM, continuous loops).
+- Prefer transforming `x` / `y` / `scale` / `opacity` over layout properties when motion is frequent.
+- Kill or complete tweens on unmount (the playground uses `useGSAP` cleanup).
+- Respect `prefers-reduced-motion` in production UIs: shorten, simplify, or replace motion with a static state (hardening continues in `DEMO-MOTION-001`).
+
+## Common mistakes
+
+- Decorating with easing before the duration feels right
+- Using one “magic” duration for every UI event
+- Making waiting interactions cinematic (users feel latency, not craft)
+- Changing distance and duration at the same time when learning — you can no longer tell which variable caused the feeling
+
+## When to use / avoid
+
+**Use deliberate timing when:**
+
+- You need the audience to *read* a change
+- Weight, importance, or narrative beat depends on how long something takes
+- You are establishing a motion language for a product or sequence
+
+**Avoid long timing when:**
+
+- The user is mid-task and waiting on the motion to finish
+- The change is purely confirmatory chrome (toasts, tiny toggles)
+- Accessibility or reduced-motion preferences call for minimal motion
+
+## Key takeaways
+
+- Timing = duration of the action; master it before easing.
+- Same path + different clocks = different emotion.
+- Creative web borrows from cinema *and* UI — pick the clock that matches the job.
+- Hold distance and easing constant while you train your eye on duration.
+
+## Related concepts
+
+- [Motion Design overview](/docs/motion) — curriculum map
+- **Spacing** — how motion is distributed between frames (next after Timing)
+- **Easing** — how progress maps across that duration (gold vertical slice)
+- Composition lessons under [/docs/composition](/docs/composition) — the frame Timing animates through
+
+## Exercise
+
+Run the playground at `0.2s`, `0.6s`, and `1.6s` with ease none. Write **one word** for each feeling. That vocabulary becomes your timing instinct.

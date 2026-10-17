@@ -34,7 +34,7 @@
 | **02** | Documentation System | Fumadocs polish: nav meta, search language plan, lesson template, MDX map hygiene | `COMPLETED` (ENG-002) | 01 |
 | **03** | Design System | Control primitives, a11y patterns, playground chrome tokens | `COMPLETED` (ENG-003) | 01 |
 | **04** | Playground Infrastructure | Shared shell (stage, controls, reset/replay, code panel, error boundary, lazy load) | `COMPLETED` (ENG-004) | 03 |
-| **05** | Vertical Slice | One gold lesson: Motion → Timing & Easing (English + demos + code sync) | `IN PROGRESS` (infra ✓; DOC-MOTION-001 next) | 04 |
+| **05** | Vertical Slice | One gold lesson: Motion → Timing & Easing (English + demos + code sync) | `IN PROGRESS` (DOC-MOTION-001 ✓; DEMO-MOTION-001 next) | 04 |
 | **06** | Foundational Modules | Camera → Editing → Composition (lesson batches) | `NOT STARTED` | 05 |
 | **07** | Motion Modules | Remaining motion lessons | `NOT STARTED` | 05 |
 | **08** | Storytelling & Lighting | Educational phases 05–06 | `NOT STARTED` | 06–07 (partial OK) |

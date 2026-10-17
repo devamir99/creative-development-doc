@@ -80,10 +80,13 @@ Actionable tasks only. Statuses: `NOT STARTED` | `IN PROGRESS` | `COMPLETED` | `
 ## Vertical slice — Motion (Phase 05)
 
 ### DOC-MOTION-001 — Timing lesson (English, full template)
-- **Status:** `NOT STARTED`
+- **Status:** `COMPLETED`
 - **Depends on:** ENG-002, ENG-004 (demo may ship as DEMO-MOTION-001)
 - **Objective:** Migrate `content/docs/motion/timing.mdx` to the English lesson standard (ADR-005; template in `LESSON_TEMPLATE.md`).
-- **Acceptance:** Skeleton sections present; clear English; no marketing fluff.
+- **Acceptance:**
+  - [x] Skeleton sections present (intro → related + exercise)
+  - [x] Clear English; no marketing fluff
+  - [x] Playground embedded; parameters documented
 
 ### DEMO-MOTION-001 — Timing playground (shell integration)
 - **Status:** `NOT STARTED`
@@ -157,7 +160,7 @@ Execute **one lesson** (DOC + DEMO if required) per run unless backlog item says
 
 | Field | Value |
 | --- | --- |
-| **ID** | `DOC-MOTION-001` |
-| **Title** | Timing lesson (English, full template) |
-| **Depends on** | ENG-002, ENG-004 (`COMPLETED`) |
+| **ID** | `DEMO-MOTION-001` |
+| **Title** | Timing playground (shell integration / reduced-motion) |
+| **Depends on** | ENG-004, ENG-005 (`COMPLETED`) |
 | **Blocked?** | No |

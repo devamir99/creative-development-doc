@@ -1,9 +1,9 @@
 # Project Status — Creative Lab
 
 **Last updated:** 2026-10-17  
-**Current engineering phase:** 05 Vertical Slice → ready (infra through ENG-005 done)  
-**Active / next task:** `DOC-MOTION-001` — Timing lesson (English, full template)  
-**Execution state:** Waiting for user approval to start `DOC-MOTION-001`
+**Current engineering phase:** 05 Vertical Slice  
+**Active / next task:** `DEMO-MOTION-001` — Timing playground (shell standards / reduced-motion)  
+**Execution state:** Waiting for user approval to start `DEMO-MOTION-001`
 
 ---
 
@@ -12,8 +12,9 @@
 | Item | Value |
 | --- | --- |
 | App | `creative-lab` (Next.js 16.4.2 + Fumadocs) |
-| Playground | Shell + `formatSnippet` / `copyText` (ENG-004/005) |
-| Locale / accent | English LTR · yellow `rgb(250 250 5)` (ADR-005) |
+| Timing lesson | English full template (`DOC-MOTION-001`) |
+| Timing demo | Shell + synced code present; reduced-motion hardening still `DEMO-MOTION-001` |
+| Locale / accent | English LTR · yellow accent (ADR-005) |
 | Blockers | None |
 
 ---
@@ -22,23 +23,22 @@
 
 | ID | Name | Notes |
 | --- | --- | --- |
-| ENG-000 … ENG-004 | Foundation → playground shell | |
-| ENG-005 | Code snippet sync + copy utilities | `formatSnippet`, `copyText`, Timing smoke |
+| ENG-000 … ENG-005 | Foundation → code sync | |
+| DOC-MOTION-001 | Timing lesson (English template) | Full skeleton in `timing.mdx` |
 
 ---
 
 ## In progress
 
-_None (ENG-005 just completed)._
+_None (DOC-MOTION-001 just completed)._
 
 ---
 
 ## Next up (prerequisites satisfied)
 
-1. **`DOC-MOTION-001`** — Timing lesson to full English template  
-   - Depends on: ENG-002 ✓, ENG-004 ✓  
-   - (Backlog may still say “Persian”; follow **ADR-005** → English)  
-2. Also unblocked after this: `DEMO-MOTION-001` (pair after or with DOC per backlog) — **do not** start in the same run unless user asks
+1. **`DEMO-MOTION-001`** — Timing playground hardening (a11y / reduced-motion / shell standards)  
+   - Depends on: ENG-004 ✓, ENG-005 ✓  
+   - Do **not** start DOC-MOTION-002 / Easing in the same run
 
 ---
 
@@ -48,22 +48,22 @@ _None._
 
 ---
 
-## Last validation (ENG-005)
+## Last validation (DOC-MOTION-001)
 
 | Check | Result |
 | --- | --- |
-| Typecheck | passed |
-| Lint | passed |
-| Build | passed |
-| `formatSnippet` smoke (node strip-types) | passed |
-| Browser / visual | not run |
+| Typecheck | not run (MDX/docs-focused; build optional) |
+| Lint | not run |
+| Build | not run |
+| Content vs template | passed (manual section checklist) |
+| Browser | not run — open `/docs/motion/timing` |
 
 ---
 
 ## Notes for next agent
 
-1. New demos: template + `formatSnippet` → `PlaygroundShell.code`.
-2. ADR-005: English UI/lessons, yellow accent.
+1. DOC is done; demo already on shell — DEMO-MOTION-001 should add reduced-motion + polish, not reinvent chrome.
+2. ADR-005: English lessons.
 3. Suggest git only; never commit/push.
 4. STOP after one task.
 

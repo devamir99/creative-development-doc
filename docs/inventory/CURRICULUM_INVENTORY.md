@@ -70,7 +70,7 @@ Counts (planned targets, refined over time):
 | Lesson / concept | Demo? | Tech | Status | Notes |
 | --- | --- | --- | --- | --- |
 | Index | N | — | SEED | |
-| Timing | Y | GSAP | SEED | `timing.mdx` + TimingPlayground |
+| Timing | Y | GSAP | IN PROGRESS | DOC-MOTION-001 ✓ (English template); DEMO-MOTION-001 next |
 | Easing | Y | GSAP + curve viz | NOT STARTED | Gold vertical slice |
 | Spacing | Y | GSAP | NOT STARTED | |
 | Anticipation | Y | GSAP | NOT STARTED | |
