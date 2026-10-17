@@ -132,7 +132,7 @@ Execute **one lesson** (DOC + DEMO if required) per run unless backlog item says
 | DOC-CAM-001 | Camera fundamentals (English) | Phase 05 done | `COMPLETED` |
 | DEMO-CAM-FOV | FOV playground (R3F) | DOC-CAM-001 + ENG-004 | `COMPLETED` |
 | DEMO-CAM-DOLLY-ZOOM | Dolly vs Zoom (true optical difference) | DEMO-CAM-FOV | `COMPLETED` |
-| DEMO-CAM-ORBIT | Orbit camera | ENG-004 | `NOT STARTED` |
+| DEMO-CAM-ORBIT | Orbit camera | ENG-004 | `COMPLETED` |
 | DEMO-CAM-DOF | DOF / rack focus | ENG-004 | `NOT STARTED` |
 
 ### Editing
@@ -173,7 +173,7 @@ Execute **one lesson** (DOC + DEMO if required) per run unless backlog item says
 
 | Field | Value |
 | --- | --- |
-| **ID** | `DEMO-CAM-ORBIT` |
-| **Title** | Orbit camera |
+| **ID** | `DEMO-CAM-DOF` |
+| **Title** | DOF / rack focus |
 | **Depends on** | ENG-004 (`COMPLETED`) |
 | **Blocked?** | No |

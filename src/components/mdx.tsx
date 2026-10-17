@@ -7,6 +7,7 @@ import defaultMdxComponents from "fumadocs-ui/mdx";
 import type { MDXComponents } from "mdx/types";
 import { DollyZoomPlayground } from "@/demos/camera/dolly-zoom-playground";
 import { FovPlayground } from "@/demos/camera/fov-playground";
+import { OrbitPlayground } from "@/demos/camera/orbit-playground";
 import { EasingPlayground } from "@/demos/motion/easing-playground";
 import { TimingPlayground } from "@/demos/motion/timing-playground";
 
@@ -18,6 +19,7 @@ export function getMDXComponents(components?: MDXComponents) {
     EasingPlayground,
     FovPlayground,
     DollyZoomPlayground,
+    OrbitPlayground,
     ...components,
   } satisfies MDXComponents;
 }

@@ -31,7 +31,7 @@ Counts (planned targets, refined over time):
 | FOV | Y | R3F | SHIPPED | `/docs/camera/fov` + `FovPlayground` (lazy Canvas) |
 | Dolly vs Zoom | Y | R3F | SHIPPED | Matched `z·tan(fov/2)`; side-by-side parallax |
 | Ortho vs Perspective | Y | R3F | NOT STARTED | |
-| Orbit | Y | R3F | NOT STARTED | |
+| Orbit | Y | R3F | SHIPPED | `/docs/camera/orbit` · spherical params + optional auto |
 | Path / camera along path | Y | R3F | NOT STARTED | |
 | DOF | Y | R3F | NOT STARTED | |
 | Rack Focus | Y | R3F | NOT STARTED | |

@@ -1,0 +1,95 @@
+---
+title: Orbit Camera
+description: Moving the eye on a sphere around a fixed look-at — product turntables and spatial study.
+---
+
+# Orbit Camera
+
+## Introduction
+
+An **orbit** keeps the camera looking at a subject while the eye travels on a sphere (or sphere-like path) around it. Azimuth spins around the vertical axis; elevation climbs or drops; radius is the distance to the target.
+
+FOV can stay fixed so you isolate **spatial** framing — unlike zoom.
+
+## Why it matters
+
+- Product configurators and turntables are orbits (sometimes with easing).
+- Studying form: orbit reveals silhouette changes that a locked camera hides.
+- In film language, arcs / orbits add energy without cutting — overuse still frets the viewer.
+
+## Visual explanation
+
+```text
+            elevation
+                ↑
+                ● eye (radius)
+               ╱
+    target ●—————— azimuth around Y
+```
+
+Watch the yellow subject and pillars as azimuth changes: parallax proves the eye is moving through space.
+
+## Interactive playground
+
+<OrbitPlayground />
+
+Presets jump to common product angles. **Auto orbit** is disabled when the OS asks for reduced motion.
+
+## Parameters
+
+| Parameter | Role |
+| --- | --- |
+| Azimuth | Degrees around Y (0 ≈ from +Z) |
+| Elevation | Degrees above horizontal through the target |
+| Radius | Distance from target to eye |
+| FOV | Fixed here (`40°`) so orbit stays spatial |
+
+## Practical examples
+
+1. **Sneaker / watch hero** — slow azimuth ease-in-out loop; modest elevation.
+2. **Architecture massing** — wider radius, higher elevation for readable volumes.
+3. **Debug a mesh** — orbit beats scrubbing FOV when you need to understand form.
+
+## Implementation
+
+```js
+const phi = ((90 - elevationDeg) * Math.PI) / 180;
+const theta = (azimuthDeg * Math.PI) / 180;
+camera.position.set(
+  target.x + radius * Math.sin(phi) * Math.sin(theta),
+  target.y + radius * Math.cos(phi),
+  target.z + radius * Math.sin(phi) * Math.cos(theta),
+);
+camera.lookAt(target);
+```
+
+`OrbitControls` in drei is fine for apps; this lab exposes the sphere parameters directly for teaching.
+
+## Performance notes
+
+- `frameloop="demand"` while scrubbing; `"always"` only during auto-orbit.
+- Cap DPR; one Canvas per demo.
+
+## Common mistakes
+
+- Orbiting while also zooming FOV every frame — hard to read which variable taught you what
+- Radius so short the camera clips the subject
+- Auto-orbit ignoring `prefers-reduced-motion`
+
+## When to use / avoid
+
+**Use** for form study and product presence.  
+**Avoid** as endless decoration on content-heavy pages, or when a single authored angle already tells the story.
+
+## Key takeaways
+
+- Orbit = spherical eye move + fixed look-at.
+- Keep FOV steady when learning the spatial effect.
+- Azimuth / elevation / radius are the three knobs that matter first.
+
+## Related concepts
+
+- [Camera Fundamentals](/docs/camera/fundamentals)
+- [Dolly vs Zoom](/docs/camera/dolly-zoom)
+- [Field of View](/docs/camera/fov)
+- Upcoming: DOF / rack focus
