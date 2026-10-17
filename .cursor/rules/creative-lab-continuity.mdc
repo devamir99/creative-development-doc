@@ -1,0 +1,38 @@
+---
+description: Multi-session continuity for Creative Lab — one task, no git writes, stop
+alwaysApply: true
+---
+
+# Creative Lab — Agent Continuity
+
+## Before any implementation
+
+1. Read `docs/progress/PROJECT_STATUS.md`
+2. Read the next task in `docs/roadmap/TASK_BACKLOG.md` (prerequisites must be `COMPLETED`)
+3. Follow `docs/architecture/*` and relevant `docs/decisions/*`
+4. Obey `MASTER_PROMPT.md` absolute execution rules when present
+
+## Scope
+
+- Implement **only** the approved/next single task
+- Do **not** auto-advance to the next task
+- Do **not** recreate the Next.js/Fumadocs foundation from scratch
+
+## Git safety
+
+Never run: `git add`, `git commit`, `git push`, `git merge`, `git rebase`, destructive resets, or `gh pr create`.
+
+Allowed: read-only `git status`, `git diff`, `git log`, `git branch --show-current`.
+
+After each task, suggest exact `git add <paths>` and `git commit -m "..."` for the **user**.
+
+## After each task
+
+1. Validate acceptance criteria (record passed / failed / not run)
+2. Update `PROJECT_STATUS.md` (+ roadmap/backlog statuses)
+3. Report in the Persian completion template from `MASTER_PROMPT.md`
+4. **STOP** and wait for user approval
+
+## Next.js
+
+This app’s Next.js APIs may differ from training data — check `AGENTS.md` and `node_modules/next/dist/docs/` before new framework usage.
