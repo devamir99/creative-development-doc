@@ -1,0 +1,30 @@
+---
+title: Raycasting & Pointer Picking
+description: Selecting 3D objects with the pointer via R3F events.
+---
+
+# Raycasting & Pointer Picking
+
+## Introduction
+
+**Raycasting** shoots a ray from the camera through the pointer to find intersected meshes. React Three Fiber exposes this as familiar pointer events on meshes.
+
+## Why it matters
+
+- Product hotspots, configurators, and 3D UI all need picking.
+- Always `stopPropagation` when nesting interactive meshes.
+
+## Interactive playground
+
+<RaycastPlayground />
+
+## Key takeaways
+
+- Prefer R3F pointer events over hand-rolled raycasters for UI picks.
+- Invalidate demand canvases on hover/click.
+- Reset cursor styles on pointer out / unmount.
+
+## Related lessons
+
+- [Orbit Camera](/docs/camera/orbit)
+- [Focal Point](/docs/composition/focal-point)

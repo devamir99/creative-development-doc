@@ -1,0 +1,32 @@
+---
+title: ScrollTrigger Progress
+description: Scrubbing motion from scroll — progress as a shared driver.
+---
+
+# ScrollTrigger Progress
+
+## Introduction
+
+**ScrollTrigger** binds animation progress to scroll position. With `scrub: true`, the playhead tracks the scrollbar instead of running on its own clock.
+
+## Why it matters
+
+- Scroll storytelling’s core primitive.
+- Easy to abuse — vestibular load and layout thrash.
+
+## Interactive playground
+
+<ScrollProgressPlayground />
+
+Scroll **inside** the stage (nested scroller). Reset returns to the top.
+
+## Key takeaways
+
+- Prefer one clear progress driver per section.
+- Kill ScrollTriggers on unmount.
+- Honor reduced motion.
+
+## Related lessons
+
+- [Parallax](/docs/motion/parallax)
+- [Narrative Pacing](/docs/storytelling/pacing)
