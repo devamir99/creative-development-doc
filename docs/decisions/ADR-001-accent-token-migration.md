@@ -1,6 +1,6 @@
 # ADR-001 — Accent color via semantic tokens
 
-**Status:** Accepted (implement in `ENG-001`)  
+**Status:** Implemented (`ENG-001`)  
 **Date:** 2026-10-17
 
 ## Context

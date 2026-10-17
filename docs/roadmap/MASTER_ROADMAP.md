@@ -30,7 +30,7 @@
 | Phase | Name | Goal | Status | Depends on |
 | --- | --- | --- | --- | --- |
 | **00** | Discovery & Architecture | Inspect repo; write roadmap, backlog, architecture, inventory, agent rules | `COMPLETED` | — |
-| **01** | Project Foundation | Harden tokens, typography, RTL readiness, folder conventions on existing app | `NOT STARTED` | 00 |
+| **01** | Project Foundation | Harden tokens, typography, RTL readiness, folder conventions on existing app | `IN PROGRESS` (ENG-001 ✓; ENG-002/003 next) | 00 |
 | **02** | Documentation System | Fumadocs polish: nav meta, search language plan, lesson template, MDX map hygiene | `NOT STARTED` | 01 |
 | **03** | Design System | Control primitives, a11y patterns, playground chrome tokens | `NOT STARTED` | 01 |
 | **04** | Playground Infrastructure | Shared shell (stage, controls, reset/replay, code panel, error boundary, lazy load) | `NOT STARTED` | 03 |
@@ -71,11 +71,12 @@ Full lesson/demo matrix: `docs/inventory/CURRICULUM_INVENTORY.md`.
 - [x] Roadmap, backlog, status, architecture, inventory, ADRs, agent rule
 - [x] First implementation task identified (`ENG-001`)
 
-### M1 — Foundation & chrome — acceptance
+### M1 — Foundation & chrome — acceptance — mostly met via ENG-001
 
-- Semantic design tokens aligned with vision (accent `#6D33FA` via tokens)
-- Root/docs RTL-ready strategy documented and partially applied
-- App still builds; existing Timing demo unbroken
+- [x] Semantic design tokens aligned with vision (accent `#6D33FA` via tokens)
+- [x] Root RTL strategy applied (`lang="fa"` `dir="rtl"`; LTR code/playground)
+- [x] App still builds; Timing playground uses tokens + `dir="ltr"`
+- [ ] ENG-002/003 complete remaining foundation polish before calling M1 fully closed
 
 ### M2 — Playground engine — acceptance
 
@@ -100,8 +101,8 @@ Full lesson/demo matrix: `docs/inventory/CURRICULUM_INVENTORY.md`.
 
 ```text
 ENG-000 (planning) ✓
-    └── ENG-001 (tokens + RTL/docs chrome)
-            ├── ENG-002 (docs system / lesson template)
+    └── ENG-001 (tokens + RTL/docs chrome) ✓
+            ├── ENG-002 (docs system / lesson template)  ← next
             ├── ENG-003 (design system controls)
             └── ENG-004 (playground shell)  ← needs ENG-003
                     ├── ENG-005 (code sync + copy utils)

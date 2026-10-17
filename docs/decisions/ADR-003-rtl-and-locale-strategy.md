@@ -1,6 +1,6 @@
 # ADR-003 — RTL and locale strategy
 
-**Status:** Accepted (apply baseline in `ENG-001`; refine search in `ENG-002`)  
+**Status:** Baseline implemented (`ENG-001`); search language still deferred to `ENG-002`  
 **Date:** 2026-10-17
 
 ## Context
@@ -19,3 +19,10 @@ Audience is Persian-speaking developers. Seed app uses `lang="en"` and LTR. Fuma
 - Mixed English seed pages may look RTL until migrated — acceptable if readability remains OK; migrate per DOC tasks.
 - Timing playground layout must be checked after dir change.
 - Agents must not revert to `lang="en"` without a new ADR.
+
+## Implementation notes (ENG-001)
+
+- Root: `lang="fa"` `dir="rtl"`; body font **Vazirmatn** (`--font-body`); display **Syne** for Latin brand/headlines.
+- Global LTR isolate for `pre, code, kbd, samp` and `.lab-ltr`.
+- `TimingPlayground` root: `dir="ltr"` + `lab-ltr`.
+

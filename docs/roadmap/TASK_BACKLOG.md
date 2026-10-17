@@ -25,15 +25,15 @@ Actionable tasks only. Statuses: `NOT STARTED` | `IN PROGRESS` | `COMPLETED` | `
 ## Engineering — Phase 01 (Foundation)
 
 ### ENG-001 — Design tokens + RTL / docs chrome hardening
-- **Status:** `NOT STARTED`
+- **Status:** `COMPLETED`
 - **Depends on:** ENG-000
 - **Objective:** Align semantic tokens with design vision (accent `#6D33FA`), prepare `lang`/dir strategy for Persian docs without breaking Fumadocs, tighten existing landing/docs chrome to use tokens only.
 - **Primary files (expected):** `src/app/globals.css`, `src/app/layout.tsx`, possibly `src/lib/layout.shared.tsx`, `src/app/page.tsx` (token classes only), ADR update if needed.
 - **Acceptance:**
-  - [ ] Accent and surfaces expressed via CSS variables / `@theme` (no scattered one-off accent hardcodes in touched files)
-  - [ ] Documented RTL approach applied at least at root or docs layout level as decided
-  - [ ] Timing playground still renders; `npm run lint` / build or typecheck recorded
-  - [ ] No new playground abstractions yet
+  - [x] Accent and surfaces expressed via CSS variables / `@theme` (no scattered one-off accent hardcodes in touched files)
+  - [x] Documented RTL approach applied at least at root or docs layout level as decided
+  - [x] Timing playground still renders; `npm run lint` / build or typecheck recorded
+  - [x] No new playground abstractions yet
 
 ### ENG-002 — Documentation system polish (template + nav hygiene)
 - **Status:** `NOT STARTED`
@@ -141,7 +141,7 @@ Execute **one lesson** (DOC + DEMO if required) per run unless backlog item says
 
 | Field | Value |
 | --- | --- |
-| **ID** | `ENG-001` |
-| **Title** | Design tokens + RTL / docs chrome hardening |
-| **Depends on** | ENG-000 (`COMPLETED`) |
+| **ID** | `ENG-002` |
+| **Title** | Documentation system polish (template + nav hygiene) |
+| **Depends on** | ENG-001 (`COMPLETED`) |
 | **Blocked?** | No |
