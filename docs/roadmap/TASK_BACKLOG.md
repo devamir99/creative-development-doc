@@ -108,10 +108,16 @@ Actionable tasks only. Statuses: `NOT STARTED` | `IN PROGRESS` | `COMPLETED` | `
   - [x] Playground explicitly deferred to DEMO-MOTION-002 (no broken MDX tag)
 
 ### DEMO-MOTION-002 — Easing playground (gold slice)
-- **Status:** `NOT STARTED`
+- **Status:** `COMPLETED`
 - **Depends on:** DOC-MOTION-002, ENG-005
 - **Objective:** Presets, duration, replay, side-by-side, motion + curve viz, synced code.
-- **Acceptance:** Gold-bar checklist in MASTER_PROMPT §8–9; Completes Eng Phase 05 when DOC+DEMO pass.
+- **Acceptance:**
+  - [x] Ease + duration presets, Replay / Reset
+  - [x] Side-by-side selected ease vs linear
+  - [x] SVG curve viz (progress vs time)
+  - [x] Synced code via `formatSnippet` + Copy
+  - [x] Reduced-motion fallback; registered in `mdx.tsx`
+  - [x] Completes Eng Phase 05 gold slice with DOC-MOTION-002
 
 ---
 
@@ -167,7 +173,7 @@ Execute **one lesson** (DOC + DEMO if required) per run unless backlog item says
 
 | Field | Value |
 | --- | --- |
-| **ID** | `DEMO-MOTION-002` |
-| **Title** | Easing playground (gold vertical slice) |
-| **Depends on** | DOC-MOTION-002, ENG-005 (`COMPLETED`) |
+| **ID** | `DOC-CAM-001` |
+| **Title** | Camera fundamentals (English) |
+| **Depends on** | Phase 05 vertical slice (`COMPLETED`) |
 | **Blocked?** | No |

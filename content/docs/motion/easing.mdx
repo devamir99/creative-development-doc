@@ -50,21 +50,21 @@ Hold **duration** and **distance** constant when comparing curves. Otherwise you
 
 ## Interactive playground
 
-The gold-standard **Easing playground** (presets, duration, side-by-side motion + curve, synced code, replay) ships in **`DEMO-MOTION-002`**.
+Same distance and duration. Lane **A** uses the selected ease; lane **B** stays linear (`none`). The graph plots progress vs time for the active curve (solid) against linear (dashed).
 
-Until then, use the [Timing playground](/docs/motion/timing) with `ease: "none"` as your baseline, then mentally swap curves using the table above — or try the GSAP sketch in Implementation with different `ease` strings.
+<EasingPlayground />
+
+Use **Replay** to re-feel the pair. Use **Reset** for `power2.out` @ `0.8s`. The code panel stays synced to the selected ease and duration.
 
 ## Parameters
 
-What the upcoming playground (and any easing demo) should expose:
-
-| Parameter | Role |
+| Parameter | Role in this demo |
 | --- | --- |
-| `ease` | Curve preset or custom bezier / GSAP ease string |
-| `duration` | Shared clock so curves are comparable |
-| Distance / property | Held constant while comparing easings |
-| Side-by-side | Optional second stage for A/B curves |
-| Curve viz | Graph of progress vs time for the active ease |
+| `ease` | GSAP ease string (presets above the stage) |
+| `duration` | Shared clock for both lanes (`0.4` / `0.8` / `1.2`) |
+| Distance (`x: 200`) | Held constant so only the curve changes character |
+| Side-by-side | A = selected ease · B = linear reference |
+| Curve viz | Progress vs time for the selected ease |
 
 ## Practical examples
 

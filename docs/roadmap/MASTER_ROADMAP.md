@@ -34,8 +34,8 @@
 | **02** | Documentation System | Fumadocs polish: nav meta, search language plan, lesson template, MDX map hygiene | `COMPLETED` (ENG-002) | 01 |
 | **03** | Design System | Control primitives, a11y patterns, playground chrome tokens | `COMPLETED` (ENG-003) | 01 |
 | **04** | Playground Infrastructure | Shared shell (stage, controls, reset/replay, code panel, error boundary, lazy load) | `COMPLETED` (ENG-004) | 03 |
-| **05** | Vertical Slice | One gold lesson: Motion → Timing & Easing (English + demos + code sync) | `IN PROGRESS` (Easing DOC ✓; DEMO-MOTION-002 next) | 04 |
-| **06** | Foundational Modules | Camera → Editing → Composition (lesson batches) | `NOT STARTED` | 05 |
+| **05** | Vertical Slice | One gold lesson: Motion → Timing & Easing (English + demos + code sync) | `COMPLETED` | 04 |
+| **06** | Foundational Modules | Camera → Editing → Composition (lesson batches) | `NOT STARTED` (DOC-CAM-001 next) | 05 |
 | **07** | Motion Modules | Remaining motion lessons | `NOT STARTED` | 05 |
 | **08** | Storytelling & Lighting | Educational phases 05–06 | `NOT STARTED` | 06–07 (partial OK) |
 | **09** | Creative Web | GSAP systems, R3F, shaders, interactions | `NOT STARTED` | 07–08 |
@@ -86,11 +86,12 @@ Full lesson/demo matrix: `docs/inventory/CURRICULUM_INVENTORY.md`.
 - [x] ENG-005 code sync utilities (`formatSnippet` / `copyText`)
 - [ ] Heavy demos load via dynamic import pattern (when first R3F demo lands)
 
-### M3 — Gold vertical slice — acceptance
+### M3 — Gold vertical slice — acceptance — `COMPLETED`
 
-- Persian Timing + Easing lessons meeting lesson quality standard
-- Working demos with reset/replay, code sync, reduced-motion
-- Validation checks recorded in `PROJECT_STATUS.md`
+- [x] English Timing + Easing lessons meeting lesson quality standard
+- [x] Working demos with reset/replay, code sync, reduced-motion
+- [x] Easing: side-by-side vs linear + curve viz + synced code
+- [x] Validation checks recorded in `PROJECT_STATUS.md`
 
 ### M4+ — Curriculum expansion
 
@@ -108,8 +109,8 @@ ENG-000 (planning) ✓
             ├── ENG-003 (design system controls) ✓
             └── ENG-004 (playground shell) ✓
                     ├── ENG-005 (code sync + copy utils) ✓
-                    └── DOC/DEMO-MOTION-001 → DOC/DEMO-MOTION-002 (vertical slice)  ← next
-                            └── ENG-006+ curriculum batches
+                    └── DOC/DEMO-MOTION-001 → DOC/DEMO-MOTION-002 (vertical slice) ✓
+                            └── DOC-CAM-001 … (Phase 06)  ← next
 ```
 
 ---
