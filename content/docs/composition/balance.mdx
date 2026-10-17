@@ -1,0 +1,73 @@
+---
+title: Balance
+description: How visual weights distribute across the frame — stable, asymmetrical, or radial.
+---
+
+# Balance
+
+## Introduction
+
+**Visual weight** is how heavy an element feels. **Balance** is how those weights sit across the frame. Symmetry is only one recipe.
+
+## Why it matters
+
+- Unbalanced frames can feel dynamic — or accidental.
+- Creative heroes often use asymmetrical balance: large quiet mass vs small loud accent.
+- Scroll can *rebalance* a composition over time.
+
+## Visual explanation
+
+The readout’s weights are a teaching heuristic (`size² × contrast`), not a perceptual model. Use them to feel tradeoffs.
+
+## Interactive playground
+
+<BalancePlayground />
+
+## Parameters
+
+| Mode | Idea |
+| --- | --- |
+| Symmetrical | Mirrored masses — calm, formal |
+| Asymmetrical | Different sizes/contrasts that still settle |
+| Radial | Satellites around a center |
+
+## Practical examples
+
+1. **Editorial hero** — big type left, small product right with higher contrast.
+2. **Logo lockup** — radial marks around a wordmark.
+3. **Pricing table** — symmetrical columns for trust.
+
+## Implementation
+
+Author weight with size, value contrast, color saturation, and focus — then check the whole frame, not isolated components.
+
+## Performance notes
+
+- Balance is layout — cheap compared to blur/effects.
+
+## Common mistakes
+
+- Equating “balanced” with “symmetrical”
+- Matching widths while ignoring contrast
+- Fixing imbalance with random decoration
+
+## When to use / avoid
+
+**Use** asymmetry for energy; symmetry for ceremony.
+**Avoid** near-symmetry that looks like a mistake.
+
+## Key takeaways
+
+- Balance ≠ equal size.
+- Weight is perceptual.
+- Motion can rebalance intentionally.
+
+## Related lessons
+
+- [Focal Point](/docs/composition/focal-point)
+- [Tension](/docs/composition/tension)
+- [Center vs Off-Center](/docs/composition/center-vs-off-center)
+
+## Exercise
+
+In asymmetrical mode, shrink the accent until the frame tips. Raise contrast until it settles again — without growing size.

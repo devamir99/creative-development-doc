@@ -1,0 +1,72 @@
+---
+title: Center vs Off-Center
+description: When to plant the subject in the middle — and when space should tell the story.
+---
+
+# Center vs Off-Center
+
+## Introduction
+
+**Center** reads as statement, emblem, certainty. **Off-center** activates surrounding space and often needs **lead room** — empty space in the direction of gaze or motion.
+
+## Why it matters
+
+- Logos and icons often want center.
+- Narrative frames often want off-center + lead room.
+- Scroll can drift from center to off-center as the story opens up.
+
+## Visual explanation
+
+The arrow shows facing. Move the subject and watch lead room on the facing side shrink or grow.
+
+## Interactive playground
+
+<CenterPlayground />
+
+## Parameters
+
+| Control | Role |
+| --- | --- |
+| Subject X | Horizontal placement |
+| Facing | Which way lead room should live |
+
+## Practical examples
+
+1. **App icon** — centered on a quiet field.
+2. **Character still** — eyes left, lead room right.
+3. **Scroll open** — start centered wordmark → drift to thirds as product enters.
+
+## Implementation
+
+Track facing direction as data; keep a minimum lead-room percentage when composing programmatically.
+
+## Performance notes
+
+- Layout only.
+
+## Common mistakes
+
+- Off-center without enough lead room (nose against the edge)
+- Centering narrative action shots that need space to “breathe”
+- Mirroring facing but forgetting to flip lead room
+
+## When to use / avoid
+
+**Use** center for emblems; off-center for living scenes.
+**Avoid** accidental near-center that looks unfinished.
+
+## Key takeaways
+
+- Center = statement; off-center = activated space.
+- Lead room follows facing / motion.
+- Either choice should be intentional.
+
+## Related lessons
+
+- [Rule of Thirds](/docs/composition/rule-of-thirds)
+- [Tension](/docs/composition/tension)
+- [Focal Point](/docs/composition/focal-point)
+
+## Exercise
+
+Face right at X=70% (tight lead room) vs X=35% (open). Which feels like anticipation vs arrival?

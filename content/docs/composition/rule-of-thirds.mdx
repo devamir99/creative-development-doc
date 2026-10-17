@@ -1,0 +1,79 @@
+---
+title: Rule of Thirds
+description: A placement heuristic — intersections and power points, not a law.
+---
+
+# Rule of Thirds
+
+## Introduction
+
+Divide the frame into a 3×3 grid. **Intersections** (and the lines themselves) are strong default homes for subjects. It is a heuristic — great for starting, weak as dogma.
+
+## Why it matters
+
+- Speeds up framing decisions.
+- Explains why dead-center can feel static (and when that is desirable).
+- Maps cleanly to CSS `%` positions and camera composition overlays.
+
+## Visual explanation
+
+Yellow grid + dots mark the classic power points. Park the subject on them, then compare to center.
+
+## Interactive playground
+
+<ThirdsPlayground />
+
+## Parameters
+
+| Control | Role |
+| --- | --- |
+| X / Y | Normalized subject position |
+| Presets | TL / TR / BL / BR / Center |
+| Grid | Toggle teaching overlay |
+
+## Practical examples
+
+1. **Portrait crop** — eyes near upper third.
+2. **Landscape** — horizon on lower or upper third, not mid.
+3. **UI empty states** — illustration on a thirds point, copy opposite.
+
+## Implementation
+
+```js
+const points = [
+  [1 / 3, 1 / 3],
+  [2 / 3, 1 / 3],
+  [1 / 3, 2 / 3],
+  [2 / 3, 2 / 3],
+];
+```
+
+## Performance notes
+
+- Overlay grids are debug-only in production UIs.
+
+## Common mistakes
+
+- Treating thirds as mandatory
+- Ignoring subject matter that *wants* center (emblems, icons)
+- Aligning every element to the grid until it feels rigid
+
+## When to use / avoid
+
+**Use** as a first pass.
+**Avoid** when symmetry or emblematic centering is the brief.
+
+## Key takeaways
+
+- Thirds = useful default, not truth.
+- Intersections beat edges for many subjects.
+- Break the rule after you can see it.
+
+## Related lessons
+
+- [Focal Point](/docs/composition/focal-point)
+- [Center vs Off-Center](/docs/composition/center-vs-off-center)
+
+## Exercise
+
+Hide the grid, place by eye, then show the grid. How far were you from an intersection?

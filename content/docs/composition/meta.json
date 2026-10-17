@@ -1,4 +1,11 @@
 {
   "title": "03 · Composition",
-  "pages": ["index", "focal-point", "balance", "tension", "center-vs-off-center"]
+  "pages": [
+    "index",
+    "focal-point",
+    "balance",
+    "rule-of-thirds",
+    "tension",
+    "center-vs-off-center"
+  ]
 }

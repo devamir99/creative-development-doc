@@ -1,0 +1,76 @@
+---
+title: Focal Point
+description: The most important place the eye should finally rest — and how to build it.
+---
+
+# Focal Point
+
+## Introduction
+
+Visual hierarchy asks *what order* the eye travels. **Focal point** asks *where it finally stops* — a face, product, CTA, light, or even a charged empty region.
+
+## Why it matters
+
+- Without a clear stop, the frame feels noisy.
+- Motion can *move* the focal point over time (title → object → CTA).
+- Composition tools (size, contrast, isolation) are how you author that stop.
+
+## Visual explanation
+
+Thirds guides are optional helpers. Drag the subject and push size / contrast / background blur until one region clearly owns attention.
+
+## Interactive playground
+
+<FocalPointPlayground />
+
+## Parameters
+
+| Control | Role |
+| --- | --- |
+| Position | Where the subject sits (presets: center / thirds / lower-right) |
+| Size | Area pull |
+| Contrast | Isolation from neighbors |
+| BG blur | Softens competition (approximation of DOF) |
+
+## Practical examples
+
+1. **Product hero** — product as focal point; type as second stop.
+2. **Docs CTA** — one high-contrast button; everything else quieter.
+3. **Scroll story** — focal point migrates down the chapter.
+
+## Implementation
+
+Combine layout position with contrast and optional blur. Prefer real hierarchy over perpetual motion as the only attractor.
+
+## Performance notes
+
+- Avoid animating large blurs continuously.
+- One primary focal region per viewport beat.
+
+## Common mistakes
+
+- Multiple equal “heroes” in one frame
+- Center placement by default with no supporting space
+- Motion that never lets the eye rest
+
+## When to use / avoid
+
+**Use** whenever a decision or product must land.
+**Avoid** scattering accents that each claim equal weight.
+
+## Key takeaways
+
+- Focal point is the resting place, not just the brightest pixel.
+- Tools: size, contrast, focus, position, lines, negative space.
+- Off-center often reads stronger with supporting emptiness.
+
+## Related lessons
+
+- [Balance](/docs/composition/balance)
+- [Rule of Thirds](/docs/composition/rule-of-thirds)
+- [Center vs Off-Center](/docs/composition/center-vs-off-center)
+- [Depth of Field](/docs/camera/dof)
+
+## Exercise
+
+Place the subject on a thirds intersection, then dead center, at equal size. Note which needs *less* contrast to still feel primary.
