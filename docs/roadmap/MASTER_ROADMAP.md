@@ -35,7 +35,7 @@
 | **03** | Design System | Control primitives, a11y patterns, playground chrome tokens | `COMPLETED` (ENG-003) | 01 |
 | **04** | Playground Infrastructure | Shared shell (stage, controls, reset/replay, code panel, error boundary, lazy load) | `COMPLETED` (ENG-004) | 03 |
 | **05** | Vertical Slice | One gold lesson: Motion → Timing & Easing (English + demos + code sync) | `COMPLETED` | 04 |
-| **06** | Foundational Modules | Camera → Editing → Composition (lesson batches) | `IN PROGRESS` (DOC-CAM-001 ✓; DEMO-CAM-FOV next) | 05 |
+| **06** | Foundational Modules | Camera → Editing → Composition (lesson batches) | `IN PROGRESS` (FOV ✓; DEMO-CAM-DOLLY-ZOOM next) | 05 |
 | **07** | Motion Modules | Remaining motion lessons | `NOT STARTED` | 05 |
 | **08** | Storytelling & Lighting | Educational phases 05–06 | `NOT STARTED` | 06–07 (partial OK) |
 | **09** | Creative Web | GSAP systems, R3F, shaders, interactions | `NOT STARTED` | 07–08 |
@@ -110,7 +110,7 @@ ENG-000 (planning) ✓
             └── ENG-004 (playground shell) ✓
                     ├── ENG-005 (code sync + copy utils) ✓
                     └── DOC/DEMO-MOTION-001 → DOC/DEMO-MOTION-002 (vertical slice) ✓
-                            └── DOC-CAM-001 ✓ → DEMO-CAM-FOV  ← next
+                            └── DOC-CAM-001 ✓ → DEMO-CAM-FOV ✓ → DEMO-CAM-DOLLY-ZOOM  ← next
 ```
 
 ---

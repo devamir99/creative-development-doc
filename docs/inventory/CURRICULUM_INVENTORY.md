@@ -28,7 +28,7 @@ Counts (planned targets, refined over time):
 | Module index | N | — | SEED→updated | `camera/index.mdx` roadmap |
 | Shot types comparison | Y | R3F | NOT STARTED | |
 | Angles playground | Y | R3F | NOT STARTED | |
-| FOV | Y | R3F | NOT STARTED | |
+| FOV | Y | R3F | SHIPPED | `/docs/camera/fov` + `FovPlayground` (lazy Canvas) |
 | Dolly vs Zoom | Y | R3F | NOT STARTED | True optical/spatial difference |
 | Ortho vs Perspective | Y | R3F | NOT STARTED | |
 | Orbit | Y | R3F | NOT STARTED | |

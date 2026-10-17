@@ -1,0 +1,93 @@
+---
+title: Field of View (FOV)
+description: How wide the camera sees when position stays fixed — perspective stretch vs compression.
+---
+
+# Field of View (FOV)
+
+## Introduction
+
+**Field of view (FOV)** is how wide the camera’s cone of vision is, usually measured in **degrees** for a perspective camera (vertical FOV in Three.js / R3F).
+
+With the camera **locked in place**, changing FOV reframes the world optically: wide FOV exaggerates perspective; narrow FOV compresses depth and feels more “telephoto.”
+
+This is **not** the same as dollying closer or farther. Dolly moves the eye through space; FOV changes the lens. That pair gets its own demo later (`DEMO-CAM-DOLLY-ZOOM`).
+
+## Why it matters
+
+- Product heroes look distorted with careless ultra-wide FOV.
+- Narrow FOV can feel premium and compressed — or claustrophobic if overused.
+- Scroll / cinematic web often fakes a “push in” with FOV; trained eyes spot it next to a true spatial move.
+
+## Visual explanation
+
+Hold **position** and **look direction** constant. Only FOV changes.
+
+| FOV (approx) | Feel |
+| --- | --- |
+| ~24–35° | Tighter, more compressed depth |
+| ~40–50° | Familiar “normal” product / dialogue band |
+| ~70–90° | Wide, stretched edges, dramatic perspective |
+
+Watch the yellow subject vs the far pillars: wide FOV pulls more of the set into frame and bends spatial relationships; tele FOV crops and stacks depth.
+
+## Interactive playground
+
+<FovPlayground />
+
+WebGL loads only for this demo (dynamic import). Reset returns to `40°`.
+
+## Parameters
+
+| Parameter | Role |
+| --- | --- |
+| `fov` | Vertical field of view in degrees (Three.js `PerspectiveCamera.fov`) |
+| Camera position | Fixed at `[0, 1.25, 6]` in this lab |
+| Near / far | Clip planes — unchanged here |
+
+## Practical examples
+
+1. **Furniture / sneakers hero** — start ~40°; avoid 90° unless distortion is the point.
+2. **Architectural peek** — wider FOV to sell scale; watch verticals at the frame edge.
+3. **Portrait-like product** — narrower FOV + careful distance (distance is a separate control — don’t fake it only with FOV).
+
+## Implementation
+
+```tsx
+<PerspectiveCamera
+  makeDefault
+  position={[0, 1.25, 6]}
+  fov={40}
+/>
+```
+
+After changing `fov` at runtime, call `camera.updateProjectionMatrix()` (the playground does this when the slider moves).
+
+## Performance notes
+
+- Cap `dpr`; use `frameloop="demand"` and invalidate on FOV change.
+- Don’t mount Canvas on text-only routes — lazy-load the scene module.
+- Dispose is handled when the Canvas unmounts with the lesson.
+
+## Common mistakes
+
+- Using FOV animation as a substitute for a dolly without saying so
+- Extreme wide FOV on reflective products → melting edges
+- Forgetting `updateProjectionMatrix()` after mutating `camera.fov`
+
+## When to use / avoid
+
+**Change FOV when** you intentionally want optical widen/narrow with a locked eye.  
+**Prefer dolly/truck when** you want the parallax of moving through space.
+
+## Key takeaways
+
+- FOV = lens width; position = eye placement — different tools.
+- Fixed camera + FOV change is the clean way to learn the optical effect.
+- Next: Dolly vs Zoom for the spatial contrast.
+
+## Related concepts
+
+- [Camera Fundamentals](/docs/camera/fundamentals)
+- [Camera overview](/docs/camera)
+- Upcoming: Dolly vs Zoom · Orbit · DOF
