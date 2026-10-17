@@ -89,15 +89,19 @@ Actionable tasks only. Statuses: `NOT STARTED` | `IN PROGRESS` | `COMPLETED` | `
   - [x] Playground embedded; parameters documented
 
 ### DEMO-MOTION-001 — Timing playground (shell integration)
-- **Status:** `NOT STARTED`
+- **Status:** `COMPLETED`
 - **Depends on:** ENG-004, ENG-005 (partial OK if sync deferred with note)
 - **Objective:** Upgrade Timing playground to shell standards (reset/replay, a11y, reduced-motion).
-- **Acceptance:** Controls work; cleanup OK; registered in `mdx.tsx`.
+- **Acceptance:**
+  - [x] Controls work (presets / reset / replay)
+  - [x] Cleanup OK (`useGSAP`)
+  - [x] Registered in `mdx.tsx`
+  - [x] `prefers-reduced-motion` static fallback + preset a11y group
 
-### DOC-MOTION-002 — Easing lesson (Persian)
+### DOC-MOTION-002 — Easing lesson (English)
 - **Status:** `NOT STARTED`
 - **Depends on:** DOC-MOTION-001
-- **Objective:** New Easing MDX lesson (Persian) meeting quality standard.
+- **Objective:** New Easing MDX lesson (English, ADR-005) meeting quality standard.
 - **Acceptance:** Linked from motion `meta.json`; related Timing.
 
 ### DEMO-MOTION-002 — Easing playground (gold slice)
@@ -160,7 +164,7 @@ Execute **one lesson** (DOC + DEMO if required) per run unless backlog item says
 
 | Field | Value |
 | --- | --- |
-| **ID** | `DEMO-MOTION-001` |
-| **Title** | Timing playground (shell integration / reduced-motion) |
-| **Depends on** | ENG-004, ENG-005 (`COMPLETED`) |
+| **ID** | `DOC-MOTION-002` |
+| **Title** | Easing lesson (English) |
+| **Depends on** | DOC-MOTION-001 (`COMPLETED`) |
 | **Blocked?** | No |

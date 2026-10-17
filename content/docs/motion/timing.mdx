@@ -83,7 +83,7 @@ CSS can teach the same idea (`transition-duration`), but a replayable stage with
 - Duration itself is cheap; cost comes from what you animate (layout thrash, filters, large DOM, continuous loops).
 - Prefer transforming `x` / `y` / `scale` / `opacity` over layout properties when motion is frequent.
 - Kill or complete tweens on unmount (the playground uses `useGSAP` cleanup).
-- Respect `prefers-reduced-motion` in production UIs: shorten, simplify, or replace motion with a static state (hardening continues in `DEMO-MOTION-001`).
+- Respect `prefers-reduced-motion`: the Timing playground swaps to a static start→end diagram when that preference is on; production UIs should do the same or shorten motion.
 
 ## Common mistakes
 

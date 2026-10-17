@@ -85,4 +85,4 @@ Register demos in `src/components/mdx.tsx` (`getMDXComponents`).
 
 ## Reference migration
 
-`TimingPlayground` uses `PlaygroundShell` + `formatSnippet` (Reset, Replay, controls, synced code, Copy).
+`TimingPlayground` uses `PlaygroundShell` + `formatSnippet` (Reset, Replay, controls, synced code, Copy) and honors `prefers-reduced-motion` via `usePrefersReducedMotion` (static end-state fallback).
