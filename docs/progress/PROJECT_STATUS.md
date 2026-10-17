@@ -1,9 +1,9 @@
 # Project Status — Creative Lab
 
 **Last updated:** 2026-10-17  
-**Current engineering phase:** 04 Playground Infrastructure → **COMPLETED** (ENG-004)  
-**Active / next task:** `ENG-005` — Code snippet sync + copy utilities  
-**Execution state:** Waiting for user approval to start `ENG-005`
+**Current engineering phase:** 05 Vertical Slice → ready (infra through ENG-005 done)  
+**Active / next task:** `DOC-MOTION-001` — Timing lesson (English, full template)  
+**Execution state:** Waiting for user approval to start `DOC-MOTION-001`
 
 ---
 
@@ -12,10 +12,8 @@
 | Item | Value |
 | --- | --- |
 | App | `creative-lab` (Next.js 16.4.2 + Fumadocs) |
-| Playground shell | `src/components/playground` (`PlaygroundShell` + stage/toolbar/code/error) |
-| Reference demo | Timing migrated onto shell (Reset / Replay / live code string) |
-| Locale / fonts | English LTR · Syne + IBM Plex Mono (ADR-005) |
-| Accent | `rgb(250 250 5)` yellow · dark `--lab-accent-fg` (ADR-005) |
+| Playground | Shell + `formatSnippet` / `copyText` (ENG-004/005) |
+| Locale / accent | English LTR · yellow `rgb(250 250 5)` (ADR-005) |
 | Blockers | None |
 
 ---
@@ -24,25 +22,23 @@
 
 | ID | Name | Notes |
 | --- | --- | --- |
-| ENG-000 | Discovery docs + inventory | |
-| ENG-001 | Design tokens + RTL / docs chrome | |
-| ENG-002 | Documentation system polish | |
-| ENG-003 | Design system control primitives | |
-| ENG-004 | Playground shell infrastructure | Shell + Timing migration; Vazirmatn Turbopack fix |
+| ENG-000 … ENG-004 | Foundation → playground shell | |
+| ENG-005 | Code snippet sync + copy utilities | `formatSnippet`, `copyText`, Timing smoke |
 
 ---
 
 ## In progress
 
-_None (ENG-004 just completed)._
+_None (ENG-005 just completed)._
 
 ---
 
 ## Next up (prerequisites satisfied)
 
-1. **`ENG-005`** — Code snippet sync + copy utilities  
-   - Depends on: ENG-004 ✓  
-   - Shell already has basic Copy; ENG-005 should formalize sync helpers / shared APIs
+1. **`DOC-MOTION-001`** — Timing lesson to full English template  
+   - Depends on: ENG-002 ✓, ENG-004 ✓  
+   - (Backlog may still say “Persian”; follow **ADR-005** → English)  
+2. Also unblocked after this: `DEMO-MOTION-001` (pair after or with DOC per backlog) — **do not** start in the same run unless user asks
 
 ---
 
@@ -52,26 +48,24 @@ _None._
 
 ---
 
-## Last validation (ENG-004 + font fix)
+## Last validation (ENG-005)
 
 | Check | Result |
 | --- | --- |
 | Typecheck | passed |
 | Lint | passed |
 | Build | passed |
-| Vazirmatn Turbopack error | fixed (single subset + variable) |
-| Tests | not run |
-| Browser / visual | not run — hard-refresh `/docs/motion/timing` after `npm run dev` |
+| `formatSnippet` smoke (node strip-types) | passed |
+| Browser / visual | not run |
 
 ---
 
 ## Notes for next agent
 
-1. Prefer `PlaygroundShell` for all new demos; do not reinvent chrome.
-2. Follow ADR-005: English UI, yellow accent — do not restore violet/RTL/Vazirmatn.
-3. ENG-005 may extract/refine code panel sync beyond the inline string Timing uses.
-4. Suggest git commands only; never commit/push.
-5. After next task: STOP.
+1. New demos: template + `formatSnippet` → `PlaygroundShell.code`.
+2. ADR-005: English UI/lessons, yellow accent.
+3. Suggest git only; never commit/push.
+4. STOP after one task.
 
 ---
 

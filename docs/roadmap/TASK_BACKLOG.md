@@ -66,20 +66,24 @@ Actionable tasks only. Statuses: `NOT STARTED` | `IN PROGRESS` | `COMPLETED` | `
   - [x] Vazirmatn Turbopack font failure fixed (related blocker during verification)
 
 ### ENG-005 — Code snippet sync + copy utilities
-- **Status:** `NOT STARTED`
+- **Status:** `COMPLETED`
 - **Depends on:** ENG-004
 - **Objective:** Utilities/components so displayed code matches live params; Copy works.
-- **Acceptance:** Documented API; unit-smoke via demo usage or minimal harness.
+- **Acceptance:**
+  - [x] Documented API (`docs/architecture/CODE_SYNC.md`)
+  - [x] `formatSnippet` + `copyText` in `src/lib/playground`
+  - [x] Unit-smoke via Timing demo + `formatSnippet` node check
+  - [x] Code panel uses shared copy helper
 
 ---
 
 ## Vertical slice — Motion (Phase 05)
 
-### DOC-MOTION-001 — Timing lesson (Persian, full template)
+### DOC-MOTION-001 — Timing lesson (English, full template)
 - **Status:** `NOT STARTED`
 - **Depends on:** ENG-002, ENG-004 (demo may ship as DEMO-MOTION-001)
-- **Objective:** Migrate `content/docs/motion/timing.mdx` to Persian lesson standard.
-- **Acceptance:** Skeleton sections present; RTL readable; no marketing fluff.
+- **Objective:** Migrate `content/docs/motion/timing.mdx` to the English lesson standard (ADR-005; template in `LESSON_TEMPLATE.md`).
+- **Acceptance:** Skeleton sections present; clear English; no marketing fluff.
 
 ### DEMO-MOTION-001 — Timing playground (shell integration)
 - **Status:** `NOT STARTED`
@@ -153,7 +157,7 @@ Execute **one lesson** (DOC + DEMO if required) per run unless backlog item says
 
 | Field | Value |
 | --- | --- |
-| **ID** | `ENG-005` |
-| **Title** | Code snippet sync + copy utilities |
-| **Depends on** | ENG-004 (`COMPLETED`) |
+| **ID** | `DOC-MOTION-001` |
+| **Title** | Timing lesson (English, full template) |
+| **Depends on** | ENG-002, ENG-004 (`COMPLETED`) |
 | **Blocked?** | No |

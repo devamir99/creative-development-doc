@@ -10,6 +10,7 @@
 | [architecture/LESSON_TEMPLATE.md](./architecture/LESSON_TEMPLATE.md) | Persian lesson skeleton |
 | [templates/lesson.stub.mdx](./templates/lesson.stub.mdx) | Copy-paste MDX stub |
 | [architecture/PLAYGROUND_SYSTEM.md](./architecture/PLAYGROUND_SYSTEM.md) | Playground shell contracts (ENG-004) |
+| [architecture/CODE_SYNC.md](./architecture/CODE_SYNC.md) | Live snippet sync + copy (ENG-005) |
 | [architecture/UI_PRIMITIVES.md](./architecture/UI_PRIMITIVES.md) | Playground control primitives |
 | [inventory/CURRICULUM_INVENTORY.md](./inventory/CURRICULUM_INVENTORY.md) | Lesson/demo coverage matrix |
 | [decisions/](./decisions/) | ADRs |

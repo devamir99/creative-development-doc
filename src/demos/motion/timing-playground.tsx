@@ -5,6 +5,7 @@ import gsap from "gsap";
 import { useRef, useState } from "react";
 import { PlaygroundShell } from "@/components/playground";
 import { LabButton, LabReadout } from "@/components/ui";
+import { formatSnippet } from "@/lib/playground";
 
 const DEFAULT_DURATION = 0.6;
 
@@ -13,6 +14,12 @@ const PRESETS = [
   { label: "0.6s", value: 0.6 },
   { label: "1.6s", value: 1.6 },
 ] as const;
+
+const TIMING_SNIPPET = `gsap.to(el, {
+  x: 240,
+  duration: {{duration}},
+  ease: "none",
+});`;
 
 export function TimingPlayground() {
   const boxRef = useRef<HTMLDivElement>(null);
@@ -44,11 +51,7 @@ export function TimingPlayground() {
     setReplayKey((k) => k + 1);
   }
 
-  const codeValue = `gsap.to(el, {
-  x: 240,
-  duration: ${duration},
-  ease: "none",
-});`;
+  const codeValue = formatSnippet(TIMING_SNIPPET, { duration });
 
   return (
     <PlaygroundShell
