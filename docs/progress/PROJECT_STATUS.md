@@ -2,8 +2,8 @@
 
 **Last updated:** 2026-10-17  
 **Current engineering phase:** 06 Foundational Modules  
-**Active / next task:** `DEMO-CAM-DOLLY-ZOOM` — Dolly vs Zoom (true optical difference)  
-**Execution state:** Waiting for user approval to start `DEMO-CAM-DOLLY-ZOOM`
+**Active / next task:** `DEMO-CAM-ORBIT` — Orbit camera  
+**Execution state:** Waiting for user approval to start `DEMO-CAM-ORBIT`
 
 ---
 
@@ -11,42 +11,42 @@
 
 | Item | Value |
 | --- | --- |
-| Camera FOV | R3F playground shipped (`/docs/camera/fov`, dynamic import) |
+| Dolly vs Zoom | Side-by-side R3F; matched subject size; real parallax difference |
 | Locale / accent | English LTR · yellow accent (ADR-005) |
 | Blockers | None |
 
 ---
 
-## Completed
+## Completed (recent)
 
 | ID | Name | Notes |
 | --- | --- | --- |
-| … through DOC-CAM-001 | Prior work | |
-| DEMO-CAM-FOV | FOV playground (R3F) | Lazy `FovScene`, fixed position, FOV slider/presets |
+| DEMO-CAM-FOV | FOV playground | |
+| DEMO-CAM-DOLLY-ZOOM | Dolly vs Zoom | Shared depth set; framing math smoke-tested |
 
 ---
 
-## Next up (prerequisites satisfied)
+## Next up
 
-1. **`DEMO-CAM-DOLLY-ZOOM`** — must show true optical/spatial difference (not fake scale)  
-   - Depends on: DEMO-CAM-FOV ✓
+1. **`DEMO-CAM-ORBIT`** — Orbit camera playground (R3F)  
+   - Depends on: ENG-004 ✓  
 
 ---
 
-## Last validation (DEMO-CAM-FOV)
+## Last validation (DEMO-CAM-DOLLY-ZOOM)
 
 | Check | Result |
 | --- | --- |
 | Typecheck | passed |
 | Lint | passed |
 | Build | passed |
-| Browser / WebGL | not run — open `/docs/camera/fov` |
+| Framing math smoke | passed |
+| Browser / WebGL | not run — `/docs/camera/dolly-zoom` |
 
 ---
 
 ## Notes for next agent
 
-1. Dolly vs Zoom: compare moving camera vs changing FOV with matched framing — parallax must differ.
-2. Reuse lazy Canvas pattern from `fov-playground.tsx`.
-3. Suggest git only; never commit/push.
-4. STOP after one task.
+1. Reuse `CameraDepthSet` / lazy Canvas pattern.
+2. Suggest git only; never commit/push.
+3. STOP after one task.

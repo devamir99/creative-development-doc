@@ -1,0 +1,93 @@
+---
+title: Dolly vs Zoom
+description: Moving the eye through space versus changing the lens — matched subject size, different parallax.
+---
+
+# Dolly vs Zoom
+
+## Introduction
+
+**Dolly** moves the camera through space (here: along Z toward the subject).  
+**Zoom** changes field of view while the eye stays put.
+
+Both can make a subject occupy more of the frame. They are **not** the same operation. Dolly changes **spatial relationships** (parallax between near and far). Zoom changes the **optical cone** without relocating the eye.
+
+## Why it matters
+
+- Hitchcock / “vertigo” shots combine both on purpose; beginners often zoom when they meant to dolly (or the reverse).
+- Product and architectural web 3D: faking a push-in with FOV alone usually lacks parallax and feels flat.
+- Teaching clarity: once you have seen matched framing side by side, you stop equating the two.
+
+## Visual explanation
+
+The playground keeps the yellow subject at roughly the **same size** in both panels using:
+
+```text
+z × tan(fov / 2) ≈ constant
+```
+
+| Panel | What changes | What to watch |
+| --- | --- | --- |
+| **Dolly** | Camera `z` closer · FOV fixed | Pillars and far blocks shift relative to the subject (parallax) |
+| **Zoom** | FOV narrower · Camera `z` fixed | Subject grows optically; depth stack compresses without the eye moving |
+
+At push amount `0` both sides match the baseline (`z=6`, `fov=40°`).
+
+## Interactive playground
+
+<DollyZoomPlayground />
+
+Two WebGL views load lazily. Drag **Push-in amount** and compare the mid-ground pillars.
+
+## Parameters
+
+| Parameter | Role |
+| --- | --- |
+| Push amount | 0…1 blend from baseline to strongest matched push |
+| Dolly `z` / `fov` | Eye moves; FOV stays at baseline |
+| Zoom `z` / `fov` | Eye fixed; FOV solves for matched subject size |
+
+## Practical examples
+
+1. **Product hero** — prefer a short dolly (or orbit) for tangible space; reserve FOV animation for optical stylization.
+2. **Horror / unease** — dolly-zoom (both at once) is a separate effect; learn the two ingredients first.
+3. **UI embedded 3D** — zoom-only “push” is cheaper but reads as a crop, not a move.
+
+## Implementation
+
+```js
+// Matched angular size (teaching approximation)
+const zDolly = /* closer z */;
+const fovZoom =
+  2 * Math.atan((zDolly / zBase) * Math.tan((fovBase * Math.PI) / 360));
+// degrees: fovZoom * 180 / Math.PI
+```
+
+## Performance notes
+
+- Two canvases use lower `dpr` caps and `frameloop="demand"`.
+- Prefer one compare session at a time on low-power devices.
+
+## Common mistakes
+
+- Scaling the subject mesh to fake a dolly
+- Animating FOV and calling it a camera move
+- Comparing dolly vs zoom without matching subject size (you then confuse size change with technique)
+
+## When to use / avoid
+
+**Dolly** when space and parallax matter.  
+**Zoom** when you want optical compression/expansion with a locked eye.  
+**Both together** only when you intentionally want the vertigo counter-move.
+
+## Key takeaways
+
+- Same subject size ≠ same camera craft.
+- Dolly = spatial; Zoom = optical.
+- Matched framing reveals the real difference in the background.
+
+## Related concepts
+
+- [Field of View (FOV)](/docs/camera/fov)
+- [Camera Fundamentals](/docs/camera/fundamentals)
+- Upcoming: Orbit · DOF
