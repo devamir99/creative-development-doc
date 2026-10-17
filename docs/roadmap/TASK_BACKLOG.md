@@ -46,10 +46,14 @@ Actionable tasks only. Statuses: `NOT STARTED` | `IN PROGRESS` | `COMPLETED` | `
   - [x] Search strategy noted (`ADR-004` + multilingual `createFromSource`)
 
 ### ENG-003 — Design system control primitives
-- **Status:** `NOT STARTED`
+- **Status:** `COMPLETED`
 - **Depends on:** ENG-001
 - **Objective:** Accessible control primitives for playgrounds (button, slider, select, readout) under `src/components/ui/` (or agreed path), token-driven.
-- **Acceptance:** Keyboard-usable controls; used or ready for shell; no fake decorative controls.
+- **Acceptance:**
+  - [x] Keyboard-usable controls (`LabButton`, `LabSlider`, `LabSelect`, `LabReadout`)
+  - [x] Used or ready for shell (TimingPlayground uses Button/Readout; Slider/Select ready)
+  - [x] No fake decorative controls
+  - [x] Documented in `docs/architecture/UI_PRIMITIVES.md`
 
 ### ENG-004 — Playground shell infrastructure
 - **Status:** `NOT STARTED`
@@ -145,7 +149,7 @@ Execute **one lesson** (DOC + DEMO if required) per run unless backlog item says
 
 | Field | Value |
 | --- | --- |
-| **ID** | `ENG-003` |
-| **Title** | Design system control primitives |
-| **Depends on** | ENG-001 (`COMPLETED`) |
+| **ID** | `ENG-004` |
+| **Title** | Playground shell infrastructure |
+| **Depends on** | ENG-003 (`COMPLETED`) |
 | **Blocked?** | No |

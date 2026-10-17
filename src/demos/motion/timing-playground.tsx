@@ -3,6 +3,7 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { useRef, useState } from "react";
+import { LabButton, LabReadout } from "@/components/ui";
 
 const PRESETS = [
   { label: "0.2s", value: 0.2 },
@@ -45,13 +46,12 @@ export function TimingPlayground() {
             Same distance · ease none · change only timing
           </p>
         </div>
-        <button
-          type="button"
+        <LabButton
+          variant="outline"
           onClick={() => setKey((k) => k + 1)}
-          className="h-9 border border-lab-line px-3 text-xs transition-colors hover:border-lab-accent/50"
         >
           Replay
-        </button>
+        </LabButton>
       </div>
 
       <div className="relative h-36 border-b border-lab-line px-4">
@@ -64,25 +64,23 @@ export function TimingPlayground() {
 
       <div className="flex flex-wrap items-center gap-2 px-4 py-4">
         {PRESETS.map((preset) => (
-          <button
+          <LabButton
             key={preset.value}
-            type="button"
+            pressed={duration === preset.value}
+            variant="outline"
             onClick={() => {
               setDuration(preset.value);
               setKey((k) => k + 1);
             }}
-            className={
-              duration === preset.value
-                ? "h-9 bg-lab-accent px-3 font-mono text-xs text-lab-accent-fg"
-                : "h-9 border border-lab-line px-3 font-mono text-xs text-lab-muted hover:border-lab-accent/40"
-            }
           >
             {preset.label}
-          </button>
+          </LabButton>
         ))}
-        <code className="ms-auto font-mono text-xs text-lab-muted">
-          duration: {duration}
-        </code>
+        <LabReadout
+          className="ms-auto"
+          label="duration:"
+          value={duration}
+        />
       </div>
     </div>
   );

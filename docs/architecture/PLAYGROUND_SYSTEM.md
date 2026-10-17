@@ -20,9 +20,11 @@ src/components/playground/
   playground-toolbar.tsx    # reset / replay / pause
   playground-code-panel.tsx # snippet + copy
   playground-error-boundary.tsx
-src/components/ui/          # primitives used by controls
+src/components/ui/          # primitives (ENG-003) — see UI_PRIMITIVES.md
 src/demos/<domain>/         # lesson-specific stage + control wiring
 ```
+
+Control primitives (`LabButton`, `LabSlider`, `LabSelect`, `LabReadout`) live under `src/components/ui/` and must be preferred over one-off button/range markup in new demos.
 
 ## Shell contract (target API sketch)
 
