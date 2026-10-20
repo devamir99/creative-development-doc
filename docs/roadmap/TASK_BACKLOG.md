@@ -68,7 +68,8 @@ Optional later: shot types, blocking, scroll cameras.
 
 | ID | Status |
 | --- | --- |
-| QA-001 build/lint/tsc | `COMPLETED` (this session) |
+| QA-001 build/lint/tsc | `COMPLETED` (2026-10-20: webpack build 71 routes; Turbopack font bug pre-existing) |
+| DOC-COMPLETE handbook expansion (25 lessons, reference) | `COMPLETED` (2026-10-20) |
 | QA-002 browser/WebGL pass | `NOT STARTED` |
 | QA-003 formal a11y audit | `NOT STARTED` |
 

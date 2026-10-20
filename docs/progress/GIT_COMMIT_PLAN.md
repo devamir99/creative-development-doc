@@ -6,6 +6,15 @@ Historical per-batch commands below are **logical groupings of the final working
 
 ---
 
+## Batch D — Complete handbook reference (2026-10-20)
+
+```bash
+git add content/docs src/components/mdx.tsx src/demos/camera/shot-types-playground.tsx src/demos/camera/camera-movement-playground.tsx src/demos/camera/projection-playground.tsx src/demos/composition/space-lines-playground.tsx src/demos/motion/motion-principles-playground.tsx src/demos/storytelling/story-visual-playground.tsx src/demos/lighting/light-atmosphere-playground.tsx src/demos/creative-web/web-craft-playground.tsx docs/progress docs/roadmap/TASK_BACKLOG.md
+git commit -m "docs(handbook): complete full creative development reference with new lessons and demos"
+```
+
+---
+
 ## Batch C — Demo-first gap fill (fundamentals, motif, direction, projects)
 
 ```bash

@@ -1,4 +1,4 @@
 {
   "title": "04 · Motion Design",
-  "pages": ["index", "timing", "easing", "stagger", "anticipation", "parallax"]
+  "pages": ["index", "timing", "easing", "spacing", "stagger", "anticipation", "spring-and-inertia", "secondary-motion", "parallax", "morphing-and-kinetic-type"]
 }

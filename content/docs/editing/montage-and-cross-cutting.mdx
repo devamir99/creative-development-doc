@@ -1,0 +1,95 @@
+---
+title: Montage, Cross-Cutting & Rhythmic Editing
+description: Meaning created by sequence, parallel action, repetition, acceleration, and contrast between shots.
+---
+
+# Montage, Cross-Cutting & Rhythmic Editing
+
+## See it first
+
+<CutTimelinePlayground />
+
+Use the timeline to feel cut position. Then imagine several shots in a row: meaning is not inside one shot alone — it emerges from order and rhythm.
+
+## Introduction
+
+**Montage** builds meaning by juxtaposing shots. **Cross-cutting** alternates between parallel actions. **Rhythmic editing** varies shot length to create tempo, pressure, or calm.
+
+## Core patterns
+
+| Pattern | Structure | Effect |
+|---|---|---|
+| Metric montage | Shots by measured length | Pulse, acceleration |
+| Rhythmic montage | Length follows movement/action | Physical tempo |
+| Tonal montage | Shots linked by mood/light/color | Emotional association |
+| Intellectual montage | Contrasting concepts collide | Idea or argument |
+| Cross-cutting | A/B/A/B parallel scenes | Suspense, comparison, convergence |
+| Montage sequence | Compressed fragments | Time passing, training, building |
+
+## Why it matters
+
+Web experiences are sequences: hero, proof, product, story, CTA. The order teaches causality. Cross-cutting can compare before/after or problem/solution. Rhythm can make a page feel calm, urgent, or premium.
+
+## Visual explanation
+
+Two harmless shots can create a third meaning when placed together. A face followed by food reads differently from the same face followed by danger. Sequence is authorship.
+
+## Parameters
+
+| Parameter | Effect |
+|---|---|
+| Shot duration | Tempo and emphasis |
+| Order | Causality and interpretation |
+| Repetition | Motif, ritual, comedy, dread |
+| Acceleration | Shortening shots increases pressure |
+| Parallel contrast | Cross-cut scenes comment on each other |
+
+## Practical applications
+
+1. **Product launch film:** fragments of material, craft, use, result.
+2. **Case study:** problem / process / outcome cross-cut.
+3. **Onboarding:** montage compresses setup progress.
+4. **Social/hero loop:** rhythmic cuts synchronized to type or music.
+
+## Implementation
+
+In web motion, treat scenes as timeline labels and define durations explicitly.
+
+```ts
+tl.to(".scene-a", { autoAlpha: 1, duration: .4 })
+  .to(".scene-b", { autoAlpha: 1, duration: .25 }, "+=0.1")
+  .to(".scene-c", { autoAlpha: 1, duration: .15 });
+```
+
+Shortening durations creates acceleration; do not rely only on faster movement inside shots.
+
+## Common mistakes
+
+- Random fast cuts called “energy”
+- Cross-cutting scenes that never converge or comment
+- Montage with no motif or progression
+- Editing rhythm that fights reading time for text
+
+## Accessibility
+
+Rapid cuts and flashes can be harmful. Avoid high-frequency flashing, honor reduced motion, and provide static summaries.
+
+## When to use / avoid
+
+Use montage to compress time and create associations. Avoid in instructional sequences where continuity and geography must remain crystal clear.
+
+## Key takeaways
+
+- Sequence creates meaning.
+- Rhythm is controlled by duration patterns.
+- Parallel scenes gain power when they converge.
+
+## Related lessons
+
+- [Cuts & Continuity](/docs/editing/cuts)
+- [Narrative Pacing](/docs/storytelling/pacing)
+- [Motif & Continuity](/docs/storytelling/motif)
+
+## Exercise
+
+Plan a six-shot montage for making coffee. Then reorder it to imply rushing, ritual, or loneliness without changing the shots.

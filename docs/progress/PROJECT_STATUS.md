@@ -1,59 +1,32 @@
 # Project Status — Creative Lab
 
-**Last updated:** 2026-10-17  
-**Current engineering phase:** 11 QA (partial)  
-**Active / next task:** Browser/WebGL manual QA; optional curriculum depth (fog, kinetic type, showroom)  
-**Execution state:** AUTONOMOUS batch complete — awaiting user git commits
-
----
+**Last updated:** 2026-10-20
+**State:** Complete handbook reference (v1) — awaiting user commit
 
 ## Snapshot
 
 | Item | Value |
-| --- | --- |
-| Lessons (MDX pages) | 38 including section indexes |
-| Interactive playgrounds | 21 |
-| Practical project briefs | 3 |
+|---|---|
+| MDX pages | 65 |
+| Interactive playground files | 36 |
+| Total MDX lines | ~4,781 |
 | Language | English (ADR-005) |
-| Build / lint / tsc | Passed (this session) |
-| Browser checks | Not run |
-| Blockers | None for further content depth |
 
----
+## Curriculum (all with lessons + demos or structured briefs)
 
-## Phases covered this autonomous run
+Camera (10) · Editing (5) · Composition (10) · Motion (10) · Storytelling (5) · Lighting (5) · Creative Web (6) · Direction (5) · Projects (5 incl. showroom) · Reference (glossary, cheat sheet, checklists)
 
-| Domain | Status |
-| --- | --- |
-| Camera (+ DOF) | Core playgrounds shipped |
-| Editing | Cuts, J/L, Transitions |
-| Composition | Focal, Balance, Thirds, Tension, Center |
-| Motion | Timing, Easing, Stagger, Anticipation, Parallax |
-| Storytelling | Pacing + Motif docs |
-| Lighting | Three-point playground |
-| Creative Web | ScrollTrigger + Raycast |
-| Direction | Visual language + Critique |
-| Projects | Landing / Product / Portfolio briefs |
-
----
-
-## Last validation
+## Last validation (2026-10-20)
 
 | Check | Result |
-| --- | --- |
+|---|---|
 | Typecheck | passed |
 | Lint | passed |
-| Build | passed (44 doc routes) |
-| Unit tests | not executed (no dedicated suite invoked) |
-| Browser / WebGL | not run |
-| a11y audit | not run (patterns followed; no axe run) |
+| Build (webpack) | passed — 71 routes |
+| Build (Turbopack default) | blocked by pre-existing `next/font/google` Turbopack resolution error in `src/app/layout.tsx` (unchanged); network reachable, webpack build green |
+| Browser/WebGL | not run |
 
----
+## Remaining (optional only)
 
-## Remaining gaps (honest)
-
-- Extra camera topics (shot types, blocking, scroll cameras)
-- Extra motion (kinetic type, morph, spring specialty)
-- Atmosphere (fog, bloom) beyond three-point
-- Digital showroom project brief
-- Live browser verification of every playground
+- Browser spot-check of WebGL demos
+- Fix Turbopack font issue upstream / self-host fonts if it persists

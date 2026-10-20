@@ -1,0 +1,94 @@
+---
+title: Scroll Storytelling & Narrative Transitions
+description: Chapters, pins, reveals, camera travel, and transitions controlled by reader progress.
+---
+
+# Scroll Storytelling & Narrative Transitions
+
+## See it first
+
+<ScrollProgressPlayground />
+
+Scroll gives the reader a hand on the projector. The designer still controls sequence, emphasis, and chapter boundaries.
+
+## Introduction
+
+Scroll storytelling arranges narrative beats along a page. As progress changes, media, type, camera, data, or scenes transform.
+
+## Narrative structures
+
+| Structure | Use |
+|---|---|
+| Linear journey | Product creation, travel, process |
+| Chapter reveal | Case study sections |
+| Comparison | Before/after, problem/solution |
+| Map/timeline travel | History, data, geography |
+| Object inspection | Product features in sequence |
+| Parallel build | Layers assemble into final system |
+
+## Why it matters
+
+Scroll is familiar, shareable, and works without asking users to learn a custom interface. It can combine cinema, editorial design, data, and interaction.
+
+## Parameters
+
+| Parameter | Effect |
+|---|---|
+| Chapter length | Reading and motion time |
+| Pin duration | How long viewport stays with a scene |
+| Progress mapping | Direct, eased, stepped, or threshold-based |
+| Transition type | Cut, dissolve, wipe, camera move, morph |
+| Caption position | Must not fight the visual focal point |
+
+## Practical applications
+
+1. **Product:** scroll rotates product while features appear.
+2. **Report:** charts build as argument progresses.
+3. **Case study:** camera trucks from problem to outcome.
+4. **History:** timeline advances through eras.
+
+## Implementation
+
+Build chapters as semantic sections first. Add pinning/scrub only after the page works as normal content.
+
+```ts
+ScrollTrigger.create({
+  trigger: chapter,
+  start: "top top",
+  end: "+=120%",
+  scrub: true,
+  pin: true,
+});
+```
+
+## Common mistakes
+
+- Pinning everything
+- Text too small or moving while reading
+- Scroll distance far longer than information value
+- Mobile layouts copied from desktop pinning without redesign
+- No way to skip or revisit chapters
+
+## Performance & accessibility
+
+Provide non-pinned fallback, reduced-motion mode, keyboard-reachable content, and visible progress where helpful. Pause WebGL when off-screen.
+
+## When to use / avoid
+
+Use for narrative marketing, explainers, portfolios, and reports. Avoid checkout, settings, documentation reference, and urgent tasks.
+
+## Key takeaways
+
+- Scroll controls time, not just position.
+- Chapters need promise and payoff.
+- The unpinned readable page is the foundation.
+
+## Related lessons
+
+- [Scroll-Controlled Camera](/docs/camera/scroll-camera)
+- [ScrollTrigger Progress](/docs/creative-web/scroll-trigger)
+- [Narrative Pacing](/docs/storytelling/pacing)
+
+## Exercise
+
+Outline a five-chapter product story. For each chapter write: visual, caption, transition in, and what changes with scroll.

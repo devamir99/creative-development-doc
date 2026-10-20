@@ -1,0 +1,96 @@
+---
+title: Light Types & Shadows
+description: Ambient, directional, point, spot, hemisphere, and shadow behavior in cinematic and real-time scenes.
+---
+
+# Light Types & Shadows
+
+## See it first
+
+<LightTypesPlayground />
+
+The playground is a CSS metaphor. In a real 3D scene, each light type has geometry, falloff, cost, and shadow rules.
+
+## Light types
+
+| Type | Real-world analogy | Behavior | Typical use |
+|---|---|---|---|
+| Ambient | General bounce | Fills everything, no direction | Base visibility |
+| Hemisphere | Sky + ground bounce | Two-color gentle fill | Outdoor ambience |
+| Directional | Sun | Parallel rays, position = direction | Daylight, key light |
+| Point | Bulb | Radiates from a point, falls off | Lamps, sparks |
+| Spot | Stage spotlight | Cone with angle/penumbra | Focus, stage, flashlight |
+| Rect area | Softbox/window | Broad soft light (renderer dependent) | Product, interiors |
+
+## Shadow principles
+
+- Shadow direction reveals light direction.
+- Hard shadows imply small/direct sources; soft shadows imply large/diffuse sources.
+- Contact shadows ground objects.
+- Too many shadow-casting lights are expensive.
+- Shadow maps need bias tuning to avoid acne/peter-panning.
+
+## Why it matters
+
+Light type determines form, mood, and performance. A realistic object with wrong shadow direction immediately feels fake.
+
+## Parameters
+
+| Parameter | Effect |
+|---|---|
+| Intensity | Exposure contribution |
+| Color/temperature | Mood and time |
+| Distance/decay | Point/spot falloff |
+| Angle/penumbra | Spot cone and edge softness |
+| Shadow map size | Sharpness versus memory/cost |
+| Cast/receive | Which objects create/read shadows |
+
+## Practical applications
+
+1. **Product:** directional key + hemisphere fill + spotlight accent.
+2. **Game room:** point lamps with limited distance.
+3. **Outdoor:** one directional sun with shadows, hemisphere sky.
+4. **UI 3D:** fake contact shadow may be cheaper than real shadow maps.
+
+## Implementation (R3F)
+
+```tsx
+<ambientLight intensity={0.25} />
+<directionalLight position={[4, 6, 3]} intensity={1.4} castShadow />
+<pointLight position={[0, 2, 1]} intensity={8} distance={8} />
+<spotLight position={[0, 5, 2]} angle={0.45} penumbra={0.6} />
+```
+
+Intensity units vary with renderer settings and Three.js version; treat values as scene-relative unless physically correct lighting is enabled and understood.
+
+## Common mistakes
+
+- Ambient so high that form disappears
+- Every light casting shadows
+- Point lights without distance limits affecting everything
+- Shadow camera too small/large for the scene
+- Mixed shadow directions with no story reason
+
+## Performance
+
+Start with one shadow-casting key light. Bake or fake shadows where possible. Limit pixel ratio and shadow map size on mobile.
+
+## When to use / avoid
+
+Use directional for sun/key, point for local sources, spot for focused pools. Avoid ambient as the main modeling light.
+
+## Key takeaways
+
+- Light type = spatial behavior.
+- Shadows sell contact and direction.
+- Performance is part of lighting design.
+
+## Related lessons
+
+- [Three-Point Lighting](/docs/lighting/three-point)
+- [Color & Temperature](/docs/lighting/color-and-temperature)
+- [Fog & Bloom](/docs/lighting/fog-and-bloom)
+
+## Exercise
+
+Light the same cube with ambient only, directional only, point only, and spot only. Describe form and mood each time.

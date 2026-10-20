@@ -1,0 +1,87 @@
+---
+title: Spring, Inertia, Momentum & Overshoot
+description: Motion that carries energy, passes the target, settles, and feels physical.
+---
+
+# Spring, Inertia, Momentum & Overshoot
+
+## See it first
+
+<SpringPlayground />
+
+A spring does not simply arrive. It passes, returns, and loses energy. That overshoot is information about weight and elasticity.
+
+## Introduction
+
+**Inertia** is resistance to change. **Momentum** is carried movement. A **spring** model pulls an object toward a target with stiffness and damping. **Overshoot** happens when energy carries it beyond the destination.
+
+## The mental model
+
+| Property | Higher value feels |
+|---|---|
+| Stiffness | Faster pull to target, snappier |
+| Damping | Less oscillation, quicker settle |
+| Mass | Heavier, slower to change |
+| Initial velocity | More carry-through |
+
+## Why it matters
+
+Physical motion makes interfaces feel responsive and objects feel material. But excessive spring on every button becomes novelty rather than language.
+
+## Parameters
+
+| Parameter | Effect |
+|---|---|
+| Stiffness/tension | Strength of attraction |
+| Damping/friction | Energy loss |
+| Mass | Resistance |
+| Velocity | Starting energy |
+| Overshoot clamp | Prevents layout-breaking extremes |
+
+## Practical applications
+
+1. **Drag release:** momentum continues, then spring settles.
+2. **Bottom sheet:** spring creates tactile docking.
+3. **Product configurator:** parts snap with slight settle.
+4. **Playful brand:** more elastic overshoot.
+
+## Implementation
+
+GSAP provides `elastic.out` and physics-like eases for simple cases. For interactive dragging, use a dedicated spring/physics system and clamp velocity.
+
+```ts
+gsap.to(el, { x: 300, duration: 1, ease: "elastic.out(1, 0.45)" });
+```
+
+Do not animate layout properties with large overshoot if it causes reflow.
+
+## Common mistakes
+
+- Bounce on serious confirmations, errors, and payments
+- Springs that oscillate too long
+- Different spring physics on every component
+- Ignoring interruptibility when the user grabs a moving element
+
+## Accessibility
+
+Springs are still motion. Reduced-motion users should receive instant or short fade alternatives.
+
+## When to use / avoid
+
+Use for drag, release, docking, playful emphasis. Avoid for dense data entry, destructive actions, and repeated navigation.
+
+## Key takeaways
+
+- Overshoot communicates energy.
+- Damping decides how quickly energy dies.
+- A product needs one spring language, not random elasticity.
+
+## Related lessons
+
+- [Anticipation & Follow-Through](/docs/motion/anticipation)
+- [Easing](/docs/motion/easing)
+- [Secondary Motion](/docs/motion/secondary-motion)
+
+## Exercise
+
+Animate the same panel with linear, ease-out, back-out, and elastic-out. Choose one for a banking app and one for a toy brand; justify each.

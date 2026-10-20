@@ -1,0 +1,98 @@
+---
+title: Fog, Bloom & Atmospheric Depth
+description: Aerial perspective, glow, exposure atmosphere, and when post-processing helps or hurts.
+---
+
+# Fog, Bloom & Atmospheric Depth
+
+## See it first
+
+<FogBloomPlayground />
+
+Fog separates depth by making distance softer and lighter/darker. Bloom makes bright areas spill light. Both are powerful and easy to overuse.
+
+## Introduction
+
+**Fog** simulates atmosphere between camera and objects. **Bloom** is a post-processing glow around bright pixels. Together they can create scale, mystery, dawn, night, and futuristic atmosphere.
+
+## Fog models (concept)
+
+| Model | Behavior | Use |
+|---|---|---|
+| Linear fog | Starts/ends at distances | Controlled scenes |
+| Exponential fog | Density-based falloff | Moody environments |
+| Height fog | Thicker near ground | Landscapes, streets |
+| Color fog | Atmosphere color | Dawn, night, pollution, dream |
+
+## Bloom principles
+
+- Bloom should start from genuinely bright/emissive areas.
+- Threshold controls what glows.
+- Strength/radius control intensity and spread.
+- Full-screen bloom can soften text and UI if composited incorrectly.
+
+## Why it matters
+
+Atmosphere tells the viewer how big and far the world is. Without it, 3D scenes can feel like objects in a vacuum.
+
+## Parameters
+
+| Parameter | Effect |
+|---|---|
+| Fog color | Time/weather/mood |
+| Fog near/far or density | Depth separation speed |
+| Bloom threshold | Which pixels glow |
+| Bloom strength/radius | Glow power/spread |
+| Exposure | Overall brightness before post |
+
+## Practical applications
+
+1. **City night:** cool fog + restrained neon bloom.
+2. **Product:** extremely subtle fog or none; contact clarity wins.
+3. **Landscape:** far mountains fade by atmosphere.
+4. **UI 3D:** bloom only on emissive accents.
+
+## Implementation
+
+In Three.js:
+
+```ts
+scene.fog = new THREE.Fog(0x09090b, 8, 26);
+```
+
+Bloom usually comes from post-processing. This lab’s DOF lesson uses `@react-three/postprocessing`; bloom can live in the same composer but should be added only when a lesson needs it.
+
+## Simplification note
+
+The playground uses CSS blur/opacity/glow as a visual metaphor. Real fog is depth-based per fragment; real bloom is thresholded HDR/post-process glow.
+
+## Common mistakes
+
+- Fog hiding bad scene scale
+- Bloom on everything, making the frame milky
+- Fog color unrelated to sky/background
+- Post-processing UI text together with 3D glow
+
+## Performance
+
+Post passes cost GPU time and memory. Cap resolution/DPR, disable on low-power devices, and avoid stacking many full-screen effects without profiling.
+
+## When to use / avoid
+
+Use fog for environment scale and bloom for emissive storytelling. Avoid in crisp product inspection and dense UI.
+
+## Key takeaways
+
+- Fog = distance becomes atmosphere.
+- Bloom = brightness spills.
+- Restraint keeps both expensive-looking.
+
+## Related lessons
+
+- [Depth of Field](/docs/camera/dof)
+- [Layers & Depth](/docs/composition/layers-and-depth)
+- [Light Types & Shadows](/docs/lighting/light-types-and-shadows)
+
+## Exercise
+
+Take a night scene. Add fog first, then bloom. Remove each separately and describe what depth/mood disappears.

@@ -1,0 +1,100 @@
+---
+title: Scroll-Controlled Camera
+description: Turning scroll progress into dolly, truck, orbit, focus, and chapter-based camera choreography.
+---
+
+# Scroll-Controlled Camera
+
+## See it first
+
+<ScrollProgressPlayground />
+
+Scroll is not the camera itself. Scroll produces a normalized progress value; you map that value to camera position, rotation, focus, or chapter state.
+
+## Introduction
+
+A scroll-controlled camera links page progress to a virtual camera path. It is one of the defining techniques of cinematic websites, product storytelling, and interactive case studies.
+
+## Core model
+
+```text
+scroll position → normalized progress (0..1) → camera path / chapter / effect
+```
+
+## Why it matters
+
+- Users control pacing with a familiar input.
+- A product can be inspected as the story unfolds.
+- Chapters can feel like camera moves instead of separate pages.
+
+## Mapping patterns
+
+| Scroll progress drives | Result |
+|---|---|
+| Camera Z | Dolly in/out |
+| Camera X | Truck through scenes |
+| Orbit angle | Product inspection |
+| Focus distance | Rack focus between chapters |
+| Layer translation | Parallax without full 3D |
+| Discrete index | Chapter cuts at thresholds |
+
+## Parameters
+
+| Parameter | Role |
+|---|---|
+| Section length | How much scroll time a chapter receives |
+| Progress easing | Smooths or sharpens response; avoid hiding direct control |
+| Camera path | Key poses interpolated over progress |
+| Pinning | Keeps viewport fixed while internal scene changes |
+| Thresholds | Where cuts, captions, or states switch |
+
+## Practical applications
+
+1. **Product story:** orbit slowly while features highlight.
+2. **Case study:** truck from problem to process to outcome.
+3. **Landing page:** dolly into hero object, then release to normal content.
+4. **Data story:** camera travels along a timeline or map.
+
+## Implementation
+
+```ts
+const progress = scrollY / (sectionHeight - viewportHeight);
+camera.position.lerpVectors(startPose, endPose, progress);
+camera.lookAt(target);
+```
+
+In GSAP, ScrollTrigger can provide the progress; in R3F, apply it to the camera inside the render loop or on update.
+
+## Common mistakes
+
+- Hijacking scroll so users lose control
+- Making text readable only at exact scroll positions
+- Moving camera and changing FOV and rotating content simultaneously
+- Long pinned sections with little new information
+- No reduced-motion or non-pinned fallback
+
+## Performance & accessibility
+
+Use one active scene, cap DPR, pause off-screen rendering, and provide a static chapter summary. Scroll-driven motion must respect `prefers-reduced-motion`; content must remain available without precise scrolling.
+
+## When to use / avoid
+
+Use when progression through space is the story. Avoid for documentation, checkout, settings, and dense reference material.
+
+## Key takeaways
+
+- Scroll = progress source.
+- Camera pose = mapped output.
+- Pinning is powerful but expensive cognitively.
+- Always provide an escape into normal reading.
+
+## Related lessons
+
+- [Camera Movement](/docs/camera/movement)
+- [ScrollTrigger Progress](/docs/creative-web/scroll-trigger)
+- [Narrative Pacing](/docs/storytelling/pacing)
+- [Project: Cinematic Landing](/docs/projects/cinematic-landing)
+
+## Exercise
+
+Design a three-chapter scroll camera: establishing wide, medium detail, close-up payoff. Write the camera pose for each chapter before writing code.

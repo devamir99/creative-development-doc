@@ -1,32 +1,100 @@
 ---
-title: ScrollTrigger Progress
-description: Scrubbing motion from scroll — progress as a shared driver.
+title: ScrollTrigger, Scroll-Driven Animation & Pinning
+description: Scrub, triggers, pinning, progress mapping, and responsible scroll choreography.
 ---
 
-# ScrollTrigger Progress
+# ScrollTrigger, Scroll-Driven Animation & Pinning
 
-## Introduction
-
-**ScrollTrigger** binds animation progress to scroll position. With `scrub: true`, the playhead tracks the scrollbar instead of running on its own clock.
-
-## Why it matters
-
-- Scroll storytelling’s core primitive.
-- Easy to abuse — vestibular load and layout thrash.
-
-## Interactive playground
+## See it first
 
 <ScrollProgressPlayground />
 
-Scroll **inside** the stage (nested scroller). Reset returns to the top.
+Scroll inside the stage. The important output is not the scrollbar; it is normalized `progress` from 0 to 1.
+
+## Introduction
+
+GSAP ScrollTrigger connects animation to scroll position. It can play on enter, toggle states, scrub a timeline, pin a section, and report progress.
+
+## Core concepts
+
+| Concept | Meaning |
+|---|---|
+| Trigger | Element whose position starts the behavior |
+| Start/end | Scroll positions defining the active range |
+| Scrub | Timeline progress follows scroll |
+| Pin | Viewport section stays fixed during a scroll range |
+| Toggle actions | Play/reverse/etc. at boundaries |
+| Progress | Normalized 0..1 value |
+| Refresh | Recalculation after layout/assets change |
+
+## Why it matters
+
+ScrollTrigger turns page length into a timeline. It is the bridge between editorial pages and cinematic camera/motion systems.
+
+## Parameters
+
+| Parameter | Effect |
+|---|---|
+| `start` / `end` | When chapter begins/ends |
+| `scrub` | Direct link or smoothed catch-up |
+| `pin` | Fixed stage duration |
+| `anticipatePin` | Reduces pin jump |
+| `markers` | Debug only; remove in production |
+| `invalidateOnRefresh` | Rebuild values after resize |
+
+## Practical applications
+
+1. **Product rotation:** scrub orbit across a pinned hero.
+2. **Chart build:** progress draws lines/bars.
+3. **Chapter reveal:** timeline plays on enter, no pin.
+4. **Horizontal scroll:** vertical progress translates a track.
+
+## Implementation
+
+```ts
+gsap.to(".product", {
+  rotateY: 360,
+  ease: "none",
+  scrollTrigger: {
+    trigger: ".chapter",
+    start: "top top",
+    end: "+=120%",
+    scrub: true,
+    pin: true,
+  },
+});
+```
+
+In React, create inside scoped GSAP context and clean up.
+
+## Common mistakes
+
+- Pinning without understanding mobile layout
+- Markers left visible
+- ScrollTrigger created before fonts/images stabilize layout
+- Multiple pinned sections fighting
+- Animations that only work after JavaScript loads with invisible content
+
+## Performance & accessibility
+
+Keep content readable without pinning. Respect reduced motion, test keyboard navigation, and pause heavy scenes when off-screen.
+
+## When to use / avoid
+
+Use for narrative chapters and product stories. Avoid in docs, forms, checkout, and dense tools.
 
 ## Key takeaways
 
-- Prefer one clear progress driver per section.
-- Kill ScrollTriggers on unmount.
-- Honor reduced motion.
+- ScrollTrigger maps scroll range to animation progress.
+- Pinning buys time but costs user control.
+- Refresh/cleanup are production requirements.
 
 ## Related lessons
 
-- [Parallax](/docs/motion/parallax)
-- [Narrative Pacing](/docs/storytelling/pacing)
+- [Scroll Storytelling](/docs/storytelling/scroll-storytelling)
+- [Scroll-Controlled Camera](/docs/camera/scroll-camera)
+- [GSAP Timelines](/docs/creative-web/gsap-timelines)
+
+## Exercise
+
+Create a 150vh section. Map progress to a square moving across the screen. Then change only end distance and describe pacing change.

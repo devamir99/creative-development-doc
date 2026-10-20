@@ -1,0 +1,99 @@
+---
+title: Color Harmony & Temperature
+description: Warm/cool contrast, complementary and analogous palettes, saturation, value, and tone mapping.
+---
+
+# Color Harmony & Temperature
+
+## See it first
+
+<ColorTemperaturePlayground />
+
+Warm light feels like sun, fire, skin, and intimacy. Cool light feels like night, technology, distance, or clinical space. Meaning depends on context and contrast.
+
+## Introduction
+
+**Color temperature** describes warm-to-cool appearance. In photography it is associated with Kelvin, but in web/3D teaching, the important skill is relative: what is warmer or cooler than its surroundings?
+
+## Harmony systems
+
+| System | Relationship | Feeling/use |
+|---|---|---|
+| Monochromatic | One hue, varied value/saturation | Calm, premium, focused |
+| Analogous | Neighboring hues | Natural, gentle |
+| Complementary | Opposite hues | Tension, pop, sport/energy |
+| Split complementary | One hue + two neighbors of opposite | Balanced contrast |
+| Triadic | Three spaced hues | Playful, systematic |
+| Neutral + accent | Grays + one signal | Product/UI clarity |
+
+## Value and saturation
+
+Hue is only one dimension. **Value** (light/dark) creates hierarchy and readability. **Saturation** controls intensity and cheapness risk. A palette can fail even with fashionable hues if values are muddy.
+
+## Tone mapping & exposure (concept)
+
+Tone mapping compresses bright/dark range into displayable color. It affects contrast and saturation. In Three.js, renderer tone mapping and output color space must be treated as part of art direction, not default plumbing.
+
+## Why it matters
+
+Color directs attention, encodes brand, signals state, and creates time/place. Warm subject against cool background is one of the strongest separation tools.
+
+## Parameters
+
+| Parameter | Effect |
+|---|---|
+| Key color temperature | Main mood |
+| Fill contrast temperature | Warm/cool separation |
+| Accent saturation | Attention strength |
+| Background value | Subject separation |
+| Exposure/tone mapping | Overall contrast and roll-off |
+
+## Practical applications
+
+1. **Night product:** cool environment, warm product light.
+2. **Health/clinical:** cool neutrals, controlled saturation.
+3. **Food:** warm key and careful saturation.
+4. **Creative Lab itself:** near-black neutrals + yellow accent.
+
+## Implementation
+
+```css
+:root {
+  --accent: rgb(250 250 5);
+  --cool-fill: #b9ccff;
+  --warm-key: #ffd9a0;
+}
+```
+
+In R3F, set light `color` and material colors deliberately; check under the actual tone mapping used by the scene.
+
+## Common mistakes
+
+- Using pure complementary colors at equal saturation everywhere
+- Warm and cool lights mixed with no hierarchy
+- Ignoring color-vision accessibility for meaning
+- Judging palette colors isolated instead of in the final lit scene
+
+## Accessibility
+
+Never encode critical meaning by color alone. Check text contrast and avoid red/green-only state differences.
+
+## When to use / avoid
+
+Use warm/cool contrast for separation and time. Avoid high saturation across large areas unless the brand is intentionally loud.
+
+## Key takeaways
+
+- Temperature is relative.
+- Value creates hierarchy before hue.
+- One accent beats a rainbow in most product systems.
+
+## Related lessons
+
+- [Three-Point Lighting](/docs/lighting/three-point)
+- [Visual Language](/docs/direction/visual-language)
+- [Focal Point](/docs/composition/focal-point)
+
+## Exercise
+
+Make the same scene in three palettes: warm night, cool clinical, neutral+yellow. Keep geometry identical; note story changes.

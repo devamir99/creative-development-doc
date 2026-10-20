@@ -1,0 +1,82 @@
+---
+title: Spacing
+description: Where positions bunch or stretch across time — the frame-by-frame shape of acceleration.
+---
+
+# Spacing
+
+## See it first
+
+<SpacingPlayground />
+
+Spacing is the distance between successive positions. Bunched positions mean slow movement; stretched positions mean fast movement.
+
+## Introduction
+
+If timing is total duration and easing is the curve, **spacing** is what you see when you freeze every frame and inspect the gaps.
+
+## Why it matters
+
+Animators diagnose motion through spacing. A move can have the right duration but wrong spacing, making it feel floaty, snappy, or mechanical.
+
+## Reading spacing
+
+| Pattern | Meaning |
+|---|---|
+| Even gaps | Constant speed |
+| Gaps grow | Acceleration |
+| Gaps shrink | Deceleration |
+| Bunched at both ends | Ease-in-out |
+| One huge gap | Snap or teleport-like cut |
+
+## Parameters
+
+| Parameter | Effect |
+|---|---|
+| Frame rate | More samples reveal spacing more clearly |
+| Ease curve | Controls spacing distribution |
+| Distance | Larger travel exaggerates gaps |
+| Motion blur/ghosting | Helps or hides spacing in final playback |
+
+## Practical applications
+
+- UI drawer: spacing should shrink as it settles.
+- Falling object: gaps grow downward.
+- Camera push: spacing changes create acceleration feeling.
+- Sprite/frame animation: spacing is literally authored pose to pose.
+
+## Implementation
+
+In GSAP, easing generates spacing. To inspect it, sample positions at fixed time intervals rather than trusting the curve name.
+
+```ts
+for (let t = 0; t <= 1; t += 0.1) {
+  console.log(t, gsap.parseEase("power2.out")(t));
+}
+```
+
+## Common mistakes
+
+- Choosing easing by name without visualizing positions
+- Adding motion blur to hide broken spacing everywhere
+- Assuming slow motion automatically means bunched spacing in the right places
+
+## When to use / avoid
+
+Use spacing analysis when motion feels wrong but duration seems right. In simple UI, a standard ease-out is often enough.
+
+## Key takeaways
+
+- Spacing is visible acceleration.
+- Easing is a spacing generator.
+- Diagnose with frozen frames/onion skins.
+
+## Related lessons
+
+- [Easing](/docs/motion/easing)
+- [Timing](/docs/motion/timing)
+- [Spring & Inertia](/docs/motion/spring-and-inertia)
+
+## Exercise
+
+Draw nine dots for a ball moving left to right: slow-fast-slow. Then match it to an easing family.

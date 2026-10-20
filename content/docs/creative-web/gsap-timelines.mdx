@@ -1,0 +1,95 @@
+---
+title: GSAP Timelines & Creative Web Foundations
+description: Tweens, timelines, labels, scrub, pinning, and how GSAP becomes the clock for creative websites.
+---
+
+# GSAP Timelines & Creative Web Foundations
+
+## See it first
+
+<TimelinePlayground />
+
+A timeline is not several unrelated animations. It is one authored sequence with beats, labels, overlaps, and a master clock.
+
+## Introduction
+
+GSAP animates properties over time. A **tween** is one change. A **timeline** sequences and overlaps tweens. ScrollTrigger can drive a timeline by scroll instead of time.
+
+## Core vocabulary
+
+| API/concept | Meaning |
+|---|---|
+| `gsap.to` | Animate to values |
+| `gsap.from` | Animate from values (careful on load/FOUC) |
+| `gsap.fromTo` | Explicit start/end |
+| `gsap.timeline` | Sequence/overlap tweens |
+| Label | Named time position |
+| Position parameter | Absolute/relative placement in timeline |
+| `defaults` | Shared duration/ease |
+| `useGSAP` | React scoping and cleanup in this project |
+
+## Why it matters
+
+Creative websites need choreography: headline, media, camera, UI, and transitions must share timing. Independent CSS animations drift apart.
+
+## Parameters
+
+| Parameter | Effect |
+|---|---|
+| Duration | Beat length |
+| Ease | Motion character |
+| Delay/position | Sequence relationship |
+| Stagger | Repetition rhythm |
+| Repeat/yoyo | Loops and returns |
+| TimeScale | Whole-sequence speed |
+
+## Practical applications
+
+1. **Hero intro:** mask reveal → headline words → product → CTA.
+2. **Page transition:** cover → route swap → reveal.
+3. **Scroll chapter:** one timeline scrubbed by ScrollTrigger.
+4. **Product configurator:** parts assemble in labeled steps.
+
+## Implementation
+
+```ts
+const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+tl.from(".media", { scale: 1.15, duration: .8 })
+  .from(".word", { y: 50, stagger: .06, duration: .55 }, "-=0.45")
+  .from(".cta", { autoAlpha: 0, y: 16, duration: .35 }, "-=0.2");
+```
+
+In React, scope animations and revert them on unmount.
+
+## Common mistakes
+
+- Animating from states that flash unstyled content
+- Creating timelines on every render
+- Forgetting cleanup in React
+- Nested timelines with unclear master duration
+- Using GSAP for simple hover states CSS handles better
+
+## Performance
+
+Prefer transforms/opacity, avoid animating many layout properties, and pause off-screen timelines.
+
+## When to use / avoid
+
+Use GSAP for sequencing, scroll, and complex interaction. Avoid where a CSS transition is simpler and isolated.
+
+## Key takeaways
+
+- Tween = change; timeline = choreography.
+- Labels make sequences maintainable.
+- React cleanup is mandatory.
+
+## Related lessons
+
+- [Timing](/docs/motion/timing)
+- [Easing](/docs/motion/easing)
+- [ScrollTrigger Progress](/docs/creative-web/scroll-trigger)
+- [Page Transitions](/docs/creative-web/shaders-and-performance)
+
+## Exercise
+
+Build a 2-second intro with three labels: `cover`, `headline`, `product`. Change only overlap and hear the rhythm change.

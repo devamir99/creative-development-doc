@@ -1,43 +1,88 @@
 ---
 title: Parallax
-description: Depth from differential motion — one progress, many amplitudes.
+description: Depth from differential motion — one progress value, multiple layer speeds.
 ---
 
 # Parallax
 
-## Introduction
-
-**Parallax** moves layers at different rates along shared progress (scroll, drag, or playhead). Near layers travel farther; far layers lag — a depth cue without true 3D.
-
-## Why it matters
-
-- Cheap depth for heroes and storytelling scrolls.
-- Easy to overdo — vestibular discomfort and noisy layouts.
-
-## Interactive playground
+## See it first
 
 <ParallaxPlayground />
 
+Move one progress value. Near layers travel more; far layers travel less. Your visual system interprets that difference as depth.
+
+## Introduction
+
+**Parallax** is the apparent shift of objects at different distances when the viewpoint changes. On the web, it is simulated by moving layers at different rates from scroll, pointer, or camera progress.
+
+## Why it matters
+
+Parallax adds depth without full 3D. It can make heroes feel spatial and scroll stories feel like camera travel. It can also cause discomfort and visual noise.
+
+## Layer model
+
+| Layer | Motion amount | Visual traits |
+|---|---|---|
+| Foreground | Largest | Larger, faster, sometimes blurred/cropped |
+| Midground/subject | Medium | Main focus, moderate movement |
+| Background | Smallest | Slower, lower contrast |
+
 ## Parameters
 
-| Control | Role |
-| --- | --- |
-| Progress | Shared 0–1 driver |
-| Far / Mid / Near amp | Pixels of travel at progress = 1 |
+| Parameter | Effect |
+|---|---|
+| Amplitude ratio | Depth strength |
+| Progress source | Scroll, mouse, drag, timeline |
+| Direction | Layers usually move consistently with viewpoint logic |
+| Clipping | Foreground elements need overflow room |
+| Blur/scale | Can enhance depth but costs performance |
+
+## Practical applications
+
+1. **Hero:** background skyline slow, product medium, foreground shape fast.
+2. **Scroll story:** layers simulate dolly/truck.
+3. **Game/menu:** pointer parallax for subtle depth.
+4. **Product:** environment moves less than product during orbit-like scroll.
 
 ## Implementation
 
-```js
-far.x = progress * farAmp;
-near.x = progress * nearAmp;
+```ts
+const setLayers = (p: number) => {
+  gsap.set(".far", { x: p * 20 });
+  gsap.set(".mid", { x: p * 55 });
+  gsap.set(".near", { x: p * 110 });
+};
 ```
+
+Prefer transforms and `will-change` only where justified.
+
+## Common mistakes
+
+- Every section using different parallax directions
+- Pointer parallax on text-heavy screens
+- Amplitudes so large that layout gaps appear
+- Moving background but calling it a true camera dolly
+
+## Performance & accessibility
+
+Parallax can trigger vestibular discomfort. Honor reduced motion, keep amplitudes modest, and pause off-screen. Do not make content reachable only through parallax positions.
+
+## When to use / avoid
+
+Use for heroes and narrative scenes. Avoid forms, docs, dashboards, and checkout.
 
 ## Key takeaways
 
-- One progress value; many amplitudes.
-- Honor reduced motion — disable auto or large amplitudes.
+- Differential speed = perceived depth.
+- Near moves more than far.
+- Parallax is a simulation, not true spatial camera movement.
 
 ## Related lessons
 
-- [Timing](/docs/motion/timing)
-- [Camera FOV](/docs/camera/fov)
+- [Layers & Depth](/docs/composition/layers-and-depth)
+- [Scroll Storytelling](/docs/storytelling/scroll-storytelling)
+- [Camera Movement](/docs/camera/movement)
+
+## Exercise
+
+Build three layers with amplitudes 10, 40, 100. Then reverse them. Explain why the reversed version feels wrong.

@@ -1,43 +1,91 @@
 ---
 title: Stagger
-description: Offsetting start times across a set — rhythm without unique tweens.
+description: Offsetting start times across a set — rhythm, cascade, and hierarchy without unique tweens.
 ---
 
 # Stagger
 
-## Introduction
-
-**Stagger** delays each target’s start in a shared tween. One animation definition; many start clocks.
-
-## Why it matters
-
-- Lists, cards, and nav items feel alive without hand-authored timelines.
-- Too much stagger reads as slow; too little reads as a single blob.
-
-## Interactive playground
+## See it first
 
 <StaggerPlayground />
 
+One tween, many start times. At `0s` stagger the group moves as a block; at larger values it becomes a wave.
+
+## Introduction
+
+**Stagger** delays each target’s start in a shared animation. It creates cascade, rhythm, reading order, and mechanical or organic waves.
+
+## Why it matters
+
+Lists and grids without stagger can feel like one heavy block. With too much stagger, users wait for the last item and the interface feels slow.
+
+## Stagger patterns
+
+| Pattern | Order | Feeling |
+|---|---|---|
+| Start | First → last | Reading cascade |
+| End | Last → first | Reverse emphasis |
+| Center | Middle outward | Bloom/opening |
+| Edges | Outside inward | Gathering |
+| Random | No fixed order | Organic, particles — risky for UI order |
+| Grid | By row/column/diagonal | Spatial wave |
+
 ## Parameters
 
-| Control | Role |
-| --- | --- |
-| Stagger | Seconds between successive starts |
-| Duration | Length of each item’s tween |
+| Parameter | Effect |
+|---|---|
+| Stagger interval | Gap between starts |
+| Each duration | Individual item length |
+| Total duration | Last start + duration; the real perceived cost |
+| Ease | Character of each item |
+| Origin/order | Reading and spatial logic |
+
+Total time formula: `(count - 1) × stagger + duration`.
+
+## Practical applications
+
+1. **Nav items:** 30–60ms stagger.
+2. **Cards:** 50–90ms, fade/rise.
+3. **Headline words:** 60–120ms by word.
+4. **3D parts:** assemble in construction order.
 
 ## Implementation
 
-```js
-gsap.from(".item", { y: 40, opacity: 0, duration: 0.45, stagger: 0.08 });
+```ts
+gsap.from(".item", {
+  y: 28, autoAlpha: 0, duration: .5,
+  stagger: { each: .06, from: "start" },
+  ease: "power3.out",
+});
 ```
+
+## Common mistakes
+
+- Staggering dozens of items until total time is seconds
+- Random order for content with reading hierarchy
+- Animating every list on every route/filter change
+- Stagger so small it only causes shimmer
+
+## Performance & accessibility
+
+Transform/opacity only. Reduced motion should show the final set. Do not stagger critical alerts.
+
+## When to use / avoid
+
+Use for entrances and assemblies. Avoid for urgent feedback and repeated micro-interactions.
 
 ## Key takeaways
 
-- Stagger is timing structure, not a different ease.
-- Respect reduced motion — show the final set instantly.
+- Stagger is rhythm across a set.
+- Calculate total duration, not just each duration.
+- Order should mirror reading or spatial logic.
 
 ## Related lessons
 
 - [Timing](/docs/motion/timing)
-- [Easing](/docs/motion/easing)
-- [Anticipation](/docs/motion/anticipation)
+- [Secondary Motion](/docs/motion/secondary-motion)
+- [Kinetic Typography](/docs/motion/morphing-and-kinetic-type)
+
+## Exercise
+
+Animate eight cards with stagger 0, .04, .12, .25. Which feels premium, which feels broken, and why?

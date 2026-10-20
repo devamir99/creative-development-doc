@@ -1,0 +1,95 @@
+---
+title: Interactive Digital Showroom
+description: A complete pattern for spatial product storytelling — rooms, hotspots, guided paths, and free exploration.
+---
+
+# Interactive Digital Showroom
+
+## See it first
+
+<ProductHotspotPlayground />
+
+A showroom is a product scene with spatial navigation: enter, orient, explore, inspect, compare, and contact/buy.
+
+## Project brief
+
+Build a digital showroom for a product family. Users can follow a guided tour or explore freely. Each station has a visual hero, hotspot details, lighting mood, and a clear next action.
+
+## Experience structure
+
+```text
+Arrival → orientation → guided path → free exploration → deep inspection → shortlist/compare → CTA
+```
+
+## Technique stack
+
+| Need | Lab technique |
+|---|---|
+| Spatial orientation | Wide/establishing camera |
+| Guided travel | Scroll camera or camera path |
+| Inspection | Orbit + close-up + DOF |
+| Detail discovery | Raycast hotspots |
+| Mood | Three-point + fog/bloom restraint |
+| Sequence | Cuts, pacing, motif transitions |
+| Performance | Lazy scenes, DPR caps, demand rendering |
+
+## Information architecture
+
+1. **Arrival:** brand promise and whole-room view.
+2. **Stations:** one product/problem per zone.
+3. **Inspection:** orbit, materials, dimensions, hotspots.
+4. **Compare:** consistent camera and lighting across products.
+5. **Shortlist:** saved items and summary.
+6. **CTA:** contact, configure, buy, or book.
+
+## Implementation plan
+
+1. Build static semantic product pages first.
+2. Add one 3D station and validate performance.
+3. Add hotspots with keyboard-accessible list equivalents.
+4. Add guided camera path with skip/exit.
+5. Add compare state with locked camera/light.
+6. Profile mobile GPU and loading.
+
+## Accessibility requirements
+
+- Every 3D hotspot has a text button/list equivalent.
+- Guided tours can be paused, skipped, and exited.
+- Reduced-motion mode becomes a chapter list.
+- Product specs are real DOM content, not only canvas labels.
+
+## Performance requirements
+
+- Lazy-load room assets by station.
+- Reuse geometry/materials.
+- Cap DPR and shadow map sizes.
+- Compress models/textures; show loading progress.
+- Pause off-screen canvases.
+
+## Common mistakes
+
+- A beautiful room where users cannot find products
+- Free camera with no orientation or reset
+- Hotspots only discoverable by random hovering
+- Different lighting making product colors incomparable
+
+## Deliverables checklist
+
+- [ ] Concept and visual language
+- [ ] Room/station map
+- [ ] Camera path and reset
+- [ ] Hotspot content model
+- [ ] Static fallback pages/list
+- [ ] Performance budget and test devices
+- [ ] Analytics events for station/hotspot interaction
+
+## Related lessons
+
+- [Interactive 3D Product](/docs/projects/product-3d)
+- [Scroll-Controlled Camera](/docs/camera/scroll-camera)
+- [Raycasting](/docs/creative-web/raycasting)
+- [Three-Point Lighting](/docs/lighting/three-point)
+
+## Exercise
+
+Map a three-station showroom on paper. For each station write camera shot, hotspot, lighting, and user action.

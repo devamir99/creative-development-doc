@@ -1,4 +1,4 @@
 {
   "title": "01 · Camera",
-  "pages": ["index", "fundamentals", "fov", "dolly-zoom", "orbit", "dof"]
+  "pages": ["index", "fundamentals", "shot-types", "movement", "fov", "dolly-zoom", "orbit", "dof", "projection", "scroll-camera"]
 }

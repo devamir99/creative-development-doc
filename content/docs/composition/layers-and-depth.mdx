@@ -1,0 +1,91 @@
+---
+title: Layers, Depth & Scale
+description: Foreground, midground, background, overlap, atmosphere, and relative size as depth cues.
+---
+
+# Layers, Depth & Scale
+
+## See it first
+
+<LayersDepthPlayground />
+
+Depth is not only 3D. Overlap, scale, contrast, sharpness, and atmospheric softening can layer a flat frame.
+
+## Introduction
+
+A layered composition separates the frame into **foreground**, **midground**, and **background**. The subject usually lives in one layer while other layers provide context, framing, or depth.
+
+## Depth cues
+
+| Cue | How it works |
+|---|---|
+| Overlap | Front object hides part of object behind |
+| Relative scale | Larger usually reads nearer |
+| Vertical position | Often higher reads farther in landscapes |
+| Contrast/value | Near often stronger; far weaker |
+| Sharpness | Focus layer reads nearer/more important |
+| Atmosphere | Far layers lighten/soften |
+| Parallax | Layers move at different rates |
+| Shadow | Grounds objects in space |
+
+## Why it matters
+
+Flat compositions can feel like stickers. Layers create world, scale, and routes for camera motion. In scroll experiences, layers become parallax or true 3D depth.
+
+## Parameters
+
+| Parameter | Effect |
+|---|---|
+| Number of layers | More layers can enrich or clutter |
+| Separation | Value/color/focus differences between planes |
+| Foreground framing | Creates looking-through feeling |
+| Subject layer | Determines intimacy and context |
+| Motion rate | Near layers move faster in parallax |
+
+## Practical applications
+
+1. **Hero:** blurred foreground shape, product midground, soft gradient background.
+2. **Story scene:** doorway foreground, character midground, city background.
+3. **Product configurator:** floor, product, environment, atmosphere.
+4. **Editorial page:** image, caption, background typography as separate planes.
+
+## Implementation
+
+```css
+.foreground { z-index: 3; filter: blur(2px); }
+.subject { z-index: 2; }
+.background { z-index: 1; opacity: .7; }
+```
+
+In 3D, use actual Z positions and camera parallax. Keep layer logic semantic, not arbitrary z-index numbers.
+
+## Common mistakes
+
+- Decorative foreground blobs with no spatial story
+- Subject and background sharing identical contrast/sharpness
+- Too many layers competing for attention
+- Scale differences that make products look toy-like unintentionally
+
+## Performance
+
+Blurred large layers and multiple full-screen images are expensive. Prefer small blurred assets, gradients, or GPU transforms.
+
+## When to use / avoid
+
+Use layers for world-building and cinematic depth. Avoid heavy layering in dense dashboards and forms.
+
+## Key takeaways
+
+- Depth is a set of cues, not only perspective.
+- Foreground frames; midground acts; background explains.
+- Scale is both a depth cue and a meaning cue.
+
+## Related lessons
+
+- [Depth of Field](/docs/camera/dof)
+- [Parallax](/docs/motion/parallax)
+- [Fog & Bloom](/docs/lighting/fog-and-bloom)
+
+## Exercise
+
+Take a flat hero. Add one foreground, keep subject midground, soften background. Note how scale perception changes.

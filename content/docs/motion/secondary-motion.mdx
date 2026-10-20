@@ -1,0 +1,87 @@
+---
+title: Secondary Motion & Motion Rhythm
+description: Followers, trails, cloth, hair, UI echoes, and repeated beats that make a system feel alive.
+---
+
+# Secondary Motion & Motion Rhythm
+
+## See it first
+
+<SecondaryMotionPlayground />
+
+The main object leads. The follower arrives later and with different energy. That delay sells connection and material.
+
+## Introduction
+
+**Secondary motion** is movement caused by the primary movement: hair after a head turn, a shadow catching up, icons echoing a panel, a cape trailing a character.
+
+**Motion rhythm** is the pattern of beats across a sequence — regular, syncopated, accelerating, or calm.
+
+## Why it matters
+
+- Primary motion alone can feel rigid.
+- Secondary motion communicates softness, weight, and connection.
+- Rhythm turns isolated animations into a language.
+
+## Sources
+
+| Secondary element | Follows |
+|---|---|
+| Trail/ghost | Fast hero object |
+| Shadow/scale | Jump or press |
+| Cloth/hair | Body movement |
+| Child UI elements | Parent panel |
+| Camera lag | Character or pointer |
+
+## Parameters
+
+| Parameter | Effect |
+|---|---|
+| Delay | How far behind the follower is |
+| Duration difference | Softer/slower secondary energy |
+| Amplitude | Subtle echo vs cartoon trail |
+| Rhythm pattern | Even, grouped, accelerating beats |
+| Stagger relationship | Ordered secondary response |
+
+## Practical applications
+
+1. **Cards:** card moves, shadow and icon settle after.
+2. **Character/UI mascot:** ears, scarf, or badge lag.
+3. **Navigation:** indicator leads, labels follow subtly.
+4. **Product:** accessories or reflections react to rotation.
+
+## Implementation
+
+```ts
+tl.to(".hero", { x: 300, duration: .6, ease: "power3.out" })
+  .to(".follower", { x: 300, duration: .85, ease: "power2.out" }, "<0.05");
+```
+
+Keep secondary amplitudes smaller unless the material is intentionally loose.
+
+## Common mistakes
+
+- Every element trailing at a different random delay
+- Secondary motion more noticeable than the primary action
+- Rhythm that never repeats enough to become language
+- Constant idle motion competing with reading
+
+## When to use / avoid
+
+Use to sell material and connection. Avoid in precise tools where echoes imply inaccuracy.
+
+## Key takeaways
+
+- Followers should be later, softer, and usually smaller.
+- Rhythm is repetition with variation.
+- Secondary motion supports, never replaces, primary clarity.
+
+## Related lessons
+
+- [Stagger](/docs/motion/stagger)
+- [Anticipation & Follow-Through](/docs/motion/anticipation)
+- [Spring & Inertia](/docs/motion/spring-and-inertia)
+
+## Exercise
+
+Animate a panel and its icon. Make the icon arrive 80ms later with 20% less distance. Compare with both moving identically.

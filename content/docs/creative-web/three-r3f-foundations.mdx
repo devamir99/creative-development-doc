@@ -1,0 +1,112 @@
+---
+title: Three.js, React Three Fiber & Drei Foundations
+description: Scene, camera, renderer, geometry, materials, lights, controls, and the React mental model for WebGL.
+---
+
+# Three.js, React Three Fiber & Drei Foundations
+
+## See it first
+
+<RaycastPlayground />
+
+This scene contains the core stack: Canvas, camera, lights, meshes, materials, and pointer interaction.
+
+## The scene graph
+
+```text
+Renderer / Canvas
+└── Scene
+    ├── Camera
+    ├── Lights
+    ├── Mesh = Geometry + Material
+    ├── Groups (transform hierarchy)
+    └── Effects / controls
+```
+
+## Core vocabulary
+
+| Concept | Meaning |
+|---|---|
+| Geometry | Shape data (box, sphere, custom buffer geometry) |
+| Material | Surface response to light |
+| Mesh | Geometry + material placed in scene |
+| Group | Transform container |
+| Texture | Image/data applied to material |
+| Render loop | Frame update cycle |
+| Frustum | Camera viewing volume |
+| Raycaster | Pointer picking into 3D |
+
+## R3F mental model
+
+React Three Fiber lets Three objects be described as React components. React reconciles the scene graph, but performance-sensitive updates should happen in `useFrame` or events without re-rendering React unnecessarily.
+
+Drei provides helpers: cameras, controls, environments, loaders, and common abstractions. Helpers are not magic; learn what Three object they create.
+
+## Why it matters
+
+Almost every creative 3D web experience reduces to: scene composition, camera, light, materials, interaction, and render budget.
+
+## Parameters that matter first
+
+| Parameter | Effect |
+|---|---|
+| DPR | Sharpness versus GPU cost |
+| Camera FOV/position | Framing |
+| Material roughness/metalness | Surface realism |
+| Light intensity/shadow | Form and mood |
+| Geometry segments | Silhouette quality and cost |
+| Frameloop | Always render or render on demand |
+
+## Practical applications
+
+1. **Product viewer:** one product group, orbit controls, hotspots.
+2. **Hero scene:** low-poly environment, camera path, fog.
+3. **Configurator:** swap materials/geometries by state.
+4. **Data sculpture:** geometry generated from data.
+
+## Implementation
+
+```tsx
+<Canvas dpr={[1, 1.75]} frameloop="demand">
+  <PerspectiveCamera makeDefault position={[0, 1.5, 5]} fov={40} />
+  <ambientLight intensity={0.3} />
+  <directionalLight position={[3, 5, 2]} />
+  <mesh>
+    <boxGeometry args={[1, 1, 1]} />
+    <meshStandardMaterial color="#fafa05" roughness={0.45} />
+  </mesh>
+</Canvas>
+```
+
+## Common mistakes
+
+- React state updating every frame for continuous motion
+- Many canvases on one page
+- Unbounded DPR on 4K screens
+- Forgetting disposal when creating geometry/material imperatively
+- Loading a full 3D scene for a decorative icon
+
+## Performance
+
+Use `frameloop="demand"` for static/interaction-driven scenes, reuse materials/geometries, compress models/textures, and lazy-load below-fold scenes.
+
+## When to use / avoid
+
+Use R3F inside React products when declarative scene state matters. Use vanilla Three when framework independence or tiny examples matter. Avoid WebGL where CSS/SVG communicates better.
+
+## Key takeaways
+
+- Mesh = geometry + material.
+- R3F is a renderer for Three, not a different engine.
+- Budget DPR, lights, shadows, and draw calls.
+
+## Related lessons
+
+- [Raycasting](/docs/creative-web/raycasting)
+- [Orbit Camera](/docs/camera/orbit)
+- [Three-Point Lighting](/docs/lighting/three-point)
+- [Shaders & Performance](/docs/creative-web/shaders-and-performance)
+
+## Exercise
+
+Create a scene with one group containing three meshes. Move the group, then move one child. Explain world versus local transforms.

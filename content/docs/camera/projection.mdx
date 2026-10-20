@@ -1,0 +1,92 @@
+---
+title: Perspective vs Orthographic Camera
+description: Two projection models — spatial depth versus measured, parallel representation.
+---
+
+# Perspective vs Orthographic Camera
+
+## See it first
+
+<ProjectionPlayground />
+
+The two objects have the same real size. In perspective, distance changes apparent size. In orthographic projection, it does not.
+
+## Introduction
+
+**Projection** is how a 3D scene is flattened into a 2D image. Perspective projection mimics human vision and photography. Orthographic projection removes distance scaling and preserves parallel relationships.
+
+## Comparison
+
+| Property | Perspective | Orthographic |
+|---|---|---|
+| Parallel lines | Converge | Stay parallel |
+| Distant objects | Smaller | Same scale |
+| Depth feeling | Strong | Flat/technical |
+| Measurement | Less direct | Easier |
+| Typical use | Film, product, games | CAD, diagrams, isometric UI, maps |
+
+## Why it matters
+
+Choosing projection is choosing how truthful space should feel. Perspective sells presence. Orthographic sells clarity, systems, and design precision.
+
+## Visual explanation
+
+Perspective has a viewing frustum shaped like a pyramid. Orthographic has a box. Objects are projected without the perspective divide that shrinks distant geometry.
+
+## Parameters
+
+| Parameter | Perspective | Orthographic |
+|---|---|---|
+| FOV / zoom | Controls frustum angle | Controls visible box size |
+| Near/far | Depth clipping | Depth clipping |
+| Aspect | Image proportions | Image proportions |
+| Camera distance | Changes apparent size | Mostly changes clipping/context, not scale |
+
+## Practical applications
+
+1. **Hero product:** perspective for realism and desire.
+2. **Isometric dashboard/game:** orthographic for readable systems.
+3. **Architecture plan:** orthographic for measured relationships.
+4. **Stylized explainer:** mild perspective or ortho to keep diagrams calm.
+
+## Implementation
+
+```tsx
+// Perspective
+<PerspectiveCamera position={[0, 2, 6]} fov={40} />
+
+// Orthographic (conceptual)
+<OrthographicCamera position={[4, 4, 4]} zoom={80} />
+```
+
+In Three.js/R3F, remember to update projection settings when viewport or zoom changes.
+
+## Common mistakes
+
+- Expecting orthographic scenes to feel cinematic without lighting/composition help
+- Using very wide perspective for technical products and distorting dimensions
+- Forgetting that camera distance in ortho does not work like a zoom
+
+## Performance
+
+Projection choice is not a major performance cost. Orthographic does not remove the need for good geometry, lighting, or draw-call discipline.
+
+## When to use / avoid
+
+Use perspective for embodied spatial experiences. Use orthographic for measured, diagrammatic, or isometric worlds. Avoid mixing them accidentally in one product language.
+
+## Key takeaways
+
+- Perspective = distance affects size.
+- Orthographic = parallel, measured, flat.
+- Projection is an editorial choice, not just a renderer setting.
+
+## Related lessons
+
+- [Field of View](/docs/camera/fov)
+- [Camera Fundamentals](/docs/camera/fundamentals)
+- [Layers & Depth](/docs/composition/layers-and-depth)
+
+## Exercise
+
+Sketch the same room in both projections. List what becomes clearer and what becomes less emotional in each.

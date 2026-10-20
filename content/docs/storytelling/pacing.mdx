@@ -1,29 +1,93 @@
 ---
-title: Narrative Pacing
-description: Hold lengths between beats — breath control for visual stories.
+title: Narrative Pacing & Visual Rhythm
+description: Hold lengths, information density, acceleration, pauses, and payoff timing in visual stories.
 ---
 
-# Narrative Pacing
+# Narrative Pacing & Visual Rhythm
 
-## Introduction
-
-**Pacing** is how long each narrative beat is allowed to live before the next cut or reveal. Same structure (setup → turn → payoff) can feel epic or nervous depending on holds.
-
-## Why it matters
-
-- Scroll stories and product launches fail when every beat is the same length.
-- Pacing is editing in time — cousin to cut timing.
-
-## Interactive playground
+## See it first
 
 <PacingPlayground />
 
+The beats do not change. Only their hold lengths change. Story feeling changes anyway.
+
+## Introduction
+
+**Pacing** is the rate at which story information arrives. It combines shot duration, hold time, movement speed, text density, sound, and user control.
+
+## Pacing patterns
+
+| Pattern | Structure | Feeling |
+|---|---|---|
+| Slow build | Long setup, late payoff | Epic, luxury, dread |
+| Fast setup | Quick context, long payoff | Clarity, punch |
+| Acceleration | Beats shorten | Panic, excitement |
+| Deceleration | Beats lengthen | Relief, reflection |
+| Syncopation | Irregular beats | Comedy, unease, jazz |
+| Constant pulse | Even beats | Ritual, system, montage |
+
+## Why it matters
+
+Users abandon stories that spend time where no new meaning arrives. They also miss stories that rush emotional payoff.
+
+## Parameters
+
+| Parameter | Effect |
+|---|---|
+| Setup hold | Orientation and anticipation |
+| Turn duration | Surprise speed |
+| Payoff hold | Satisfaction and memory |
+| Information per beat | Cognitive load |
+| User control | Scroll/user pacing versus authored time |
+
+## Practical applications
+
+1. **Landing:** fast problem, medium product, long CTA rest.
+2. **Horror:** long quiet setup, sudden short turn.
+3. **Luxury:** long holds, few beats.
+4. **Tutorial:** pacing follows task completion, not a fixed film clock.
+
+## Implementation
+
+Author beats with explicit holds:
+
+```ts
+const beats = [
+  { id: "setup", hold: 1.1 },
+  { id: "turn", hold: .35 },
+  { id: "payoff", hold: 1.4 },
+];
+```
+
+For scroll, hold becomes scroll distance.
+
+## Common mistakes
+
+- Equal duration for every chapter
+- Long animation before first meaningful content
+- Payoff shorter than setup
+- Text density ignoring reading speed
+
+## Accessibility
+
+Do not force time-based reading for essential content. Provide controls, static alternatives, and reduced-motion summaries.
+
+## When to use / avoid
+
+Use authored pacing in stories and launches. Avoid fixed pacing where users must complete tasks at their own speed.
+
 ## Key takeaways
 
-- Hold length is a storytelling control, not just “animation duration.”
-- Contrast slow setups with short turns for clarity.
+- Pacing is information timing.
+- Payoff needs time to land.
+- Contrast creates rhythm; sameness creates monotony.
 
 ## Related lessons
 
-- [Cuts & Continuity](/docs/editing/cuts)
+- [Montage & Cross-Cutting](/docs/editing/montage-and-cross-cutting)
 - [Timing](/docs/motion/timing)
+- [Scroll Storytelling](/docs/storytelling/scroll-storytelling)
+
+## Exercise
+
+Take a three-beat story. Make versions for luxury, alarm, and tutorial by changing only holds and information density.

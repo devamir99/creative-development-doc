@@ -1,0 +1,100 @@
+---
+title: Camera Movement
+description: Pan, tilt, dolly, truck, pedestal, orbit, tracking, and handheld — how the eye travels through a scene.
+---
+
+# Camera Movement
+
+## See it first
+
+<CameraMovementPlayground />
+
+The top map shows the physical camera. The lower strip shows the resulting frame. The central distinction is simple: **pan/tilt rotate the eye; dolly/truck/orbit move the eye.**
+
+## Introduction
+
+Camera movement changes the viewer’s relationship to space over time. A moving camera can reveal, follow, pursue, inspect, or destabilize. A locked camera can create tension by refusing to move.
+
+## Movement vocabulary
+
+| Move | Camera does | Frame result | Typical meaning |
+|---|---|---|---|
+| Pan | Rotates left/right | World sweeps horizontally | Follow, survey, reveal |
+| Tilt | Rotates up/down | World sweeps vertically | Scale, discovery |
+| Dolly | Moves forward/back | Parallax changes, subject grows/shrinks | Approach, retreat, intimacy |
+| Truck | Moves left/right | Background shifts against subject | Travel, parallel action |
+| Pedestal | Moves up/down | Height changes without tilt alone | Reveal over obstacles |
+| Orbit/arc | Curves around subject | Background rotates behind subject | Inspection, spectacle |
+| Tracking | Follows subject | Subject stable, world moves | Journey, pursuit |
+| Zoom | Changes FOV only | Size changes without spatial travel | Surveillance, shock — not a dolly |
+| Handheld | Adds irregular motion | Imperfect human presence | Documentary, urgency |
+
+## Why it matters
+
+Movement is not decoration. It controls information timing: what is revealed now, what remains hidden, and how the body of the viewer feels. On the web, scroll often becomes the motor for camera movement.
+
+## Visual explanation
+
+If foreground and background shift relative to each other, the camera moved through space. If they scale together with little relative shift, you probably changed FOV/zoom.
+
+## Parameters
+
+| Parameter | Role |
+|---|---|
+| Path | Straight, arc, spline, handheld noise |
+| Duration/easing | Emotional speed of travel |
+| Look-at target | Fixed subject, moving subject, or free orientation |
+| Start/end framing | Movement must begin and land on readable compositions |
+| Stabilization | Smooth, mechanical, or intentionally shaky |
+
+## Practical applications
+
+1. **Product reveal:** slow dolly or orbit; land on a clean hero frame.
+2. **Scroll story:** camera trucks through chapters as scroll progresses.
+3. **Tutorial:** tracking keeps the working area centered while context moves.
+4. **Cinematic tension:** locked camera while action approaches it.
+
+## Implementation
+
+Animate camera position and call `lookAt` (or use a target). Keep the path and look-at as separate concepts.
+
+```ts
+camera.position.lerpVectors(start, end, progress);
+camera.lookAt(target);
+```
+
+For scroll, map normalized scroll progress to the same `progress` value.
+
+## Common mistakes
+
+- Moving every axis at once with no motivation
+- Starting/ending on weak compositions
+- Confusing zoom with dolly
+- Endless orbit on content users need to read
+- Handheld noise applied to precise UI or product inspection
+
+## Performance & accessibility
+
+Camera motion can trigger discomfort. Offer reduced-motion alternatives, avoid rapid rotation, and never make essential content readable only while moving.
+
+## When to use / avoid
+
+Use movement to reveal, follow, or change emotional distance. Avoid it when the frame already communicates clearly or users are performing precise tasks.
+
+## Key takeaways
+
+- Rotation and translation are different tools.
+- Parallax proves spatial movement.
+- Every move needs a start frame, journey, and landing frame.
+- Motion should reveal information, not merely prove technology.
+
+## Related lessons
+
+- [Orbit Camera](/docs/camera/orbit)
+- [Dolly vs Zoom](/docs/camera/dolly-zoom)
+- [Scroll Camera](/docs/camera/scroll-camera)
+- [Motion: Timing](/docs/motion/timing)
+
+## Exercise
+
+Storyboard the same subject four ways: locked, pan, dolly, orbit. Write what new information each move reveals.

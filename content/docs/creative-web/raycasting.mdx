@@ -1,30 +1,97 @@
 ---
-title: Raycasting & Pointer Picking
-description: Selecting 3D objects with the pointer via R3F events.
+title: Raycasting, Mouse Interaction & 3D Hotspots
+description: Picking, hover, drag, cursor feedback, and accessible alternatives for interactive 3D objects.
 ---
 
-# Raycasting & Pointer Picking
+# Raycasting, Mouse Interaction & 3D Hotspots
 
-## Introduction
-
-**Raycasting** shoots a ray from the camera through the pointer to find intersected meshes. React Three Fiber exposes this as familiar pointer events on meshes.
-
-## Why it matters
-
-- Product hotspots, configurators, and 3D UI all need picking.
-- Always `stopPropagation` when nesting interactive meshes.
-
-## Interactive playground
+## See it first
 
 <RaycastPlayground />
 
+Hover changes feedback. Click commits selection. That distinction matters in product interfaces.
+
+## Introduction
+
+**Raycasting** casts an imaginary ray from the camera through the pointer into the scene and reports intersections. It powers object picking, hotspots, drag planes, shooting, terrain height, and 3D UI.
+
+## Interaction states
+
+| State | Feedback | Meaning |
+|---|---|---|
+| Hover | Highlight, cursor pointer | “This can be used” |
+| Active/press | Scale/color change | “Input received” |
+| Selected | Persistent accent | “This is current” |
+| Disabled | Muted, no pointer cursor | “Unavailable” |
+| Drag | Object follows plane | Direct manipulation |
+
+## Why it matters
+
+3D without picking is a movie. Picking turns scenes into interfaces: configurators, showrooms, games, maps, and educational explorers.
+
+## Parameters/concepts
+
+| Concept | Role |
+|---|---|
+| Pointer NDC | Pointer converted to -1..1 scene coordinates |
+| Raycaster | Computes intersections |
+| Intersect object list | What can be picked |
+| Event propagation | Which nested object wins |
+| Invisible hit area | Larger/easier target than visual marker |
+| Drag plane | Surface used to convert pointer to 3D movement |
+
+## Practical applications
+
+1. **Product hotspots:** click parts for specs.
+2. **Showroom:** select stations/products.
+3. **Editor:** drag objects on a ground plane.
+4. **Game:** target selection and interaction.
+
+## Implementation (R3F)
+
+```tsx
+<mesh
+  onPointerOver={(e) => { e.stopPropagation(); setHover(true); }}
+  onPointerOut={() => setHover(false)}
+  onClick={(e) => { e.stopPropagation(); onSelect(id); }}
+>
+```
+
+Use larger invisible hit meshes for small hotspots and reset cursor/hover on unmount.
+
+## Common mistakes
+
+- Hotspots too small for touch
+- Hover-only content with no keyboard/touch equivalent
+- Forgetting `stopPropagation`
+- Raycasting every frame against a huge scene when events suffice
+- Selected state only shown by color
+
+## Accessibility
+
+Provide a DOM list of the same hotspots. Keyboard users must be able to select every object and read its details. Canvas needs an accessible description and non-canvas fallback for critical content.
+
+## Performance
+
+Event-based R3F picking is efficient for normal UI. For drag/continuous hover, throttle and limit tested objects.
+
+## When to use / avoid
+
+Use for object-level interaction. Avoid making tiny canvas targets the only way to access essential information.
+
 ## Key takeaways
 
-- Prefer R3F pointer events over hand-rolled raycasters for UI picks.
-- Invalidate demand canvases on hover/click.
-- Reset cursor styles on pointer out / unmount.
+- Ray = camera through pointer.
+- Hover previews; click commits.
+- Hit area can be larger than visual marker.
+- DOM alternatives are mandatory for important content.
 
 ## Related lessons
 
-- [Orbit Camera](/docs/camera/orbit)
-- [Focal Point](/docs/composition/focal-point)
+- [Three.js & R3F Foundations](/docs/creative-web/three-r3f-foundations)
+- [Project: 3D Product](/docs/projects/product-3d)
+- [Showroom](/docs/projects/showroom)
+
+## Exercise
+
+Build three boxes. Hover highlights, click selects, and a DOM button list selects the same boxes. Test with keyboard only.

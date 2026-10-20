@@ -1,0 +1,74 @@
+---
+title: Creative Cheat Sheet
+description: Decision tables for real work — which shot, cut, ease, light, and technique to reach for.
+---
+
+# Creative Cheat Sheet
+
+## I need to…
+
+| Goal | Reach for | Avoid |
+|---|---|---|
+| Show where we are | Extreme wide / wide | Close-up first |
+| Show emotion/detail | Close-up | Wide with tiny subject |
+| Make subject powerful | Low angle | High angle |
+| Make subject vulnerable | High angle | Low angle |
+| Approach intimately | Dolly in | FOV zoom pretending to dolly |
+| Inspect a product | Orbit, fixed FOV | Random free camera |
+| Select one depth plane | DOF / rack focus | Blurring everything |
+| Change scene cleanly | Hard cut | Dissolve everywhere |
+| Soften time/memory | Dissolve | Fast wipe |
+| Lead with next sound | J-cut | — |
+| Keep sound under new picture | L-cut | — |
+| Compress parallel action | Cross-cutting | One long unbroken scene |
+| Make one thing win | Focal point tools | Five accents |
+| Calm/luxury feeling | Negative space | Crowding |
+| Guide eye to subject | Leading lines | Lines leaving frame |
+| Sell depth cheaply | Parallax layers | Reversed layer speeds |
+| UI entrance | Ease-out, 200–500ms | Bounce |
+| Drag release | Spring with damping | Long elastic oscillation |
+| Many items entering | Stagger 40–90ms | 300ms × 20 items |
+| Product mood | Three-point lighting | Flat ambient only |
+| Night atmosphere | Fog + restrained bloom | Bloom on everything |
+| Scroll story | ScrollTrigger scrub | Pinning every section |
+| 3D selection | Raycast + DOM list | Hover-only hotspots |
+| Signature GPU surface | ShaderMaterial | Shaders on body text |
+
+## Duration starting points
+
+| Motion | Start here |
+|---|---|
+| Button/toggle feedback | 120–250ms |
+| Panel/drawer | 300–550ms |
+| List stagger total | under ~800ms |
+| Hero reveal | 900–1800ms |
+| Camera dolly/orbit beat | 1200–2500ms |
+| Page transition cover+reveal | 600–1200ms total |
+
+These are starting points, not laws. Product tone and reduced-motion settings override them.
+
+## Ease starting points
+
+| Job | Ease family |
+|---|---|
+| Enter | `power3.out` / ease-out |
+| Exit | `power2.in` (shorter than enter) |
+| Move between states | `power2.inOut` |
+| Mechanical/constant | `none` |
+| Playful snap | `back.out(1.4)` sparingly |
+| Physical settle | Spring / `elastic.out` sparingly |
+
+## The 10-second critique
+
+1. What do I see first?
+2. Where does my eye rest?
+3. What changed and why now?
+4. Is the camera moving through space or only zooming?
+5. Does the cut/transition earn its style?
+6. Warm or cool — and is that intentional?
+7. What is the first motion verb?
+8. Can I read/use this with motion reduced?
+9. What does this cost on a mid-range phone?
+10. What one change would help most?
+
+Full method: [Critique Loop](/docs/direction/critique).

@@ -1,0 +1,103 @@
+---
+title: Typography & Motion Language Direction
+description: Type as casting, voice, hierarchy, and choreography — not just font selection.
+---
+
+# Typography & Motion Language Direction
+
+## See it first
+
+<KineticTypePlayground />
+
+Type has voice. Its size, weight, spacing, and movement decide whether it whispers, instructs, celebrates, or alarms.
+
+## Typography direction
+
+| Decision | Effect |
+|---|---|
+| Typeface personality | Formal, technical, warm, rebellious |
+| Scale contrast | Drama and hierarchy |
+| Weight | Authority and density |
+| Tracking/leading | Air, urgency, luxury, readability |
+| Case | Shout, label, sentence, brand mark |
+| Alignment | Order, asymmetry, editorial tension |
+| Mono vs sans/serif | System/technical versus human/editorial roles |
+
+## Motion language
+
+A motion language defines verbs, not random effects:
+
+| Verb | Motion signature |
+|---|---|
+| Arrive | Ease-out, slight rise |
+| Inspect | Slow orbit/dolly, stable holds |
+| Snap | Short duration, back/spring settle |
+| Flow | In-out, overlapping stagger |
+| Alarm | Fast cut, high contrast, minimal decoration |
+
+Every product should have a small set of durations, eases, distances, and transition types that recur.
+
+## Why it matters
+
+Typography is often the largest visual element on the web. If type direction is generic, the experience is generic even with WebGL.
+
+## Parameters
+
+| Parameter | Directional effect |
+|---|---|
+| Display/body ratio | Drama |
+| Line length | Reading comfort |
+| Weight contrast | Voice hierarchy |
+| Letter animation unit | Word (meaning) vs letter (texture) |
+| Motion distance | Confidence vs nervousness |
+| Ease family | Brand material/physics |
+
+## Practical applications
+
+1. **Luxury:** large air, restrained weights, slow ease-out.
+2. **Technical lab:** mono labels, grid type, snappy precise motion.
+3. **Playful product:** variable scale, spring accents, word-group bounces.
+4. **Editorial:** serif display, strong columns, calm page transitions.
+
+## Implementation
+
+Define type roles and motion tokens:
+
+```css
+--font-display: ...;
+--ease-arrive: cubic-bezier(.22, 1, .36, 1);
+--duration-arrive: 520ms;
+```
+
+Keep accessible DOM text intact when splitting for animation.
+
+## Common mistakes
+
+- Choosing fonts by trend without voice
+- Animating letters in long paragraphs
+- Display type too large for mobile content
+- Every heading using a different effect
+
+## Accessibility
+
+Maintain contrast, line height, scalable text, and reduced-motion alternatives. Avoid text rendered only as canvas/images.
+
+## When to use / avoid
+
+Direct type for every major experience. Avoid kinetic type for legal, error, and dense instructional content.
+
+## Key takeaways
+
+- Type is casting and voice.
+- Motion language is a reusable grammar.
+- Words should usually animate as meaning units.
+
+## Related lessons
+
+- [Morphing & Kinetic Typography](/docs/motion/morphing-and-kinetic-type)
+- [Visual Language](/docs/direction/visual-language)
+- [Symmetry & Hierarchy](/docs/composition/symmetry-and-hierarchy)
+
+## Exercise
+
+Set the same headline in three directions: luxury, laboratory, playground. Change only type scale, spacing, weight, ease, and duration.

@@ -1,4 +1,4 @@
 {
   "title": "07 · Creative Web",
-  "pages": ["index", "scroll-trigger", "raycasting"]
+  "pages": ["index", "gsap-timelines", "scroll-trigger", "three-r3f-foundations", "raycasting", "shaders-and-performance"]
 }

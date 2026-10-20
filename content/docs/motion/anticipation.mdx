@@ -1,41 +1,92 @@
 ---
-title: Anticipation & Follow-Through
-description: Wind-up opposite the action, then settle — readable physicality.
+title: Anticipation, Follow-Through & Overshoot
+description: Wind-up, main action, drag, overlap, and settle — the physical phrase of a movement.
 ---
 
-# Anticipation & Follow-Through
+# Anticipation, Follow-Through & Overshoot
 
-## Introduction
-
-**Anticipation** moves opposite the main action first (the wind-up). **Follow-through** continues past the target and settles. Together they sell weight and intent.
-
-## Why it matters
-
-- UI that only eases in from zero feels mechanical.
-- Overdone wind-up becomes parody — tune to product tone.
-
-## Interactive playground
+## See it first
 
 <AnticipationPlayground />
 
+First the object moves slightly backward. Then it launches. Then it passes or settles. Remove the wind-up and the action feels less prepared.
+
+## Introduction
+
+Classic animation breaks a movement into a phrase:
+
+```text
+Anticipation → Main action → Follow-through / Overshoot → Settle
+```
+
+## Definitions
+
+| Phase | Meaning |
+|---|---|
+| Anticipation | Opposite preparatory movement |
+| Main action | Primary travel/change |
+| Follow-through | Attached parts continue after body stops |
+| Overshoot | Main object passes target due to energy |
+| Settle | Energy dissipates into final state |
+
+## Why it matters
+
+The brain reads preparation as intention. A jump without crouch feels weightless. A panel that stops instantly can feel digital and brittle.
+
 ## Parameters
 
-| Control | Role |
-| --- | --- |
-| Anticipation | Pixels of opposite wind-up |
-| Follow-through | Settle overshoot energy |
-| Action duration | Main travel time |
+| Parameter | Effect |
+|---|---|
+| Anticipation distance/duration | How clearly intention reads |
+| Main duration/ease | Power of action |
+| Overshoot amount | Elasticity/weight |
+| Follower delay | Material looseness |
+| Settle time | Final confidence |
+
+## Practical applications
+
+1. **Button/CTA:** tiny press anticipation, release settle.
+2. **Drawer:** slight opposite resistance before opening in playful systems.
+3. **Character/object jump:** crouch, launch, hair/cloth follow.
+4. **Product snap:** overshoot a few pixels/degrees, then dock.
 
 ## Implementation
 
-Chain three timeline steps: anticipate → action → settle.
+```ts
+gsap.timeline()
+  .to(el, { x: -18, duration: .16, ease: "power2.in" })
+  .to(el, { x: 240, duration: .5, ease: "power3.out" })
+  .to(el, { x: 232, duration: .18, ease: "power1.out" })
+  .to(el, { x: 240, duration: .16 });
+```
+
+## Common mistakes
+
+- Anticipation before every tiny UI action
+- Overshoot on errors, payments, destructive actions
+- Follow-through that delays usability
+- Cartoon physics in a serious visual language
+
+## Accessibility
+
+Reduced motion: no wind-up or overshoot; show final state or fade. Never require watching the full phrase to interact.
+
+## When to use / avoid
+
+Use for hero actions, playful products, physical drag/snap. Avoid for dense productivity UI and urgent feedback.
 
 ## Key takeaways
 
-- Opposite-then-go beats ease-only for many “physical” UI moves.
-- Zero anticipation is a valid preset for sober interfaces.
+- Preparation sells intention.
+- Follow-through sells material.
+- Settle sells confidence.
 
 ## Related lessons
 
+- [Spring & Inertia](/docs/motion/spring-and-inertia)
+- [Secondary Motion](/docs/motion/secondary-motion)
 - [Easing](/docs/motion/easing)
-- [Stagger](/docs/motion/stagger)
+
+## Exercise
+
+Animate a dot jumping. Version A: no anticipation. Version B: crouch first. Version C: crouch plus overshoot. Rank weight and playfulness.

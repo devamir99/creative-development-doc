@@ -1,22 +1,18 @@
 # Agent Checkpoint
 
-**Mode:** AUTONOMOUS  
-**Updated:** 2026-10-17
+**Mode:** AUTONOMOUS
+**Updated:** 2026-10-20
 
 ## State
 
 | Field | Value |
-| --- | --- |
-| Last completed | Demo-first playgrounds for fundamentals, motif, direction, projects |
-| Next | Browser spot-check of new pages |
-| Validation | build + lint passed |
+|---|---|
+| Last completed | Full handbook completion: 25 new/expanded lessons, 8 new playground files, Reference section |
+| Validation | tsc ✓ · lint ✓ · webpack build ✓ (71 routes) · Turbopack build blocked by pre-existing Google-fonts issue |
+| Next | User commit (see GIT_COMMIT_PLAN), then browser spot-check |
 
-## New demo routes
+## Notes
 
-- `/docs/camera/fundamentals`
-- `/docs/storytelling/motif`
-- `/docs/direction/visual-language`
-- `/docs/direction/critique`
-- `/docs/projects/cinematic-landing`
-- `/docs/projects/product-3d`
-- `/docs/projects/portfolio`
+- New playgrounds registered in `src/components/mdx.tsx`
+- Root nav adds `reference` section
+- Do not git add/commit/push (agent rule)

@@ -1,40 +1,96 @@
 ---
-title: Three-Point Lighting
-description: Key, fill, and rim — shaping form and separating subject from background.
+title: Three-Point Lighting, Shadows & Color Mood
+description: Key, fill, rim, shadow logic, contrast ratios, and warm/cool storytelling.
 ---
 
-# Three-Point Lighting
+# Three-Point Lighting, Shadows & Color Mood
 
-## Introduction
-
-**Three-point lighting** is a classic setup: a **key** light shapes form, a **fill** opens crushing shadows, and a **rim** (back) light separates the subject from the background.
-
-## Why it matters
-
-- Reads clearly in product, portrait, and UI 3D embeds.
-- Teaching knobs (intensity / warm-cool) beat opaque “make it pretty” presets.
-- Not physically accurate photometric units — labeled as such.
-
-## Interactive playground
+## See it first
 
 <ThreePointPlayground />
 
+Key shapes the subject. Fill decides how dangerous shadows feel. Rim separates the subject from the world.
+
+## Introduction
+
+Three-point lighting is a teaching framework, not a law. It gives names to three jobs: **key**, **fill**, and **rim/back**.
+
+## The three jobs
+
+| Light | Position/job | If removed |
+|---|---|---|
+| Key | Main direction and form | Scene loses shape |
+| Fill | Opens shadow side | Shadows may crush |
+| Rim | Behind/side edge separation | Subject merges with background |
+
+## Contrast ratio (concept)
+
+The difference between key side and fill side controls drama. High ratio = mystery, noon, noir. Low ratio = beauty, product clarity, daytime softness. Exact photographic ratios depend on measurement; in 3D, judge by rendered value and story.
+
+## Shadow language
+
+- Hard shadow: direct/small source, noon, stage, graphic.
+- Soft shadow: large/diffuse source, window, beauty/product.
+- Long shadow: low source, morning/evening.
+- No visible shadow: flat, graphic, possibly floating unless contact shadow exists.
+
+## Color mood
+
+Warm key + cool fill often feels cinematic. Cool key + warm practical can feel nocturnal. Keep one dominant temperature story.
+
 ## Parameters
 
-| Control | Role |
-| --- | --- |
-| Key | Primary shaping light |
-| Fill | Shadow openness |
-| Rim | Edge separation |
-| Key temp | Cool ↔ warm color mix on the key |
+| Parameter | Effect |
+|---|---|
+| Key intensity/position | Form and direction |
+| Fill intensity | Shadow openness |
+| Rim intensity | Separation |
+| Temperature | Time/emotion |
+| Shadow softness/size | Source realism |
+| Ambient/hemisphere | Base atmosphere |
+
+## Practical applications
+
+1. **Product:** strong key, moderate fill, gentle rim.
+2. **Portrait/character:** sculpt with key, protect eyes with fill.
+3. **Noir:** key only, tiny fill, strong rim.
+4. **Tech product:** cool fill, warm accent rim.
+
+## Implementation
+
+```tsx
+<directionalLight position={[4, 5, 3]} intensity={1.5} castShadow />
+<directionalLight position={[-4, 2, 2]} intensity={0.35} />
+<directionalLight position={[-2, 3, -4]} intensity={0.9} />
+```
+
+## Common mistakes
+
+- Three lights at equal intensity
+- Rim so strong it creates a halo
+- Fill eliminating all modeling
+- Warm/cool colors fighting without hierarchy
+
+## Performance
+
+Usually only the key needs shadows. Test shadow map size and DPR on target devices.
+
+## When to use / avoid
+
+Use as a starting setup for subjects. Avoid treating it as mandatory for stylized flat scenes.
 
 ## Key takeaways
 
-- Key shapes; fill softens; rim detaches.
-- Temperature shifts mood without changing placement.
-- Prefer demand frameloops when scrubbing lights.
+- Name lights by job.
+- Contrast ratio is mood.
+- Shadows must agree with light direction.
 
 ## Related lessons
 
-- [Camera fundamentals](/docs/camera/fundamentals)
-- [Focal Point](/docs/composition/focal-point)
+- [Light Types & Shadows](/docs/lighting/light-types-and-shadows)
+- [Color & Temperature](/docs/lighting/color-and-temperature)
+- [Fog & Bloom](/docs/lighting/fog-and-bloom)
+
+## Exercise
+
+Render one sphere with key only, key+fill, then all three. Describe what each added light contributes in one sentence.

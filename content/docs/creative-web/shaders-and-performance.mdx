@@ -1,0 +1,109 @@
+---
+title: Shaders, Page Transitions & Performance
+description: GLSL thinking, WebGL costs, transition architecture, and optimization budgets for creative websites.
+---
+
+# Shaders, Page Transitions & Performance
+
+## See it first
+
+<ShaderPlayground />
+
+<PerformancePlayground />
+
+<PageTransitionPlayground />
+
+The shader panel is a CSS stand-in for the core idea: **color is computed from position, time, and parameters**. Real GLSL runs that computation per vertex/fragment on the GPU.
+
+## Shader mental model
+
+| Shader stage | Job |
+|---|---|
+| Vertex shader | Positions vertices; passes data onward |
+| Fragment shader | Computes each pixel/fragment color |
+| Uniform | Global parameter from CPU (time, mouse, color) |
+| Attribute | Per-vertex data (position, UV, normal) |
+| Varying | Interpolated data passed between stages |
+| UV | 2D coordinates across a surface |
+
+```glsl
+uniform float uTime;
+varying vec2 vUv;
+
+void main() {
+  float wave = sin(vUv.x * 10.0 + uTime) * 0.5 + 0.5;
+  gl_FragColor = vec4(wave, vUv.y, 0.8, 1.0);
+}
+```
+
+Syntax varies between GLSL versions and Three.js shader chunks; always check the version your setup uses.
+
+## Why shaders matter
+
+Shaders enable gradients that react to geometry, distortion, noise, fluid-like surfaces, custom lighting, image effects, and visual languages impossible with flat CSS alone.
+
+## Page transition architecture
+
+1. User triggers navigation.
+2. Cover/transition state enters.
+3. Route/content changes while covered or crossfading.
+4. New page is ready and fonts/images are stable.
+5. Reveal with the same motion language.
+
+Never let a transition hide broken loading. Measure content readiness.
+
+## Performance budget
+
+| Cost | Watch |
+|---|---|
+| JavaScript bundle | Lazy-load 3D/shader scenes |
+| GPU fill rate | Full-screen post effects and DPR |
+| Draw calls | Many unique meshes/materials |
+| Textures/models | Compression and reuse |
+| Animation loops | Pause off-screen/hidden |
+| Layout animation | Prefer transforms/opacity |
+
+## Practical applications
+
+1. **Shader hero background:** noise gradient driven by mouse/time.
+2. **Image distortion:** fragment shader bends UVs on hover/scroll.
+3. **Page wipe:** one accent layer covers, route swaps, reveals.
+4. **Product glow:** emissive material plus restrained bloom.
+
+## Implementation strategy
+
+Start with built-in materials. Add `onBeforeCompile` or ShaderMaterial only when the visual requirement is clear. Keep uniforms typed and dispose materials/geometries.
+
+## Common mistakes
+
+- Writing shaders before understanding UVs and normals
+- Full-screen effects on every section
+- Page transitions that delay navigation for decoration
+- No fallback when WebGL is unavailable
+- DPR uncapped on high-density displays
+
+## Accessibility
+
+Shader motion can be intense. Respect reduced motion, avoid flashing, and never encode essential information only in animated distortion.
+
+## When to use / avoid
+
+Use shaders for signature surfaces and real-time effects. Avoid for normal cards, text backgrounds, and content users must read continuously.
+
+## Key takeaways
+
+- Fragment shader = color per pixel.
+- Uniforms connect interaction/time to GPU.
+- Performance is a creative constraint, not an afterthought.
+- Transitions must reveal readiness, not hide chaos.
+
+## Related lessons
+
+- [GSAP Timelines](/docs/creative-web/gsap-timelines)
+- [Three.js & R3F Foundations](/docs/creative-web/three-r3f-foundations)
+- [Fog & Bloom](/docs/lighting/fog-and-bloom)
+- [Project: 3D Product](/docs/projects/product-3d)
+
+## Exercise
+
+Write a fragment color using only UV: left side dark, right side yellow, top brighter than bottom. Then add time as a slow pulse.

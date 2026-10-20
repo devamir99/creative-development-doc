@@ -1,0 +1,95 @@
+---
+title: Morphing & Kinetic Typography
+description: Shapes and letters that transform with meaning — continuity through change.
+---
+
+# Morphing & Kinetic Typography
+
+## See it first
+
+<MorphPlayground />
+
+Switch to **Kinetic Typography** in the same playground family after exploring the morph: letters can enter, stretch, assemble, and become the message.
+
+<KineticTypePlayground />
+
+## Introduction
+
+**Morphing** transforms one shape/state into another while preserving a sense of identity. **Kinetic typography** is typography in motion: letters and words move according to rhythm, voice, and meaning.
+
+## Morph types
+
+| Morph | Continuity cue |
+|---|---|
+| Border-radius | Square softens into organic/circle |
+| Path morph | SVG outline becomes another outline |
+| Scale/rotation blend | Object transforms through movement |
+| Layout/FLIP | Element changes position/size while identity persists |
+| Mask reveal | New shape appears through old shape |
+
+## Kinetic type principles
+
+- Motion should express tone: shout, whisper, stumble, celebrate.
+- Reading order must survive animation.
+- Letter stagger is not automatically meaningful.
+- Large type can be scenery; small type must remain legible.
+
+## Why it matters
+
+Morphs explain transformation better than cuts when identity continues. Kinetic type can make language physical in launches, music visuals, education, and brand films.
+
+## Parameters
+
+| Parameter | Effect |
+|---|---|
+| Duration | Transformation readability |
+| Intermediate shape | Whether morph feels liquid, mechanical, or magical |
+| Stagger per letter/word | Reading rhythm |
+| Overshoot | Playfulness and emphasis |
+| End-state hold | Time to actually read |
+
+## Practical applications
+
+1. **Play button → pause:** small morph preserves identity.
+2. **Logo construction:** parts assemble into mark.
+3. **Launch headline:** words arrive by meaning groups, not random letters.
+4. **Data state change:** bar morphs into donut only if identity mapping is clear.
+
+## Implementation
+
+For SVG path morphs, use compatible path structures or a dedicated plugin. For type, split by words first; split letters only for short display text and preserve accessible text.
+
+```ts
+gsap.from(".word", { y: 40, opacity: 0, stagger: 0.08, ease: "power3.out" });
+```
+
+## Common mistakes
+
+- Morphing unrelated objects with no shared geometry
+- Letter-by-letter animation for long paragraphs
+- Text moving while users are expected to read it
+- Screen readers receiving fragmented letters
+
+## Performance & accessibility
+
+Keep full text available in the DOM/accessibility tree. Avoid splitting long copy. Reduced motion should show final text immediately.
+
+## When to use / avoid
+
+Use morphs for identity-preserving changes. Avoid for complex data transformations where a cut plus labels is clearer.
+
+## Key takeaways
+
+- Morph = continuity through transformation.
+- Kinetic type = language with choreography.
+- Final reading state matters more than entrance tricks.
+
+## Related lessons
+
+- [Stagger](/docs/motion/stagger)
+- [Transitions](/docs/editing/transitions)
+- [Typography Direction](/docs/direction/typography-direction)
+
+## Exercise
+
+Animate the word “OPEN” three ways: whisper, announcement, alarm. Change only duration, stagger, and scale.

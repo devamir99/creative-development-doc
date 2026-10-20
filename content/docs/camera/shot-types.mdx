@@ -1,0 +1,107 @@
+---
+title: Shot Types & Camera Angles
+description: Wide, medium, close-up and low/eye/high angles — framing that assigns power, intimacy, and geography.
+---
+
+# Shot Types & Camera Angles
+
+## See it first
+
+<ShotTypesPlayground />
+
+Drag framing size and switch angle. Notice: wide explains *where*, medium explains *what is happening*, close-up explains *what it feels like*.
+
+## Introduction
+
+A **shot type** describes how much of the subject and environment is visible. A **camera angle** describes the vertical relationship between camera and subject. Together they are the fastest visual grammar in cinema and 3D web scenes.
+
+## Why it matters
+
+- A product shown only in close-up may look beautiful but users may not understand scale or context.
+- A character filmed from below feels powerful; from above, exposed or judged.
+- Web heroes, product configurators, and scroll stories all inherit this grammar even when the “camera” is CSS or WebGL.
+
+## Shot-size reference
+
+| Shot | What dominates | Best for | Risk |
+|---|---|---|---|
+| Extreme wide | Place | World-building, scale, isolation | Subject may disappear |
+| Wide | Subject + environment | Geography, entrances, full product | Less emotion |
+| Medium wide | Body/action + some space | Movement, interaction | Can feel generic |
+| Medium | Upper body/action | Dialogue, tutorials, product use | Limited context |
+| Medium close-up | Face + gesture | Conversation, reaction | Background weakens |
+| Close-up | Face/detail | Emotion, material, decision | No geography |
+| Extreme close-up | Texture/symbol | Eyes, logo, mechanism, clue | Abstract if overused |
+
+## Angle reference
+
+| Angle | Viewer feeling | Common use |
+|---|---|---|
+| Low angle | Power, monument, threat | Hero product, villain, architecture |
+| Eye level | Neutral, honest | Dialogue, documentation, UI 3D |
+| High angle | Vulnerability, overview | Maps, weakness, surveillance |
+| Dutch/canted | Instability | Anxiety, stylized action — use sparingly |
+| POV | “I am there” | Games, tutorials, immersive product |
+
+## Visual explanation
+
+Shot size answers **how close are we emotionally?** Angle answers **who has power?** A close-up from below is a powerful intimate subject. A wide shot from above can make the same subject feel lost.
+
+## Parameters
+
+| Parameter | Effect |
+|---|---|
+| Distance / crop | Controls shot size |
+| Camera height | Controls angle and dominance |
+| Focal length | Changes compression; do not confuse with distance |
+| Subject placement | Determines how much environment remains readable |
+
+## Practical applications
+
+1. **Product landing:** wide for context, medium for interaction, close-up for material.
+2. **Portfolio case:** establishing wide, medium process, close-up outcome.
+3. **Tutorial:** medium for hands/action, close-up only at the critical detail.
+4. **Game/cinematic UI:** low angle for boss/hero, high angle for tactical overview.
+
+## Implementation
+
+In R3F, shot size is usually camera distance plus framing; angle is camera height relative to the look-at point.
+
+```tsx
+<PerspectiveCamera position={[0, cameraHeight, distance]} fov={40} />
+```
+
+Keep FOV fixed while learning. Otherwise you cannot tell whether the change came from lens or position.
+
+## Common mistakes
+
+- Calling every FOV change a “close-up”
+- Using low angles for everything until nothing feels powerful
+- Cutting from extreme wide to extreme close-up without story motivation
+- Placing the camera high but aiming it like an eye-level shot, creating accidental surveillance feelings
+
+## Performance & accessibility
+
+Camera angle itself is cheap. Avoid constant reframing that causes motion discomfort. In interactive scenes, provide reset and respect reduced-motion settings.
+
+## When to use / avoid
+
+Use wide shots to orient, medium shots to explain action, close-ups to create feeling. Avoid close-ups when the user still needs spatial context.
+
+## Key takeaways
+
+- Shot size = emotional distance.
+- Angle = power relationship.
+- Change one variable at a time while learning.
+- A sequence usually moves between geography, action, and emotion.
+
+## Related lessons
+
+- [Camera Fundamentals](/docs/camera/fundamentals)
+- [Field of View](/docs/camera/fov)
+- [Camera Movement](/docs/camera/movement)
+- [Composition: Focal Point](/docs/composition/focal-point)
+
+## Exercise
+
+Take one product or person. Describe three frames: wide/eye-level, medium/low, close/high. Write the different story each frame tells.
