@@ -1,7 +1,7 @@
 # Project Status — Creative Lab
 
 **Last updated:** 2026-10-20
-**State:** Complete handbook reference (v1) — awaiting user commit
+**State:** Complete handbook + sidebar fix + YouTube video refs on visual lessons — awaiting user commit
 
 ## Snapshot
 
@@ -11,6 +11,8 @@
 | Interactive playground files | 36 |
 | Total MDX lines | ~4,781 |
 | Language | English (ADR-005) |
+| Docs sidebar | Section folders open by default (`defaultOpenLevel: 1`) |
+| Video references | ~42 visual lessons have a curated YouTube link |
 
 ## Curriculum (all with lessons + demos or structured briefs)
 
@@ -20,11 +22,13 @@ Camera (10) · Editing (5) · Composition (10) · Motion (10) · Storytelling (5
 
 | Check | Result |
 |---|---|
-| Typecheck | passed |
-| Lint | passed |
-| Build (webpack) | passed — 71 routes |
-| Build (Turbopack default) | blocked by pre-existing `next/font/google` Turbopack resolution error in `src/app/layout.tsx` (unchanged); network reachable, webpack build green |
-| Browser/WebGL | not run |
+| Typecheck | passed (handbook batch) |
+| Lint | passed (handbook batch) |
+| Build (webpack) | passed — 71 routes (handbook batch) |
+| Build (Turbopack default) | blocked by pre-existing `next/font/google` Turbopack resolution error in `src/app/layout.tsx` (unchanged) |
+| Sidebar SSR | passed — `/docs` HTML includes section children when folders open |
+| Sidebar toggle | passed — CDP click closes/reopens Camera folder |
+| Browser/WebGL demos | not run |
 
 ## Remaining (optional only)
 

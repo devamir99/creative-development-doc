@@ -70,6 +70,8 @@ Optional later: shot types, blocking, scroll cameras.
 | --- | --- |
 | QA-001 build/lint/tsc | `COMPLETED` (2026-10-20: webpack build 71 routes; Turbopack font bug pre-existing) |
 | DOC-COMPLETE handbook expansion (25 lessons, reference) | `COMPLETED` (2026-10-20) |
+| FIX-SIDEBAR-001 section folders empty until hydrate | `COMPLETED` (2026-10-20: `defaultOpenLevel: 1` + Suspense around docs `params`) |
+| DOC-VIDEO-001 curated YouTube refs on visual lessons | `COMPLETED` (2026-10-20: ~42 lessons — StudioBinder, EFAP, Alan Becker, GSAP, Quilez) |
 | QA-002 browser/WebGL pass | `NOT STARTED` |
 | QA-003 formal a11y audit | `NOT STARTED` |
 

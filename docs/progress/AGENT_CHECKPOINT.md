@@ -7,12 +7,12 @@
 
 | Field | Value |
 |---|---|
-| Last completed | Full handbook completion: 25 new/expanded lessons, 8 new playground files, Reference section |
-| Validation | tsc ✓ · lint ✓ · webpack build ✓ (71 routes) · Turbopack build blocked by pre-existing Google-fonts issue |
-| Next | User commit (see GIT_COMMIT_PLAN), then browser spot-check |
+| Last completed | Video references: YouTube links added to ~42 visual lessons (camera, editing, composition, motion, lighting, storytelling, creative-web) |
+| Validation | Sample oEmbed checks passed (StudioBinder DOF, Fandor J/L cuts, GSAP ScrollTrigger, Quilez, R3F tip video) |
+| Next | User commit (see GIT_COMMIT_PLAN Batch F); optional QA-002 |
 
 ## Notes
 
-- New playgrounds registered in `src/components/mdx.tsx`
-- Root nav adds `reference` section
+- Section pattern: `## Video reference` with one curated Watch link + channel + why
+- Prefer StudioBinder / Every Frame a Painting / Alan Becker / GSAP Learning for craft clarity
 - Do not git add/commit/push (agent rule)

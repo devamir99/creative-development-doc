@@ -6,6 +6,24 @@ Historical per-batch commands below are **logical groupings of the final working
 
 ---
 
+## Batch F — YouTube video references (2026-10-20)
+
+```bash
+git add content/docs/camera content/docs/editing content/docs/composition content/docs/motion content/docs/lighting content/docs/storytelling content/docs/creative-web docs/progress/AGENT_CHECKPOINT.md docs/progress/PROJECT_STATUS.md docs/progress/GIT_COMMIT_PLAN.md docs/roadmap/TASK_BACKLOG.md
+git commit -m "docs(curriculum): add curated YouTube references to visual lessons"
+```
+
+---
+
+## Batch E — Sidebar section folders (2026-10-20)
+
+```bash
+git add src/app/docs/layout.tsx src/app/docs/[[...slug]]/page.tsx docs/progress/AGENT_CHECKPOINT.md docs/progress/PROJECT_STATUS.md docs/progress/GIT_COMMIT_PLAN.md docs/roadmap/TASK_BACKLOG.md
+git commit -m "fix(docs): open sidebar sections by default so lesson links SSR"
+```
+
+---
+
 ## Batch D — Complete handbook reference (2026-10-20)
 
 ```bash
