@@ -7,12 +7,14 @@
 
 | Field | Value |
 |---|---|
-| Last completed | Video references: YouTube links added to ~42 visual lessons (camera, editing, composition, motion, lighting, storytelling, creative-web) |
-| Validation | Sample oEmbed checks passed (StudioBinder DOF, Fandor J/L cuts, GSAP ScrollTrigger, Quilez, R3F tip video) |
-| Next | User commit (see GIT_COMMIT_PLAN Batch F); optional QA-002 |
+| Last completed | Upgraded interactive camera/motion demos to cinematic WebGL stages |
+| Validation | `tsc --noEmit` ✓ · eslint on changed demos ✓ |
+| Next | User commit (GIT_COMMIT_PLAN Batch G); optional QA-002 browser pass |
 
 ## Notes
 
-- Section pattern: `## Video reference` with one curated Watch link + channel + why
-- Prefer StudioBinder / Every Frame a Painting / Alan Becker / GSAP Learning for craft clarity
+- Shared `CameraDepthSet`: capsule hero + mid props + far skyline + rim light
+- `CameraMovementPlayground`: full R3F (pan/tilt/dolly/truck/pedestal/orbit/zoom/handheld)
+- `ShotTypesPlayground`: R3F framing distance + low/eye/high
+- `EasingPlayground`: WebGL runway (eased yellow vs linear wire) + lanes + curve
 - Do not git add/commit/push (agent rule)

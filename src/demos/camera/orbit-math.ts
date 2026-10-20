@@ -1,4 +1,4 @@
-export const ORBIT_TARGET = { x: 0, y: 0.55, z: 0 } as const;
+export const ORBIT_TARGET = { x: 0, y: 1.1, z: 0 } as const;
 
 export const DEFAULT_ORBIT = {
   azimuthDeg: 32,

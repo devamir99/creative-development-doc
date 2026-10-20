@@ -1,7 +1,7 @@
 # Project Status — Creative Lab
 
 **Last updated:** 2026-10-20
-**State:** Complete handbook + sidebar fix + YouTube video refs on visual lessons — awaiting user commit
+**State:** Handbook + video refs + cinematic WebGL camera/easing demos — awaiting user commit
 
 ## Snapshot
 

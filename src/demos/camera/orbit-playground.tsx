@@ -35,7 +35,7 @@ camera.position.set(
   {{y}},
   {{z}},
 );
-camera.lookAt(0, 0.55, 0);
+camera.lookAt(0, 1.1, 0);
 camera.fov = {{fov}};`;
 
 export function OrbitPlayground() {

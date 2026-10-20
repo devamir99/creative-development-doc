@@ -72,6 +72,7 @@ Optional later: shot types, blocking, scroll cameras.
 | DOC-COMPLETE handbook expansion (25 lessons, reference) | `COMPLETED` (2026-10-20) |
 | FIX-SIDEBAR-001 section folders empty until hydrate | `COMPLETED` (2026-10-20: `defaultOpenLevel: 1` + Suspense around docs `params`) |
 | DOC-VIDEO-001 curated YouTube refs on visual lessons | `COMPLETED` (2026-10-20: ~42 lessons — StudioBinder, EFAP, Alan Becker, GSAP, Quilez) |
+| DEMO-CAM-MOVE-3D cinematic camera movement + shot types | `COMPLETED` (2026-10-20: R3F stages; shared depth set; easing runway) |
 | QA-002 browser/WebGL pass | `NOT STARTED` |
 | QA-003 formal a11y audit | `NOT STARTED` |
 

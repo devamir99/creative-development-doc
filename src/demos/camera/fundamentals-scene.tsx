@@ -23,7 +23,7 @@ function PoseCamera({ distance, height, fov }: FundamentalsPose) {
     if (!cam) return;
     cam.position.set(0, height, distance);
     cam.fov = fov;
-    cam.lookAt(0, 0.55, 0);
+    cam.lookAt(0, 1.1, 0);
     cam.updateProjectionMatrix();
     invalidate();
   }, [distance, height, fov, invalidate]);

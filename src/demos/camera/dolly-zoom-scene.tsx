@@ -20,7 +20,7 @@ function LabCamera({ cameraZ, fov }: DollyZoomSceneProps) {
     if (!cam) return;
     cam.position.set(0, 1.25, cameraZ);
     cam.fov = fov;
-    cam.lookAt(0, 0.55, 0);
+    cam.lookAt(0, 1.1, 0);
     cam.updateProjectionMatrix();
     invalidate();
   }, [cameraZ, fov, invalidate]);

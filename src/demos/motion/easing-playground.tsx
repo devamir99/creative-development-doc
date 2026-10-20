@@ -2,11 +2,26 @@
 
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import dynamic from "next/dynamic";
 import { useMemo, useRef, useState, type RefObject } from "react";
 import { PlaygroundShell } from "@/components/playground";
 import { LabButton, LabReadout } from "@/components/ui";
 import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
 import { formatSnippet } from "@/lib/playground";
+
+gsap.registerPlugin(useGSAP);
+
+const EasingScene = dynamic(
+  () => import("./easing-scene").then((m) => m.EasingScene),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="flex h-40 items-center justify-center font-mono text-xs text-lab-muted">
+        Loading WebGL stage…
+      </div>
+    ),
+  },
+);
 
 const TRAVEL_X = 200;
 const DEFAULT_DURATION = 0.8;
@@ -33,7 +48,7 @@ const SNIPPET = `gsap.to(el, {
 });`;
 
 const CURVE_W = 280;
-const CURVE_H = 120;
+const CURVE_H = 100;
 const P_MIN = -0.2;
 const P_MAX = 1.3;
 
@@ -71,28 +86,18 @@ function MotionLane({
     tone === "accent" ? "bg-lab-accent" : "border border-lab-muted bg-transparent";
 
   return (
-    <div className="relative h-14 border-b border-lab-line px-4">
+    <div className="relative h-12 border-b border-lab-line px-4">
       <p className="absolute top-1 left-4 font-mono text-[10px] tracking-wide text-lab-muted uppercase">
         {label}
       </p>
       <div
-        className="absolute inset-x-4 top-[60%] h-px -translate-y-1/2 bg-lab-line"
+        className="absolute inset-x-4 top-[62%] h-px -translate-y-1/2 bg-lab-line"
         aria-hidden
       />
-      {reducedMotion ? (
-        <div
-          className="absolute top-[60%] left-4 size-8 -translate-y-1/2 border border-dashed border-lab-muted/50"
-          aria-hidden
-        />
-      ) : null}
       <div
         ref={boxRef}
         aria-hidden
-        className={
-          reducedMotion
-            ? `absolute top-[60%] left-4 size-8 ${fill}`
-            : `absolute top-[60%] left-4 size-8 -translate-y-1/2 ${fill}`
-        }
+        className={`absolute top-[62%] left-4 size-7 -translate-y-1/2 ${fill}`}
         style={
           reducedMotion
             ? { transform: `translate(${TRAVEL_X}px, -50%)` }
@@ -108,33 +113,16 @@ function EaseCurve({ ease }: { ease: string }) {
   const linear = useMemo(() => sampleEasePath("none"), []);
 
   return (
-    <div className="border-b border-lab-line px-4 py-3">
-      <p className="mb-2 font-mono text-[10px] tracking-wide text-lab-muted uppercase">
+    <div className="border-b border-lab-line px-4 py-2">
+      <p className="mb-1 font-mono text-[10px] tracking-wide text-lab-muted uppercase">
         Curve · progress vs time
       </p>
       <svg
         viewBox={`0 0 ${CURVE_W} ${CURVE_H}`}
-        className="h-28 w-full max-w-md text-lab-accent"
+        className="h-24 w-full max-w-md text-lab-accent"
         role="img"
         aria-label={`Easing curve for ${ease}`}
       >
-        <line
-          x1={0}
-          y1={progressToY(0)}
-          x2={CURVE_W}
-          y2={progressToY(0)}
-          className="stroke-lab-line"
-          strokeWidth={1}
-        />
-        <line
-          x1={0}
-          y1={progressToY(1)}
-          x2={CURVE_W}
-          y2={progressToY(1)}
-          className="stroke-lab-line"
-          strokeWidth={1}
-          strokeDasharray="4 4"
-        />
         <path
           d={linear}
           fill="none"
@@ -149,12 +137,8 @@ function EaseCurve({ ease }: { ease: string }) {
           className="stroke-lab-accent"
           strokeWidth={2.5}
           strokeLinecap="round"
-          strokeLinejoin="round"
         />
       </svg>
-      <p className="mt-1 font-mono text-[10px] text-lab-muted">
-        Solid = selected ease · dashed = linear reference
-      </p>
     </div>
   );
 }
@@ -179,45 +163,46 @@ export function EasingPlayground() {
         x: TRAVEL_X,
         duration,
         ease,
-        delay: 0.12,
+        delay: 0.08,
       });
       gsap.to(linear, {
         x: TRAVEL_X,
         duration,
         ease: "none",
-        delay: 0.12,
+        delay: 0.08,
       });
     },
     { dependencies: [ease, duration, replayKey, reducedMotion] },
   );
 
-  function handleReplay() {
-    if (reducedMotion) return;
-    setReplayKey((k) => k + 1);
-  }
-
-  function handleReset() {
-    setEase(DEFAULT_EASE);
-    setDuration(DEFAULT_DURATION);
+  function bump() {
     if (!reducedMotion) setReplayKey((k) => k + 1);
   }
 
   const codeValue = formatSnippet(SNIPPET, { duration, ease });
 
-  const description = reducedMotion
-    ? "Reduced motion is on — curve and end positions stay static. Presets still update the code panel."
-    : "Same distance & duration · selected ease vs linear · watch the curve";
-
   return (
     <PlaygroundShell
       title="Easing Playground"
-      description={description}
-      onReplay={reducedMotion ? undefined : handleReplay}
-      onReset={handleReset}
-      stageLabel="Easing comparison stage with motion lanes and curve graph"
+      description="Yellow solid = selected ease. Wire box = linear. Same distance & duration — only the curve changes character. Curve graph mirrors the runway."
+      onReplay={reducedMotion ? undefined : bump}
+      onReset={() => {
+        setEase(DEFAULT_EASE);
+        setDuration(DEFAULT_DURATION);
+        bump();
+      }}
+      stageLabel="Easing WebGL runway and comparison lanes"
       stageClassName="min-h-0"
       stage={
         <>
+          <div className="h-44 border-b border-lab-line sm:h-52">
+            <EasingScene
+              ease={ease}
+              duration={duration}
+              replayKey={replayKey}
+              reducedMotion={reducedMotion}
+            />
+          </div>
           <MotionLane
             label={`A · ${ease}`}
             boxRef={primaryRef}
@@ -234,54 +219,43 @@ export function EasingPlayground() {
         </>
       }
       controls={
-        <>
-          <div className="flex w-full flex-col gap-3">
-            <div
-              role="group"
-              aria-label="Ease presets"
-              className="flex flex-wrap items-center gap-2"
-            >
-              {EASE_PRESETS.map((preset) => (
-                <LabButton
-                  key={preset.value}
-                  pressed={ease === preset.value}
-                  variant="outline"
-                  aria-label={`Set ease to ${preset.label}`}
-                  onClick={() => {
-                    setEase(preset.value);
-                    if (!reducedMotion) setReplayKey((k) => k + 1);
-                  }}
-                >
-                  {preset.label}
-                </LabButton>
-              ))}
-            </div>
-            <div className="flex flex-wrap items-center gap-2">
-              <div
-                role="group"
-                aria-label="Duration presets"
-                className="flex flex-wrap items-center gap-2"
+        <div className="flex w-full flex-col gap-3">
+          <div
+            role="group"
+            aria-label="Ease presets"
+            className="flex flex-wrap items-center gap-2"
+          >
+            {EASE_PRESETS.map((preset) => (
+              <LabButton
+                key={preset.value}
+                pressed={ease === preset.value}
+                variant="outline"
+                onClick={() => {
+                  setEase(preset.value);
+                  bump();
+                }}
               >
-                {DURATION_PRESETS.map((preset) => (
-                  <LabButton
-                    key={preset.value}
-                    pressed={duration === preset.value}
-                    variant="outline"
-                    aria-label={`Set duration to ${preset.label}`}
-                    onClick={() => {
-                      setDuration(preset.value);
-                      if (!reducedMotion) setReplayKey((k) => k + 1);
-                    }}
-                  >
-                    {preset.label}
-                  </LabButton>
-                ))}
-              </div>
-              <LabReadout className="ms-auto" label="ease:" value={ease} />
-              <LabReadout label="duration:" value={duration} />
-            </div>
+                {preset.label}
+              </LabButton>
+            ))}
           </div>
-        </>
+          <div className="flex flex-wrap items-center gap-2">
+            {DURATION_PRESETS.map((preset) => (
+              <LabButton
+                key={preset.value}
+                pressed={duration === preset.value}
+                variant="outline"
+                onClick={() => {
+                  setDuration(preset.value);
+                  bump();
+                }}
+              >
+                {preset.label}
+              </LabButton>
+            ))}
+            <LabReadout className="ms-auto" label="ease:" value={ease} />
+          </div>
+        </div>
       }
       code={{ language: "js", value: codeValue }}
     />

@@ -32,7 +32,7 @@ const ANGLES = [
 
 const SNIPPET = `// Shot size ≈ distance · Angle ≈ height
 camera.position.set(0, {{height}}, {{distance}});
-camera.lookAt(0, 0.55, 0);
+camera.lookAt(0, 1.1, 0);
 camera.fov = {{fov}}; // locked here — see FOV lesson`;
 
 export function FundamentalsPlayground() {

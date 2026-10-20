@@ -1,33 +1,177 @@
 "use client";
-import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
-import { useRef, useState } from "react";
+
+import dynamic from "next/dynamic";
+import { useState } from "react";
 import { PlaygroundShell } from "@/components/playground";
 import { LabButton, LabReadout } from "@/components/ui";
 import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
 import { formatSnippet } from "@/lib/playground";
-gsap.registerPlugin(useGSAP);
-type Mode = "pan" | "dolly" | "truck" | "orbit";
-const LABEL: Record<Mode, string> = { pan: "Pan — rotation only, eye stays", dolly: "Dolly — eye moves toward subject", truck: "Truck — eye slides sideways", orbit: "Orbit — eye arcs around subject" };
+import type { CameraMoveMode } from "./camera-movement-scene";
+
+const CameraMovementScene = dynamic(
+  () =>
+    import("./camera-movement-scene").then((m) => m.CameraMovementScene),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="flex h-full items-center justify-center font-mono text-xs text-lab-muted">
+        Loading WebGL stage…
+      </div>
+    ),
+  },
+);
+
+const MODES: {
+  id: CameraMoveMode;
+  label: string;
+  watch: string;
+  snippet: string;
+}[] = [
+  {
+    id: "pan",
+    label: "Pan",
+    watch: "Eye stays put — world sweeps left/right (rotation only).",
+    snippet: `// Pan = yaw the eye, do not translate
+camera.position.set(0, 1.35, 6.2);
+camera.lookAt(Math.sin(yaw) * 4, 1.1, -Math.cos(yaw) * 2);`,
+  },
+  {
+    id: "tilt",
+    label: "Tilt",
+    watch: "Eye stays put — world sweeps up/down.",
+    snippet: `// Tilt = change lookAt.y (or pitch), position fixed
+camera.position.set(0, 1.35, 6.2);
+camera.lookAt(0, lookY, 0);`,
+  },
+  {
+    id: "dolly",
+    label: "Dolly",
+    watch: "Eye moves toward subject — mid pillars shift vs hero (parallax).",
+    snippet: `// Dolly = translate along Z through space
+camera.position.z = MathUtils.lerp(7.5, 3.5, t);
+camera.lookAt(0, 1.1, 0);`,
+  },
+  {
+    id: "truck",
+    label: "Truck",
+    watch: "Eye slides sideways — background slides against the subject.",
+    snippet: `// Truck = translate on X, look-at locked on subject
+camera.position.x = MathUtils.lerp(-2.5, 2.5, t);
+camera.lookAt(0, 1.1, 0);`,
+  },
+  {
+    id: "pedestal",
+    label: "Pedestal",
+    watch: "Eye rises/falls — height change without relying on tilt alone.",
+    snippet: `// Pedestal = translate on Y
+camera.position.y = MathUtils.lerp(0.5, 2.7, t);
+camera.lookAt(0, lookY, 0);`,
+  },
+  {
+    id: "orbit",
+    label: "Orbit",
+    watch: "Eye arcs around subject — far slabs rotate behind the hero.",
+    snippet: `// Orbit = spherical move + fixed lookAt
+camera.position.set(Math.sin(az) * r, 1.55, Math.cos(az) * r);
+camera.lookAt(0, 1.1, 0);`,
+  },
+  {
+    id: "zoom",
+    label: "Zoom",
+    watch: "FOV only — subject grows, but little relative parallax vs dolly.",
+    snippet: `// Zoom = FOV change, eye stays
+camera.position.set(0, 1.35, 6.2);
+camera.fov = MathUtils.lerp(58, 26, t);
+camera.updateProjectionMatrix();`,
+  },
+  {
+    id: "handheld",
+    label: "Handheld",
+    watch: "Small irregular noise on position + look — human presence.",
+    snippet: `// Handheld = tiny noise on position & lookAt
+camera.position.add(shake);
+camera.lookAt(target.clone().add(lookShake));`,
+  },
+];
+
 export function CameraMovementPlayground() {
   const reduced = usePrefersReducedMotion();
-  const [mode, setMode] = useState<Mode>("pan");
-  const [key, setKey] = useState(0);
-  const eyeRef = useRef<HTMLDivElement>(null); const viewRef = useRef<HTMLDivElement>(null);
-  useGSAP(() => {
-    const eye = eyeRef.current, view = viewRef.current; if (!eye || !view) return;
-    gsap.killTweensOf([eye, view]); gsap.set(eye, { x: 0, y: 0, rotate: 0 }); gsap.set(view, { xPercent: 0, scale: 1 });
-    if (reduced) { gsap.set(view, { scale: mode === "dolly" ? 1.25 : 1, xPercent: mode === "truck" ? -12 : 0 }); return; }
-    if (mode === "pan") { gsap.to(eye, { rotate: 28, duration: 1.4, ease: "power1.inOut", yoyo: true, repeat: 1 }); gsap.to(view, { xPercent: -18, duration: 1.4, ease: "power1.inOut", yoyo: true, repeat: 1 }); }
-    if (mode === "dolly") { gsap.to(eye, { y: 54, duration: 1.4, ease: "power1.inOut", yoyo: true, repeat: 1 }); gsap.to(view, { scale: 1.35, duration: 1.4, ease: "power1.inOut", yoyo: true, repeat: 1 }); }
-    if (mode === "truck") { gsap.to(eye, { x: 72, duration: 1.4, ease: "power1.inOut", yoyo: true, repeat: 1 }); gsap.to(view, { xPercent: -22, duration: 1.4, ease: "power1.inOut", yoyo: true, repeat: 1 }); }
-    if (mode === "orbit") { gsap.to(eye, { x: 64, y: 28, duration: 1.4, ease: "power1.inOut", yoyo: true, repeat: 1 }); gsap.to(view, { xPercent: -14, scale: 1.12, duration: 1.4, ease: "power1.inOut", yoyo: true, repeat: 1 }); }
-  }, { dependencies: [mode, key, reduced] });
+  const [mode, setMode] = useState<CameraMoveMode>("dolly");
+  const [playing, setPlaying] = useState(true);
+  const active = MODES.find((m) => m.id === mode)!;
+
   return (
-    <PlaygroundShell title="Camera Movement" description="Top map = where the eye goes. Bottom strip = what the frame feels like. Pan rotates; dolly/truck/orbit move through space."
-      onReset={() => { setMode("pan"); setKey((k) => k + 1); }} onReplay={reduced ? undefined : () => setKey((k) => k + 1)} stageLabel="Camera movement stage" stageClassName="h-72"
-      stage={<div className="flex h-full flex-col"><div className="relative flex-1 bg-[#0c0c0e]"><div className="absolute top-1/2 left-1/2 size-10 -translate-x-1/2 -translate-y-1/2 bg-zinc-500" /><div ref={eyeRef} className="absolute bottom-5 left-[42%] size-5 rounded-full bg-lab-accent" /><span className="absolute top-2 left-3 font-mono text-[10px] text-lab-muted">TOP VIEW · yellow = camera · gray = subject</span></div><div className="relative h-24 overflow-hidden border-t border-lab-line bg-[#141416]"><div ref={viewRef} className="flex h-full items-center gap-6 px-8"><div className="h-14 w-10 shrink-0 bg-zinc-700" /><div className="h-20 w-16 shrink-0 bg-lab-accent" /><div className="h-12 w-24 shrink-0 bg-zinc-600" /></div></div></div>}
-      controls={<div className="flex w-full flex-col gap-3"><div className="flex flex-wrap gap-2">{(Object.keys(LABEL) as Mode[]).map((m) => <LabButton key={m} variant="outline" pressed={mode === m} onClick={() => { setMode(m); setKey((k) => k + 1); }}>{m}</LabButton>)}</div><LabReadout label="move:" value={LABEL[mode]} /></div>}
-      code={{ language: "js", value: formatSnippet(`// {{mode}}: {{label}}`, { mode, label: LABEL[mode] }) }} />
+    <PlaygroundShell
+      title="Camera Movement"
+      description="Real WebGL stage. Yellow figure = subject. Gray pillars mid · dark slabs far. Switch moves and watch whether the eye rotates or travels through space."
+      onReset={() => {
+        setMode("dolly");
+        setPlaying(true);
+      }}
+      onReplay={
+        reduced
+          ? undefined
+          : () => {
+              setPlaying(false);
+              requestAnimationFrame(() => setPlaying(true));
+            }
+      }
+      stageLabel="Camera movement WebGL stage"
+      stageClassName="h-[22rem] sm:h-[26rem]"
+      stage={
+        <div className="relative h-full w-full">
+          <CameraMovementScene
+            mode={mode}
+            playing={playing && !reduced}
+            reducedMotion={reduced}
+          />
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent px-3 pt-10 pb-3">
+            <p className="font-mono text-[11px] leading-snug text-zinc-200">
+              <span className="text-lab-accent">{active.label}</span>
+              {" — "}
+              {active.watch}
+            </p>
+          </div>
+          {reduced ? (
+            <p className="absolute top-2 left-3 font-mono text-[10px] text-lab-muted">
+              Reduced motion · static teaching pose
+            </p>
+          ) : null}
+        </div>
+      }
+      controls={
+        <div className="flex w-full flex-col gap-3">
+          <div className="flex flex-wrap gap-2">
+            {MODES.map((m) => (
+              <LabButton
+                key={m.id}
+                variant="outline"
+                pressed={mode === m.id}
+                onClick={() => {
+                  setMode(m.id);
+                  setPlaying(true);
+                }}
+              >
+                {m.label}
+              </LabButton>
+            ))}
+          </div>
+          {!reduced ? (
+            <LabButton
+              variant="outline"
+              pressed={playing}
+              onClick={() => setPlaying((p) => !p)}
+            >
+              {playing ? "Pause move" : "Play move"}
+            </LabButton>
+          ) : null}
+          <LabReadout label="watch for:" value={active.watch} />
+        </div>
+      }
+      code={{
+        language: "js",
+        value: formatSnippet(active.snippet, {}),
+      }}
+    />
   );
 }

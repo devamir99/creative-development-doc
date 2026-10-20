@@ -1,22 +1,110 @@
 "use client";
-import { useState } from "react";
+
+import dynamic from "next/dynamic";
+import { useMemo, useState } from "react";
 import { PlaygroundShell } from "@/components/playground";
 import { LabButton, LabReadout, LabSlider } from "@/components/ui";
 import { formatSnippet } from "@/lib/playground";
-const SNIPPET = `// Shot size is framing, not only zoom
-shot = "{{shot}}"; angle = "{{angle}}";
-// Wide=geography · Medium=action · Close=emotion`;
+import type { ShotAngle } from "./shot-types-scene";
+
+const ShotTypesScene = dynamic(
+  () => import("./shot-types-scene").then((m) => m.ShotTypesScene),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="flex h-full items-center justify-center font-mono text-xs text-lab-muted">
+        Loading WebGL stage…
+      </div>
+    ),
+  },
+);
+
+function shotLabel(framing: number) {
+  if (framing < 0.22) return "Wide / establishing — geography first";
+  if (framing < 0.45) return "Full / wide-medium — body in space";
+  if (framing < 0.7) return "Medium — action & gesture";
+  if (framing < 0.88) return "Close-up — emotion & detail";
+  return "Extreme close — isolate a feature";
+}
+
+const ANGLE_COPY: Record<ShotAngle, string> = {
+  low: "Low angle — subject reads monumental / powerful",
+  eye: "Eye-level — neutral observer",
+  high: "High angle — subject reads vulnerable / mapped",
+};
+
+const SNIPPET = `// Shot size ≈ camera distance (FOV held)
+const distance = lerp(11.5, 2.35, {{framing}});
+camera.position.set(0, {{camY}}, distance);
+camera.lookAt(0, {{lookY}}, 0);
+// angle={{angle}} · {{shot}}`;
+
 export function ShotTypesPlayground() {
-  const [size, setSize] = useState(55);
-  const [angle, setAngle] = useState<"low" | "eye" | "high">("eye");
-  const shot = size < 35 ? "Wide / establishing" : size < 70 ? "Medium" : "Close-up";
-  const subjectH = 30 + size * 1.4;
-  const tilt = angle === "low" ? "perspective(300px) rotateX(18deg)" : angle === "high" ? "perspective(300px) rotateX(-18deg)" : "none";
+  const [framing, setFraming] = useState(0.48);
+  const [angle, setAngle] = useState<ShotAngle>("eye");
+
+  const shot = useMemo(() => shotLabel(framing), [framing]);
+  const camY = angle === "low" ? 0.35 : angle === "high" ? 3.4 : 1.4;
+  const lookY = angle === "low" ? 1.55 : angle === "high" ? 0.85 : 1.15;
+
   return (
-    <PlaygroundShell title="Shot Size & Angle" description="Drag size: geography → action → emotion. Angle changes power: low makes the subject monumental, high makes it vulnerable."
-      onReset={() => { setSize(55); setAngle("eye"); }} stageLabel="Shot size and angle stage" stageClassName="h-72"
-      stage={<div className="relative flex h-full items-end justify-center overflow-hidden bg-[#101012]"><div className="absolute inset-x-0 bottom-0 h-16 bg-zinc-800/60" /><div className="absolute bottom-16 left-[15%] h-24 w-10 bg-zinc-700" /><div className="absolute right-[15%] bottom-16 h-32 w-12 bg-zinc-800" /><div className="mb-16 bg-lab-accent transition-all" style={{ width: subjectH * 0.62, height: subjectH, transform: tilt }} /><span className="absolute top-3 left-3 font-mono text-[10px] text-lab-muted">{shot} · {angle}</span></div>}
-      controls={<div className="flex w-full flex-col gap-3"><div className="flex flex-wrap gap-2">{(["low", "eye", "high"] as const).map((a) => <LabButton key={a} variant="outline" pressed={angle === a} onClick={() => setAngle(a)}>{a}</LabButton>)}</div><LabSlider label="Framing size" unit="%" min={10} max={100} step={1} value={size} onChange={setSize} /><LabReadout label="reads as:" value={shot} /></div>}
-      code={{ language: "js", value: formatSnippet(SNIPPET, { shot, angle }) }} />
+    <PlaygroundShell
+      title="Shot Size & Angle"
+      description="Same lit 3D set, different eye. Size moves the camera closer/farther. Angle changes height and look-at — power, not just decoration."
+      onReset={() => {
+        setFraming(0.48);
+        setAngle("eye");
+      }}
+      stageLabel="Shot size and angle WebGL stage"
+      stageClassName="h-[22rem] sm:h-[26rem]"
+      stage={
+        <div className="relative h-full w-full">
+          <ShotTypesScene framing={framing} angle={angle} />
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent px-3 pt-10 pb-3">
+            <p className="font-mono text-[11px] leading-snug text-zinc-200">
+              <span className="text-lab-accent">{shot.split("—")[0]?.trim()}</span>
+              {" · "}
+              {ANGLE_COPY[angle]}
+            </p>
+          </div>
+        </div>
+      }
+      controls={
+        <div className="flex w-full flex-col gap-3">
+          <div className="flex flex-wrap gap-2">
+            {(["low", "eye", "high"] as const).map((a) => (
+              <LabButton
+                key={a}
+                variant="outline"
+                pressed={angle === a}
+                onClick={() => setAngle(a)}
+              >
+                {a}
+              </LabButton>
+            ))}
+          </div>
+          <LabSlider
+            label="Framing (wide → close)"
+            unit="%"
+            min={0}
+            max={100}
+            step={1}
+            value={Math.round(framing * 100)}
+            onChange={(v) => setFraming(v / 100)}
+          />
+          <LabReadout label="reads as:" value={shot} />
+        </div>
+      }
+      code={{
+        language: "js",
+        value: formatSnippet(SNIPPET, {
+          framing: Number(framing.toFixed(2)),
+          camY,
+          lookY,
+          angle,
+          shot,
+        }),
+      }}
+    />
   );
 }

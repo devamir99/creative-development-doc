@@ -6,6 +6,15 @@ Historical per-batch commands below are **logical groupings of the final working
 
 ---
 
+## Batch G — Cinematic interactive demos (2026-10-20)
+
+```bash
+git add src/demos/camera src/demos/motion/easing-playground.tsx src/demos/motion/easing-scene.tsx content/docs/camera/movement.mdx content/docs/camera/shot-types.mdx content/docs/motion/easing.mdx docs/progress docs/roadmap/TASK_BACKLOG.md
+git commit -m "feat(demos): cinematic WebGL stages for camera moves, shots, and easing"
+```
+
+---
+
 ## Batch F — YouTube video references (2026-10-20)
 
 ```bash
