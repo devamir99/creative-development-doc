@@ -7,12 +7,17 @@ import {
 } from "fumadocs-ui/layouts/docs/page";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 import { getMDXComponents } from "@/components/mdx";
 import { source } from "@/lib/source";
 
-export default async function Page(props: PageProps<"/docs/[[...slug]]">) {
-  const params = await props.params;
-  const page = source.getPage(params.slug);
+async function DocsContent({
+  params,
+}: {
+  params: Promise<{ slug?: string[] }>;
+}) {
+  const { slug } = await params;
+  const page = source.getPage(slug);
   if (!page) notFound();
 
   const MDX = page.data.body;
@@ -29,6 +34,14 @@ export default async function Page(props: PageProps<"/docs/[[...slug]]">) {
         />
       </DocsBody>
     </DocsPage>
+  );
+}
+
+export default function Page(props: PageProps<"/docs/[[...slug]]">) {
+  return (
+    <Suspense fallback={null}>
+      <DocsContent params={props.params} />
+    </Suspense>
   );
 }
 
