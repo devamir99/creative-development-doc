@@ -3,48 +3,57 @@
 import { useState } from "react";
 import { PlaygroundShell } from "@/components/playground";
 import { LabButton, LabReadout } from "@/components/ui";
+import { useLocale } from "@/i18n/locale";
 import { formatSnippet } from "@/lib/playground";
 
-const SNIPPET = `// Critique loop: intent → observation → effect
-// Frame {{pick}}: clearer single focal point?
+const SNIPPET_EN = `// Critique loop: intent → observation → effect
+// Frame {{frame}}: clearer single focal point?
 // Winner should match the frame with one resting place.`;
 
+const SNIPPET_FA = `// حلقه نقد: نیت → مشاهده → اثر
+// قاب {{frame}}: نقطه کانونی واحد واضح‌تر؟
+// برنده باید قابی باشد که یک نقطهٔ آرامش دارد.`;
+
 export function CritiquePlayground() {
-  const [pick, setPick] = useState<"A" | "B" | null>(null);
+  const { pick } = useLocale();
+  const [frame, setFrame] = useState<"A" | "B" | null>(null);
   const [revealed, setRevealed] = useState(false);
 
   const correct = "A";
-  const isRight = pick === correct;
+  const isRight = frame === correct;
 
-  const codeValue = formatSnippet(SNIPPET, {
-    pick: pick ?? "?",
+  const codeValue = formatSnippet(pick(SNIPPET_EN, SNIPPET_FA), {
+    frame: frame ?? "?",
   });
 
   function handleReset() {
-    setPick(null);
+    setFrame(null);
     setRevealed(false);
   }
 
   return (
     <PlaygroundShell
-      title="Critique Loop"
-      description="Which frame has a clearer focal point? Pick, then Reveal. Practice intent → observation → effect."
+      title={pick("Critique Loop", "حلقه نقد و بازبینی")}
+      description={pick(
+        "Which frame has a clearer focal point? Pick, then Reveal. Practice intent → observation → effect.",
+        "کدام قاب نقطه کانونی واضح‌تری دارد؟ انتخاب کن، بعد آشکار کن. تمرین نیت → مشاهده → اثر.",
+      )}
       onReset={handleReset}
-      stageLabel="Critique comparison stage"
+      stageLabel={pick("Critique comparison stage", "صحنه مقایسه نقد و بازبینی")}
       stageClassName="h-64 sm:h-72"
       stage={
         <div className="grid h-full grid-cols-1 gap-2 p-3 sm:grid-cols-2">
           <button
             type="button"
             className={`relative overflow-hidden border text-left ${
-              pick === "A" ? "border-lab-accent" : "border-lab-line"
+              frame === "A" ? "border-lab-accent" : "border-lab-line"
             } bg-[#121214]`}
             onClick={() => {
-              setPick("A");
+              setFrame("A");
               setRevealed(false);
             }}
-            aria-pressed={pick === "A"}
-            aria-label="Frame A"
+            aria-pressed={frame === "A"}
+            aria-label={pick("Frame A", "قاب A")}
           >
             <span className="absolute top-2 left-2 z-10 font-mono text-[10px] text-lab-muted">
               A
@@ -57,14 +66,14 @@ export function CritiquePlayground() {
           <button
             type="button"
             className={`relative overflow-hidden border text-left ${
-              pick === "B" ? "border-lab-accent" : "border-lab-line"
+              frame === "B" ? "border-lab-accent" : "border-lab-line"
             } bg-[#121214]`}
             onClick={() => {
-              setPick("B");
+              setFrame("B");
               setRevealed(false);
             }}
-            aria-pressed={pick === "B"}
-            aria-label="Frame B"
+            aria-pressed={frame === "B"}
+            aria-label={pick("Frame B", "قاب B")}
           >
             <span className="absolute top-2 left-2 z-10 font-mono text-[10px] text-lab-muted">
               B
@@ -82,25 +91,34 @@ export function CritiquePlayground() {
           <div className="flex flex-wrap gap-2">
             <LabButton
               variant="solid"
-              disabled={!pick}
+              disabled={!frame}
               onClick={() => setRevealed(true)}
             >
-              Reveal
+              {pick("Reveal", "آشکارسازی")}
             </LabButton>
             <LabButton variant="outline" onClick={handleReset}>
-              Try again
+              {pick("Try again", "دوباره تلاش کن")}
             </LabButton>
           </div>
           <LabReadout
-            label="pick:"
+            label={pick("pick:", "انتخاب:")}
             value={
-              !pick
-                ? "tap a frame"
+              !frame
+                ? pick("tap a frame", "یک قاب را بزن")
                 : !revealed
-                  ? `Frame ${pick} (locked in)`
+                  ? pick(
+                      `Frame ${frame} (locked in)`,
+                      `قاب ${frame} (ثبت شد)`,
+                    )
                   : isRight
-                    ? `A — one resting place (you got it)`
-                    : `A is clearer — B has competing heroes`
+                    ? pick(
+                        "A — one resting place (you got it)",
+                        "A — یک نقطهٔ آرامش (درست بود)",
+                      )
+                    : pick(
+                        "A is clearer — B has competing heroes",
+                        "A واضح‌تر است — در B قهرمان‌های رقیب هست",
+                      )
             }
           />
         </div>

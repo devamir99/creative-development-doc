@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import { useMemo, useState } from "react";
 import { PlaygroundShell } from "@/components/playground";
 import { LabButton, LabReadout, LabSlider } from "@/components/ui";
+import { useLocale } from "@/i18n/locale";
 import { formatSnippet } from "@/lib/playground";
 import {
   BASE_CAMERA_Z,
@@ -11,18 +12,21 @@ import {
   framingForPush,
 } from "./dolly-zoom-math";
 
-const SceneLoading = () => (
-  <div className="flex h-full items-center justify-center font-mono text-xs text-lab-muted">
-    Loading WebGL…
-  </div>
-);
+function SceneLoading() {
+  const { common } = useLocale();
+  return (
+    <div className="flex h-full items-center justify-center font-mono text-xs text-lab-muted">
+      {common.loadingWebgl}
+    </div>
+  );
+}
 
 const DollyZoomScene = dynamic(
   () => import("./dolly-zoom-scene").then((m) => m.DollyZoomScene),
   { ssr: false, loading: SceneLoading },
 );
 
-const SNIPPET = `// Dolly — eye moves, FOV fixed
+const SNIPPET_EN = `// Dolly — eye moves, FOV fixed
 camera.position.z = {{dollyZ}};
 camera.fov = {{dollyFov}};
 
@@ -30,7 +34,23 @@ camera.fov = {{dollyFov}};
 camera.position.z = {{zoomZ}};
 camera.fov = {{zoomFov}};`;
 
+const SNIPPET_FA = `// دالی — چشم جابه‌جا می‌شود، FOV ثابت
+camera.position.z = {{dollyZ}};
+camera.fov = {{dollyFov}};
+
+// زوم — چشم ثابت، FOV عوض می‌شود (اندازه سوژه هم‌تراز)
+camera.position.z = {{zoomZ}};
+camera.fov = {{zoomFov}};`;
+
+const PRESETS = [
+  { id: "match", value: 0, label: { en: "Match (0)", fa: "هم‌تراز (0)" } },
+  { id: "mild", value: 0.35, label: { en: "Mild", fa: "ملایم" } },
+  { id: "strong", value: 0.7, label: { en: "Strong", fa: "قوی" } },
+  { id: "max", value: 1, label: { en: "Max", fa: "حداکثر" } },
+] as const;
+
 export function DollyZoomPlayground() {
+  const { locale, fa, pick } = useLocale();
   const [amount, setAmount] = useState(0.55);
   const framing = useMemo(() => framingForPush(amount), [amount]);
 
@@ -38,7 +58,7 @@ export function DollyZoomPlayground() {
     setAmount(0.55);
   }
 
-  const codeValue = formatSnippet(SNIPPET, {
+  const codeValue = formatSnippet(fa ? SNIPPET_FA : SNIPPET_EN, {
     dollyZ: Number(framing.dolly.z.toFixed(2)),
     dollyFov: framing.dolly.fov,
     zoomZ: framing.zoom.z,
@@ -47,16 +67,22 @@ export function DollyZoomPlayground() {
 
   return (
     <PlaygroundShell
-      title="Dolly vs Zoom"
-      description="Same subject size goal — left moves the eye (dolly), right changes FOV (zoom). Compare pillar parallax and background relationships."
+      title={pick("Dolly vs Zoom", "دالی در برابر زوم")}
+      description={pick(
+        "Same subject size goal — left moves the eye (dolly), right changes FOV (zoom). Compare pillar parallax and background relationships.",
+        "هدف اندازه سوژه یکسان است — چپ چشم را جابه‌جا می‌کند (دالی)، راست FOV را عوض می‌کند (زوم). پارالاکس ستون‌ها و رابطه پس‌زمینه را مقایسه کن.",
+      )}
       onReset={handleReset}
-      stageLabel="Side-by-side dolly and zoom 3D stages"
+      stageLabel={pick(
+        "Side-by-side dolly and zoom 3D stages",
+        "صحنه‌های سه‌بعدی دالی و زوم کنار هم",
+      )}
       stageClassName="h-auto min-h-72"
       stage={
         <div className="grid h-72 grid-cols-1 sm:h-80 sm:grid-cols-2">
           <div className="relative border-b border-lab-line sm:border-r sm:border-b-0">
             <p className="pointer-events-none absolute top-2 left-3 z-10 font-mono text-[10px] tracking-wide text-lab-accent uppercase">
-              Dolly · z={framing.dolly.z.toFixed(2)} · fov=
+              {pick("Dolly", "دالی")} · z={framing.dolly.z.toFixed(2)} · fov=
               {framing.dolly.fov}°
             </p>
             <DollyZoomScene
@@ -66,7 +92,7 @@ export function DollyZoomPlayground() {
           </div>
           <div className="relative">
             <p className="pointer-events-none absolute top-2 left-3 z-10 font-mono text-[10px] tracking-wide text-lab-muted uppercase">
-              Zoom · z={framing.zoom.z.toFixed(2)} · fov=
+              {pick("Zoom", "زوم")} · z={framing.zoom.z.toFixed(2)} · fov=
               {framing.zoom.fov.toFixed(1)}°
             </p>
             <DollyZoomScene
@@ -80,29 +106,24 @@ export function DollyZoomPlayground() {
         <div className="flex w-full flex-col gap-3">
           <div
             role="group"
-            aria-label="Push amount presets"
+            aria-label={pick("Push amount presets", "پیش‌تنظیم‌های میزان جلو رفتن")}
             className="flex flex-wrap items-center gap-2"
           >
-            {[
-              { label: "Match (0)", value: 0 },
-              { label: "Mild", value: 0.35 },
-              { label: "Strong", value: 0.7 },
-              { label: "Max", value: 1 },
-            ].map((preset) => (
+            {PRESETS.map((preset) => (
               <LabButton
-                key={preset.label}
+                key={preset.id}
                 pressed={Math.abs(amount - preset.value) < 0.001}
                 variant="outline"
                 onClick={() => setAmount(preset.value)}
               >
-                {preset.label}
+                {preset.label[locale]}
               </LabButton>
             ))}
           </div>
           <div className="flex flex-wrap items-end gap-4">
             <LabSlider
               className="min-w-[14rem] flex-1"
-              label="Push-in amount"
+              label={pick("Push-in amount", "میزان جلو رفتن")}
               min={0}
               max={1}
               step={0.01}
@@ -110,17 +131,22 @@ export function DollyZoomPlayground() {
               onChange={setAmount}
             />
             <LabReadout
-              label="baseline:"
+              label={pick("baseline:", "پایه:")}
               value={`z=${BASE_CAMERA_Z} · fov=${BASE_FOV_DEG}°`}
             />
           </div>
           <p className="text-xs text-lab-muted">
-            Framing is matched with{" "}
+            {pick(
+              "Framing is matched with",
+              "فریمینگ با",
+            )}{" "}
             <code className="font-mono text-lab-fg">
               z × tan(fov/2) ≈ constant
             </code>
-            . Differences you see are spatial (dolly) vs optical (zoom) — not a
-            fake scale trick.
+            {pick(
+              ". Differences you see are spatial (dolly) vs optical (zoom) — not a fake scale trick.",
+              " هم‌تراز می‌شود. تفاوت‌هایی که می‌بینی فضایی (دالی) در برابر نوری (زوم) است — نه یک ترفند مقیاس جعلی.",
+            )}
           </p>
         </div>
       }

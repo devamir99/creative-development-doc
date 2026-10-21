@@ -2,6 +2,7 @@
 
 import type { ReactNode } from "react";
 import { LabButton } from "@/components/ui";
+import { useLocale } from "@/i18n/locale";
 
 export type PlaygroundToolbarProps = {
   onReset?: () => void;
@@ -19,6 +20,7 @@ export function PlaygroundToolbar({
   isPaused = false,
   children,
 }: PlaygroundToolbarProps) {
+  const { common } = useLocale();
   const hasActions = Boolean(onReset || onReplay || onPause || children);
   if (!hasActions) return null;
 
@@ -26,7 +28,7 @@ export function PlaygroundToolbar({
     <div className="flex flex-wrap items-center gap-2">
       {onReplay ? (
         <LabButton variant="outline" onClick={onReplay}>
-          Replay
+          {common.replay}
         </LabButton>
       ) : null}
       {onPause ? (
@@ -36,12 +38,12 @@ export function PlaygroundToolbar({
           onClick={onPause}
           aria-pressed={isPaused}
         >
-          {isPaused ? "Resume" : "Pause"}
+          {isPaused ? common.resume : common.pause}
         </LabButton>
       ) : null}
       {onReset ? (
         <LabButton variant="ghost" onClick={onReset}>
-          Reset
+          {common.reset}
         </LabButton>
       ) : null}
       {children}

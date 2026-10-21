@@ -3,9 +3,17 @@
 import { useState } from "react";
 import { PlaygroundShell } from "@/components/playground";
 import { LabButton, LabReadout, LabSlider } from "@/components/ui";
+import { useLocale } from "@/i18n/locale";
 import { formatSnippet } from "@/lib/playground";
 
-const SNIPPET = `// Rule of thirds intersections (normalized)
+const SNIPPET_EN = `// Rule of thirds intersections (normalized)
+const points = [
+  [1/3, 1/3], [2/3, 1/3],
+  [1/3, 2/3], [2/3, 2/3],
+];
+subject.at = [{{x}}, {{y}}]; // 0–1`;
+
+const SNIPPET_FA = `// تقاطع‌های قانون یک‌سوم (نرمال‌شده)
 const points = [
   [1/3, 1/3], [2/3, 1/3],
   [1/3, 2/3], [2/3, 2/3],
@@ -13,25 +21,37 @@ const points = [
 subject.at = [{{x}}, {{y}}]; // 0–1`;
 
 export function ThirdsPlayground() {
+  const { pick } = useLocale();
   const [x, setX] = useState(1 / 3);
   const [y, setY] = useState(1 / 3);
   const [showGrid, setShowGrid] = useState(true);
 
-  const codeValue = formatSnippet(SNIPPET, {
+  const codeValue = formatSnippet(pick(SNIPPET_EN, SNIPPET_FA), {
     x: x.toFixed(2),
     y: y.toFixed(2),
   });
 
+  const presets = [
+    { id: "tl", label: pick("TL", "بالا چپ"), x: 1 / 3, y: 1 / 3 },
+    { id: "tr", label: pick("TR", "بالا راست"), x: 2 / 3, y: 1 / 3 },
+    { id: "bl", label: pick("BL", "پایین چپ"), x: 1 / 3, y: 2 / 3 },
+    { id: "br", label: pick("BR", "پایین راست"), x: 2 / 3, y: 2 / 3 },
+    { id: "center", label: pick("Center", "مرکز"), x: 0.5, y: 0.5 },
+  ] as const;
+
   return (
     <PlaygroundShell
-      title="Rule of Thirds"
-      description="Place the subject on intersections — a starting heuristic, not a law."
+      title={pick("Rule of Thirds", "قانون یک‌سوم")}
+      description={pick(
+        "Place the subject on intersections — a starting heuristic, not a law.",
+        "سوژه را روی تقاطع‌ها بگذار — یک راهنمای شروع، نه قانون مطلق.",
+      )}
       onReset={() => {
         setX(1 / 3);
         setY(1 / 3);
         setShowGrid(true);
       }}
-      stageLabel="Rule of thirds stage"
+      stageLabel={pick("Rule of thirds stage", "صحنهٔ قانون یک‌سوم")}
       stageClassName="h-72 sm:h-80"
       stage={
         <div className="relative h-full w-full bg-[#101012]">
@@ -64,18 +84,14 @@ export function ThirdsPlayground() {
       }
       controls={
         <div className="flex w-full flex-col gap-3">
-          <div role="group" aria-label="Thirds presets" className="flex flex-wrap gap-2">
-            {(
-              [
-                { label: "TL", x: 1 / 3, y: 1 / 3 },
-                { label: "TR", x: 2 / 3, y: 1 / 3 },
-                { label: "BL", x: 1 / 3, y: 2 / 3 },
-                { label: "BR", x: 2 / 3, y: 2 / 3 },
-                { label: "Center", x: 0.5, y: 0.5 },
-              ] as const
-            ).map((p) => (
+          <div
+            role="group"
+            aria-label={pick("Thirds presets", "پیش‌تنظیم یک‌سوم")}
+            className="flex flex-wrap gap-2"
+          >
+            {presets.map((p) => (
               <LabButton
-                key={p.label}
+                key={p.id}
                 variant="outline"
                 pressed={Math.abs(x - p.x) < 0.02 && Math.abs(y - p.y) < 0.02}
                 onClick={() => {
@@ -91,14 +107,33 @@ export function ThirdsPlayground() {
               pressed={showGrid}
               onClick={() => setShowGrid((v) => !v)}
             >
-              {showGrid ? "Grid on" : "Grid off"}
+              {showGrid
+                ? pick("Grid on", "شبکه روشن")
+                : pick("Grid off", "شبکه خاموش")}
             </LabButton>
           </div>
           <div className="grid gap-3 sm:grid-cols-2">
-            <LabSlider label="X" min={0.1} max={0.9} step={0.01} value={x} onChange={setX} />
-            <LabSlider label="Y" min={0.1} max={0.9} step={0.01} value={y} onChange={setY} />
+            <LabSlider
+              label="X"
+              min={0.1}
+              max={0.9}
+              step={0.01}
+              value={x}
+              onChange={setX}
+            />
+            <LabSlider
+              label="Y"
+              min={0.1}
+              max={0.9}
+              step={0.01}
+              value={y}
+              onChange={setY}
+            />
           </div>
-          <LabReadout label="norm:" value={`${x.toFixed(2)}, ${y.toFixed(2)}`} />
+          <LabReadout
+            label={pick("norm:", "نرمال:")}
+            value={`${x.toFixed(2)}, ${y.toFixed(2)}`}
+          />
         </div>
       }
       code={{ language: "js", value: codeValue }}

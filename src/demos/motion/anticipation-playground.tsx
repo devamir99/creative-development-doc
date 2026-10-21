@@ -6,16 +6,23 @@ import { useRef, useState } from "react";
 import { PlaygroundShell } from "@/components/playground";
 import { LabButton, LabReadout, LabSlider } from "@/components/ui";
 import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
+import { useLocale } from "@/i18n/locale";
 import { formatSnippet } from "@/lib/playground";
 
 gsap.registerPlugin(useGSAP);
 
-const SNIPPET = `gsap.timeline()
+const SNIPPET_EN = `gsap.timeline()
   .to(el, { x: -{{anti}}, duration: 0.18, ease: "power1.in" }) // anticipate
   .to(el, { x: {{travel}}, duration: {{duration}}, ease: "power2.out" }) // action
   .to(el, { x: {{travel}} - {{follow}}, duration: 0.22, ease: "power1.out" }) // settle`;
 
+const SNIPPET_FA = `gsap.timeline()
+  .to(el, { x: -{{anti}}, duration: 0.18, ease: "power1.in" }) // پیش‌آمادگی
+  .to(el, { x: {{travel}}, duration: {{duration}}, ease: "power2.out" }) // عمل
+  .to(el, { x: {{travel}} - {{follow}}, duration: 0.22, ease: "power1.out" }) // نشست`;
+
 export function AnticipationPlayground() {
+  const { pick } = useLocale();
   const reducedMotion = usePrefersReducedMotion();
   const elRef = useRef<HTMLDivElement>(null);
   const [anti, setAnti] = useState(24);
@@ -48,7 +55,7 @@ export function AnticipationPlayground() {
     { dependencies: [anti, follow, duration, replayKey, reducedMotion] },
   );
 
-  const codeValue = formatSnippet(SNIPPET, {
+  const codeValue = formatSnippet(pick(SNIPPET_EN, SNIPPET_FA), {
     anti,
     follow,
     duration: Number(duration.toFixed(2)),
@@ -57,11 +64,20 @@ export function AnticipationPlayground() {
 
   return (
     <PlaygroundShell
-      title="Anticipation & Follow-Through"
+      title={pick(
+        "Anticipation & Follow-Through",
+        "پیش‌آمادگی و دنباله‌روی",
+      )}
       description={
         reducedMotion
-          ? "Reduced motion: end pose only."
-          : "Wind-up opposite the action, then overshoot/settle — classic cartoon physics, useful in UI."
+          ? pick(
+              "Reduced motion: end pose only.",
+              "حرکت کاهش‌یافته: فقط حالت پایانی.",
+            )
+          : pick(
+              "Wind-up opposite the action, then overshoot/settle — classic cartoon physics, useful in UI.",
+              "بادگیری مخالف جهت عمل، سپس عبور از هدف و نشست — فیزیک کلاسیک کارتون، مفید در UI.",
+            )
       }
       onReset={() => {
         setAnti(24);
@@ -70,7 +86,10 @@ export function AnticipationPlayground() {
         setReplayKey((k) => k + 1);
       }}
       onReplay={reducedMotion ? undefined : () => setReplayKey((k) => k + 1)}
-      stageLabel="Anticipation motion stage"
+      stageLabel={pick(
+        "Anticipation motion stage",
+        "صحنهٔ حرکت پیش‌آمادگی",
+      )}
       stageClassName="h-48"
       stage={
         <div className="relative flex h-full items-center px-6">
@@ -84,7 +103,11 @@ export function AnticipationPlayground() {
       }
       controls={
         <div className="flex w-full flex-col gap-3">
-          <div role="group" aria-label="Presets" className="flex flex-wrap gap-2">
+          <div
+            role="group"
+            aria-label={pick("Presets", "پیش‌تنظیم‌ها")}
+            className="flex flex-wrap gap-2"
+          >
             <LabButton
               variant="outline"
               onClick={() => {
@@ -93,7 +116,7 @@ export function AnticipationPlayground() {
                 setReplayKey((k) => k + 1);
               }}
             >
-              No wind-up
+              {pick("No wind-up", "بدون بادگیری")}
             </LabButton>
             <LabButton
               variant="outline"
@@ -103,15 +126,39 @@ export function AnticipationPlayground() {
                 setReplayKey((k) => k + 1);
               }}
             >
-              Classic
+              {pick("Classic", "کلاسیک")}
             </LabButton>
           </div>
           <div className="grid gap-3 sm:grid-cols-3">
-            <LabSlider label="Anticipation" unit="px" min={0} max={48} step={1} value={anti} onChange={setAnti} />
-            <LabSlider label="Follow-through" unit="px" min={0} max={40} step={1} value={follow} onChange={setFollow} />
-            <LabSlider label="Action dur." unit="s" min={0.25} max={0.9} step={0.05} value={duration} onChange={setDuration} />
+            <LabSlider
+              label={pick("Anticipation", "پیش‌آمادگی")}
+              unit="px"
+              min={0}
+              max={48}
+              step={1}
+              value={anti}
+              onChange={setAnti}
+            />
+            <LabSlider
+              label={pick("Follow-through", "دنباله‌روی")}
+              unit="px"
+              min={0}
+              max={40}
+              step={1}
+              value={follow}
+              onChange={setFollow}
+            />
+            <LabSlider
+              label={pick("Action dur.", "مدت عمل")}
+              unit="s"
+              min={0.25}
+              max={0.9}
+              step={0.05}
+              value={duration}
+              onChange={setDuration}
+            />
           </div>
-          <LabReadout label="travel:" value={`${travel}px`} />
+          <LabReadout label={pick("travel:", "مسافت:")} value={`${travel}px`} />
         </div>
       }
       code={{ language: "js", value: codeValue }}

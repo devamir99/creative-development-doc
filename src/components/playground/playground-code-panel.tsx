@@ -2,6 +2,7 @@
 
 import { useEffect, useId, useRef, useState } from "react";
 import { LabButton } from "@/components/ui";
+import { useLocale } from "@/i18n/locale";
 import { copyText } from "@/lib/playground";
 
 export type PlaygroundCodePanelProps = {
@@ -14,6 +15,7 @@ export function PlaygroundCodePanel({
   language,
   value,
 }: PlaygroundCodePanelProps) {
+  const { common } = useLocale();
   const [copied, setCopied] = useState(false);
   const [copyFailed, setCopyFailed] = useState(false);
   const resetTimer = useRef<number | null>(null);
@@ -41,7 +43,11 @@ export function PlaygroundCodePanel({
     }, 1500);
   }
 
-  const status = copied ? "Copied" : copyFailed ? "Copy failed" : "Copy";
+  const status = copied
+    ? common.copied
+    : copyFailed
+      ? common.copyFailed
+      : common.copy;
 
   return (
     <div className="border-t border-lab-line">
@@ -64,7 +70,11 @@ export function PlaygroundCodePanel({
         style={{ clip: "rect(0, 0, 0, 0)", position: "absolute" }}
         aria-live="polite"
       >
-        {copied ? "Code copied to clipboard" : copyFailed ? "Copy failed" : ""}
+        {copied
+          ? common.copiedAnnouncement
+          : copyFailed
+            ? common.copyFailed
+            : ""}
       </p>
       <pre
         dir="ltr"

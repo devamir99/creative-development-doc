@@ -1,4 +1,7 @@
+"use client";
+
 import type { ReactNode } from "react";
+import { useLocale } from "@/i18n/locale";
 
 export type PlaygroundStageProps = {
   children: ReactNode;
@@ -10,12 +13,13 @@ export type PlaygroundStageProps = {
 export function PlaygroundStage({
   children,
   className = "",
-  label = "Demo stage",
+  label,
 }: PlaygroundStageProps) {
+  const { common } = useLocale();
   return (
     <div
       role="img"
-      aria-label={label}
+      aria-label={label ?? common.demoStage}
       className={[
         "relative min-h-36 border-b border-lab-line bg-lab-bg/40",
         className,

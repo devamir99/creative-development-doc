@@ -6,16 +6,23 @@ import { useRef, useState } from "react";
 import { PlaygroundShell } from "@/components/playground";
 import { LabButton, LabReadout } from "@/components/ui";
 import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
+import { useLocale } from "@/i18n/locale";
 import { formatSnippet } from "@/lib/playground";
 
 gsap.registerPlugin(useGSAP);
 
-const SNIPPET = `// Consistent language vs random chrome
+const SNIPPET_EN = `// Consistent language vs random chrome
+const consistent = {{consistent}};
+accent = consistent ? "#fafa05" : randomHue();
+ease = consistent ? "power2.out" : randomEase();`;
+
+const SNIPPET_FA = `// زبان یکدست در برابر ظاهر تصادفی
 const consistent = {{consistent}};
 accent = consistent ? "#fafa05" : randomHue();
 ease = consistent ? "power2.out" : randomEase();`;
 
 export function VisualLanguagePlayground() {
+  const { pick } = useLocale();
   const reducedMotion = usePrefersReducedMotion();
   const [consistent, setConsistent] = useState(true);
   const [replayKey, setReplayKey] = useState(0);
@@ -58,20 +65,26 @@ export function VisualLanguagePlayground() {
     { dependencies: [consistent, replayKey, reducedMotion] },
   );
 
-  const codeValue = formatSnippet(SNIPPET, {
+  const codeValue = formatSnippet(pick(SNIPPET_EN, SNIPPET_FA), {
     consistent: String(consistent),
   });
 
   return (
     <PlaygroundShell
-      title="Visual Language"
-      description="Three cards enter. Consistent = one accent + one ease. Inconsistent = random color + random easing — feels like three different brands."
+      title={pick("Visual Language", "زبان بصری")}
+      description={pick(
+        "Three cards enter. Consistent = one accent + one ease. Inconsistent = random color + random easing — feels like three different brands.",
+        "سه کارت وارد می‌شوند. یکدست = یک اکسنت + یک ایزینگ. ناهماهنگ = رنگ و ایزینگ تصادفی — حس سه برند متفاوت.",
+      )}
       onReset={() => {
         setConsistent(true);
         setReplayKey((k) => k + 1);
       }}
       onReplay={reducedMotion ? undefined : () => setReplayKey((k) => k + 1)}
-      stageLabel="Visual language comparison stage"
+      stageLabel={pick(
+        "Visual language comparison stage",
+        "صحنه مقایسه زبان بصری",
+      )}
       stageClassName="h-64 sm:h-72"
       stage={
         <div className="grid h-full grid-cols-3 gap-3 p-4">
@@ -81,7 +94,9 @@ export function VisualLanguagePlayground() {
           >
             <div data-bar className="h-2 w-full bg-lab-accent" />
             <div className="h-16 bg-zinc-700/80" />
-            <p className="font-mono text-[10px] text-lab-muted">Card 1</p>
+            <p className="font-mono text-[10px] text-lab-muted">
+              {pick("Card 1", "کارت ۱")}
+            </p>
           </div>
           <div
             ref={bRef}
@@ -89,7 +104,9 @@ export function VisualLanguagePlayground() {
           >
             <div data-bar className="h-2 w-full bg-lab-accent" />
             <div className="h-16 bg-zinc-700/80" />
-            <p className="font-mono text-[10px] text-lab-muted">Card 2</p>
+            <p className="font-mono text-[10px] text-lab-muted">
+              {pick("Card 2", "کارت ۲")}
+            </p>
           </div>
           <div
             ref={cRef}
@@ -97,7 +114,9 @@ export function VisualLanguagePlayground() {
           >
             <div data-bar className="h-2 w-full bg-lab-accent" />
             <div className="h-16 bg-zinc-700/80" />
-            <p className="font-mono text-[10px] text-lab-muted">Card 3</p>
+            <p className="font-mono text-[10px] text-lab-muted">
+              {pick("Card 3", "کارت ۳")}
+            </p>
           </div>
         </div>
       }
@@ -111,7 +130,7 @@ export function VisualLanguagePlayground() {
               setReplayKey((k) => k + 1);
             }}
           >
-            Consistent
+            {pick("Consistent", "یکدست")}
           </LabButton>
           <LabButton
             variant="outline"
@@ -121,11 +140,14 @@ export function VisualLanguagePlayground() {
               setReplayKey((k) => k + 1);
             }}
           >
-            Inconsistent
+            {pick("Inconsistent", "ناهماهنگ")}
           </LabButton>
           <LabReadout
-            label="feel:"
-            value={consistent ? "one language" : "three brands colliding"}
+            label={pick("feel:", "حس:")}
+            value={pick(
+              consistent ? "one language" : "three brands colliding",
+              consistent ? "یک زبان" : "سه برند در برخورد",
+            )}
           />
         </div>
       }

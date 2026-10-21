@@ -2,18 +2,25 @@
 
 import { Component, type ErrorInfo, type ReactNode } from "react";
 import { LabButton } from "@/components/ui";
+import { useLocale } from "@/i18n/locale";
 
-type Props = {
+type Labels = {
+  error: string;
+  body: string;
+  retry: string;
+};
+
+type InnerProps = {
   children: ReactNode;
-  /** Optional reset of parent demo state when retrying */
   onReset?: () => void;
+  labels: Labels;
 };
 
 type State = {
   error: Error | null;
 };
 
-export class PlaygroundErrorBoundary extends Component<Props, State> {
+class PlaygroundErrorBoundaryInner extends Component<InnerProps, State> {
   state: State = { error: null };
 
   static getDerivedStateFromError(error: Error): State {
@@ -31,23 +38,22 @@ export class PlaygroundErrorBoundary extends Component<Props, State> {
 
   render() {
     if (this.state.error) {
+      const { labels } = this.props;
       return (
         <div
           role="alert"
           className="flex flex-col gap-3 border border-lab-line bg-lab-panel px-4 py-6 text-sm"
         >
           <p className="font-mono text-[10px] tracking-[0.2em] text-lab-accent uppercase">
-            Playground error
+            {labels.error}
           </p>
-          <p className="text-lab-fg">
-            This playground hit an error. You can retry after resetting state.
-          </p>
+          <p className="text-lab-fg">{labels.body}</p>
           <p className="font-mono text-xs text-lab-muted break-words">
             {this.state.error.message}
           </p>
           <div>
             <LabButton variant="outline" onClick={this.handleRetry}>
-              Retry
+              {labels.retry}
             </LabButton>
           </div>
         </div>
@@ -56,4 +62,26 @@ export class PlaygroundErrorBoundary extends Component<Props, State> {
 
     return this.props.children;
   }
+}
+
+export function PlaygroundErrorBoundary({
+  children,
+  onReset,
+}: {
+  children: ReactNode;
+  onReset?: () => void;
+}) {
+  const { common } = useLocale();
+  return (
+    <PlaygroundErrorBoundaryInner
+      onReset={onReset}
+      labels={{
+        error: common.playgroundError,
+        body: common.playgroundErrorBody,
+        retry: common.retry,
+      }}
+    >
+      {children}
+    </PlaygroundErrorBoundaryInner>
+  );
 }

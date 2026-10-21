@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { PlaygroundShell } from "@/components/playground";
 import { LabButton, LabReadout, LabSlider } from "@/components/ui";
+import { useLocale } from "@/i18n/locale";
 import { formatSnippet } from "@/lib/playground";
 
 type BalanceMode = "sym" | "asym" | "radial";
@@ -12,12 +13,18 @@ function weight(size: number, contrast: number) {
   return size * size * contrast;
 }
 
-const SNIPPET = `// Asymmetry: large quiet mass vs small loud accent
+const SNIPPET_EN = `// Asymmetry: large quiet mass vs small loud accent
 left.weight ≈ {{leftW}}
 right.weight ≈ {{rightW}}
 // Balance ≠ equal size — equal *perceived* weight`;
 
+const SNIPPET_FA = `// عدم تقارن: جرم آرام بزرگ در برابر تأکید کوچک و پررنگ
+left.weight ≈ {{leftW}}
+right.weight ≈ {{rightW}}
+// تعادل ≠ اندازهٔ برابر — وزن *ادراک‌شده* برابر`;
+
 export function BalancePlayground() {
+  const { pick } = useLocale();
   const [mode, setMode] = useState<BalanceMode>("asym");
   const [leftSize, setLeftSize] = useState(72);
   const [rightSize, setRightSize] = useState(36);
@@ -30,22 +37,31 @@ export function BalancePlayground() {
   );
   const ratio = rightW / Math.max(leftW, 1);
 
-  const codeValue = formatSnippet(SNIPPET, {
+  const codeValue = formatSnippet(pick(SNIPPET_EN, SNIPPET_FA), {
     leftW: Math.round(leftW),
     rightW: Math.round(rightW),
   });
 
+  const modeButtons: { id: BalanceMode; label: string }[] = [
+    { id: "sym", label: pick("Symmetrical", "متقارن") },
+    { id: "asym", label: pick("Asymmetrical", "نامتقارن") },
+    { id: "radial", label: pick("Radial", "شعاعی") },
+  ];
+
   return (
     <PlaygroundShell
-      title="Balance / Weight"
-      description="Symmetry is one kind of balance. Here a large muted block can balance a small high-contrast accent."
+      title={pick("Balance / Weight", "تعادل بصری / وزن")}
+      description={pick(
+        "Symmetry is one kind of balance. Here a large muted block can balance a small high-contrast accent.",
+        "تقارن یک نوع تعادل است. اینجا یک بلوک بزرگ و ملایم می‌تواند تأکید کوچک با کنتراست بالا را متعادل کند.",
+      )}
       onReset={() => {
         setMode("asym");
         setLeftSize(72);
         setRightSize(36);
         setRightContrast(1.35);
       }}
-      stageLabel="Balance composition stage"
+      stageLabel={pick("Balance composition stage", "صحنهٔ ترکیب‌بندی تعادل")}
       stageClassName="h-72 sm:h-80"
       stage={
         <div className="relative flex h-full items-center justify-center bg-[#101012]">
@@ -94,14 +110,12 @@ export function BalancePlayground() {
       }
       controls={
         <div className="flex w-full flex-col gap-3">
-          <div role="group" aria-label="Balance mode" className="flex flex-wrap gap-2">
-            {(
-              [
-                { id: "sym" as const, label: "Symmetrical" },
-                { id: "asym" as const, label: "Asymmetrical" },
-                { id: "radial" as const, label: "Radial" },
-              ] as const
-            ).map((m) => (
+          <div
+            role="group"
+            aria-label={pick("Balance mode", "حالت تعادل")}
+            className="flex flex-wrap gap-2"
+          >
+            {modeButtons.map((m) => (
               <LabButton
                 key={m.id}
                 pressed={mode === m.id}
@@ -115,7 +129,7 @@ export function BalancePlayground() {
           {mode === "asym" ? (
             <div className="grid gap-3 sm:grid-cols-3">
               <LabSlider
-                label="Left size"
+                label={pick("Left size", "اندازهٔ چپ")}
                 min={40}
                 max={100}
                 step={1}
@@ -123,7 +137,7 @@ export function BalancePlayground() {
                 onChange={setLeftSize}
               />
               <LabSlider
-                label="Accent size"
+                label={pick("Accent size", "اندازهٔ تأکید")}
                 min={20}
                 max={64}
                 step={1}
@@ -131,7 +145,7 @@ export function BalancePlayground() {
                 onChange={setRightSize}
               />
               <LabSlider
-                label="Accent contrast"
+                label={pick("Accent contrast", "کنتراست تأکید")}
                 min={0.8}
                 max={1.8}
                 step={0.05}
@@ -141,7 +155,7 @@ export function BalancePlayground() {
             </div>
           ) : mode === "sym" ? (
             <LabSlider
-              label="Block size"
+              label={pick("Block size", "اندازهٔ بلوک")}
               min={40}
               max={100}
               step={1}
@@ -150,12 +164,21 @@ export function BalancePlayground() {
             />
           ) : (
             <p className="font-mono text-xs text-lab-muted">
-              Radial: equal satellites around a center — calm orbit, not left/right weighing.
+              {pick(
+                "Radial: equal satellites around a center — calm orbit, not left/right weighing.",
+                "شعاعی: ماهواره‌های برابر حول مرکز — مدار آرام، نه وزن‌کشی چپ/راست.",
+              )}
             </p>
           )}
           <div className="flex flex-wrap gap-4">
-            <LabReadout label="L weight≈" value={`${Math.round(leftW)}`} />
-            <LabReadout label="R weight≈" value={`${Math.round(rightW)}`} />
+            <LabReadout
+              label={pick("L weight≈", "وزن چپ≈")}
+              value={`${Math.round(leftW)}`}
+            />
+            <LabReadout
+              label={pick("R weight≈", "وزن راست≈")}
+              value={`${Math.round(rightW)}`}
+            />
             <LabReadout label="R/L≈" value={ratio.toFixed(2)} />
           </div>
         </div>

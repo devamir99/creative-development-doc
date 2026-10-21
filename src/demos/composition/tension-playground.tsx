@@ -3,30 +3,47 @@
 import { useState } from "react";
 import { PlaygroundShell } from "@/components/playground";
 import { LabButton, LabReadout, LabSlider } from "@/components/ui";
+import { useLocale } from "@/i18n/locale";
 import { formatSnippet } from "@/lib/playground";
 
-const SNIPPET = `// Tension rises as masses crowd edges / each other
+const SNIPPET_EN = `// Tension rises as masses crowd edges / each other
 gap = {{gap}}px
 edgeInset = {{edge}}%
 // Centered calm ↔ edge pressure`;
 
+const SNIPPET_FA = `// تنش با ازدحام جرم‌ها در لبه / کنار هم بالا می‌رود
+gap = {{gap}}px
+edgeInset = {{edge}}%
+// آرامش مرکزی ↔ فشار لبه`;
+
 export function TensionPlayground() {
+  const { pick } = useLocale();
   const [gap, setGap] = useState(48);
   const [edge, setEdge] = useState(12);
   const [count, setCount] = useState(2);
 
-  const codeValue = formatSnippet(SNIPPET, { gap, edge });
+  const codeValue = formatSnippet(pick(SNIPPET_EN, SNIPPET_FA), { gap, edge });
+
+  const feel =
+    gap < 20 || edge < 6
+      ? pick("high pressure", "فشار بالا")
+      : gap > 80 && edge > 18
+        ? pick("open / calm", "باز / آرام")
+        : pick("moderate", "متوسط");
 
   return (
     <PlaygroundShell
-      title="Tension"
-      description="Crowding the frame edge or shrinking the gap between masses raises visual pressure without changing the subject."
+      title={pick("Tension", "تنش بصری")}
+      description={pick(
+        "Crowding the frame edge or shrinking the gap between masses raises visual pressure without changing the subject.",
+        "ازدحام لبهٔ کادر یا کم کردن فاصلهٔ بین جرم‌ها فشار بصری را بالا می‌برد بدون تغییر سوژه.",
+      )}
       onReset={() => {
         setGap(48);
         setEdge(12);
         setCount(2);
       }}
-      stageLabel="Composition tension stage"
+      stageLabel={pick("Composition tension stage", "صحنهٔ تنش ترکیب‌بندی")}
       stageClassName="h-72 sm:h-80"
       stage={
         <div className="relative h-full w-full overflow-hidden bg-[#0e0e10]">
@@ -60,7 +77,11 @@ export function TensionPlayground() {
       }
       controls={
         <div className="flex w-full flex-col gap-3">
-          <div role="group" aria-label="Mass count" className="flex flex-wrap gap-2">
+          <div
+            role="group"
+            aria-label={pick("Mass count", "تعداد جرم")}
+            className="flex flex-wrap gap-2"
+          >
             {[2, 3].map((n) => (
               <LabButton
                 key={n}
@@ -68,14 +89,22 @@ export function TensionPlayground() {
                 pressed={count === n}
                 onClick={() => setCount(n)}
               >
-                {n} masses
+                {pick(`${n} masses`, `${n} جرم`)}
               </LabButton>
             ))}
           </div>
           <div className="grid gap-3 sm:grid-cols-2">
-            <LabSlider label="Gap" unit="px" min={4} max={120} step={2} value={gap} onChange={setGap} />
             <LabSlider
-              label="Edge inset"
+              label={pick("Gap", "فاصله")}
+              unit="px"
+              min={4}
+              max={120}
+              step={2}
+              value={gap}
+              onChange={setGap}
+            />
+            <LabSlider
+              label={pick("Edge inset", "فرورفتگی لبه")}
               unit="%"
               min={2}
               max={28}
@@ -84,10 +113,7 @@ export function TensionPlayground() {
               onChange={setEdge}
             />
           </div>
-          <LabReadout
-            label="feel:"
-            value={gap < 20 || edge < 6 ? "high pressure" : gap > 80 && edge > 18 ? "open / calm" : "moderate"}
-          />
+          <LabReadout label={pick("feel:", "حس:")} value={feel} />
         </div>
       }
       code={{ language: "js", value: codeValue }}

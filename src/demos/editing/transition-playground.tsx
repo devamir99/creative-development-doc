@@ -6,20 +6,21 @@ import { useRef, useState } from "react";
 import { PlaygroundShell } from "@/components/playground";
 import { LabButton, LabReadout, LabSlider } from "@/components/ui";
 import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
+import { useLocale } from "@/i18n/locale";
 import { formatSnippet } from "@/lib/playground";
 
 gsap.registerPlugin(useGSAP);
 
 type TransitionKind = "dissolve" | "wipe" | "mask" | "cut";
 
-const KINDS: { id: TransitionKind; label: string }[] = [
-  { id: "cut", label: "Cut" },
-  { id: "dissolve", label: "Dissolve" },
-  { id: "wipe", label: "Wipe" },
-  { id: "mask", label: "Mask reveal" },
+const KINDS: { id: TransitionKind }[] = [
+  { id: "cut" },
+  { id: "dissolve" },
+  { id: "wipe" },
+  { id: "mask" },
 ];
 
-const SNIPPET = `// CSS / GSAP stand-ins for editorial transitions
+const SNIPPET_EN = `// CSS / GSAP stand-ins for editorial transitions
 const kind = "{{kind}}";
 const duration = {{duration}};
 
@@ -28,7 +29,17 @@ const duration = {{duration}};
 // wipe: clip-path / x progress
 // mask: circular (or custom) reveal`;
 
+const SNIPPET_FA = `// جایگزین‌های CSS / GSAP برای گذارهای تدوین
+const kind = "{{kind}}";
+const duration = {{duration}};
+
+// cut: تعویض آنی
+// dissolve: کراس‌فید opacity
+// wipe: پیشرفت clip-path / x
+// mask: آشکارسازی دایره‌ای (یا سفارشی)`;
+
 export function TransitionPlayground() {
+  const { pick } = useLocale();
   const reducedMotion = usePrefersReducedMotion();
   const [kind, setKind] = useState<TransitionKind>("dissolve");
   const [duration, setDuration] = useState(0.7);
@@ -36,6 +47,13 @@ export function TransitionPlayground() {
 
   const aRef = useRef<HTMLDivElement>(null);
   const bRef = useRef<HTMLDivElement>(null);
+
+  const kindLabels: Record<TransitionKind, string> = {
+    cut: pick("Cut", "برش"),
+    dissolve: pick("Dissolve", "دیزالو"),
+    wipe: pick("Wipe", "وایپ"),
+    mask: pick("Mask reveal", "آشکارسازی ماسک"),
+  };
 
   useGSAP(
     () => {
@@ -108,18 +126,24 @@ export function TransitionPlayground() {
     { dependencies: [kind, duration, replayKey, reducedMotion] },
   );
 
-  const codeValue = formatSnippet(SNIPPET, {
+  const codeValue = formatSnippet(pick(SNIPPET_EN, SNIPPET_FA), {
     kind,
     duration: Number(duration.toFixed(2)),
   });
 
   return (
     <PlaygroundShell
-      title="Transition Stage"
+      title={pick("Transition Stage", "صحنهٔ گذار")}
       description={
         reducedMotion
-          ? "Reduced motion: end state of the selected transition."
-          : "Compare cut, dissolve, wipe, and mask reveal — same A/B content, different editorial glue."
+          ? pick(
+              "Reduced motion: end state of the selected transition.",
+              "حرکت کاهش‌یافته: حالت پایانی گذار انتخاب‌شده.",
+            )
+          : pick(
+              "Compare cut, dissolve, wipe, and mask reveal — same A/B content, different editorial glue.",
+              "برش، دیزالو، وایپ و آشکارسازی ماسک را مقایسه کن — همان محتوای A/B، چسب تدوین متفاوت.",
+            )
       }
       onReset={() => {
         setKind("dissolve");
@@ -127,7 +151,10 @@ export function TransitionPlayground() {
         setReplayKey((k) => k + 1);
       }}
       onReplay={reducedMotion ? undefined : () => setReplayKey((k) => k + 1)}
-      stageLabel="Transition comparison stage"
+      stageLabel={pick(
+        "Transition comparison stage",
+        "صحنهٔ مقایسهٔ گذار",
+      )}
       stageClassName="h-72 sm:h-80"
       stage={
         <div className="relative h-full w-full overflow-hidden bg-[#0c0c0e]">
@@ -137,7 +164,9 @@ export function TransitionPlayground() {
           >
             <div className="flex flex-col items-center gap-2">
               <div className="h-20 w-28 bg-lab-accent" />
-              <span className="font-mono text-[10px] text-lab-muted uppercase">Scene A</span>
+              <span className="font-mono text-[10px] text-lab-muted uppercase">
+                {pick("Scene A", "صحنه A")}
+              </span>
             </div>
           </div>
           <div
@@ -156,14 +185,20 @@ export function TransitionPlayground() {
           >
             <div className="flex flex-col items-center gap-2">
               <div className="h-24 w-20 rotate-6 bg-zinc-400" />
-              <span className="font-mono text-[10px] text-lab-muted uppercase">Scene B</span>
+              <span className="font-mono text-[10px] text-lab-muted uppercase">
+                {pick("Scene B", "صحنه B")}
+              </span>
             </div>
           </div>
         </div>
       }
       controls={
         <div className="flex w-full flex-col gap-3">
-          <div role="group" aria-label="Transition kind" className="flex flex-wrap gap-2">
+          <div
+            role="group"
+            aria-label={pick("Transition kind", "نوع گذار")}
+            className="flex flex-wrap gap-2"
+          >
             {KINDS.map((k) => (
               <LabButton
                 key={k.id}
@@ -171,12 +206,12 @@ export function TransitionPlayground() {
                 variant="outline"
                 onClick={() => setKind(k.id)}
               >
-                {k.label}
+                {kindLabels[k.id]}
               </LabButton>
             ))}
           </div>
           <LabSlider
-            label="Duration"
+            label={pick("Duration", "مدت")}
             unit="s"
             min={0.2}
             max={1.6}
@@ -185,7 +220,7 @@ export function TransitionPlayground() {
             onChange={setDuration}
             disabled={kind === "cut"}
           />
-          <LabReadout label="kind:" value={kind} />
+          <LabReadout label={pick("kind:", "نوع:")} value={kind} />
         </div>
       }
       code={{ language: "js", value: codeValue }}

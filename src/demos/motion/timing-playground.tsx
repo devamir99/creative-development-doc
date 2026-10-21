@@ -6,6 +6,7 @@ import { useRef, useState } from "react";
 import { PlaygroundShell } from "@/components/playground";
 import { LabButton, LabReadout } from "@/components/ui";
 import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
+import { useLocale } from "@/i18n/locale";
 import { formatSnippet } from "@/lib/playground";
 
 const DEFAULT_DURATION = 0.6;
@@ -24,6 +25,7 @@ const TIMING_SNIPPET = `gsap.to(el, {
 });`;
 
 export function TimingPlayground() {
+  const { pick } = useLocale();
   const boxRef = useRef<HTMLDivElement>(null);
   const [duration, setDuration] = useState(DEFAULT_DURATION);
   const [replayKey, setReplayKey] = useState(0);
@@ -60,19 +62,31 @@ export function TimingPlayground() {
   const codeValue = formatSnippet(TIMING_SNIPPET, { duration });
 
   const description = reducedMotion
-    ? "Reduced motion is on — stage shows the end position statically. Duration presets still update the readout and code."
-    : "Same distance · ease none · change only timing";
+    ? pick(
+        "Reduced motion is on — stage shows the end position statically. Duration presets still update the readout and code.",
+        "حرکت کاهش‌یافته روشن است — صحنه موقعیت پایانی را ایستا نشان می‌دهد. پیش‌تنظیم‌های مدت همچنان خوانش و کد را به‌روز می‌کنند.",
+      )
+    : pick(
+        "Same distance · ease none · change only timing",
+        "همان فاصله · ایزینگ none · فقط زمان‌بندی را عوض کن",
+      );
 
   return (
     <PlaygroundShell
-      title="Live Playground"
+      title={pick("Live Playground", "دموی زنده")}
       description={description}
       onReplay={reducedMotion ? undefined : handleReplay}
       onReset={handleReset}
       stageLabel={
         reducedMotion
-          ? "Timing stage, static end position due to reduced motion"
-          : "Timing motion stage — square travels horizontally"
+          ? pick(
+              "Timing stage, static end position due to reduced motion",
+              "صحنهٔ زمان‌بندی، موقعیت پایانی ایستا به‌خاطر حرکت کاهش‌یافته",
+            )
+          : pick(
+              "Timing motion stage — square travels horizontally",
+              "صحنهٔ حرکت زمان‌بندی — مربع افقی جابه‌جا می‌شود",
+            )
       }
       stage={
         <>
@@ -103,7 +117,10 @@ export function TimingPlayground() {
           />
           {reducedMotion ? (
             <p className="absolute inset-x-4 bottom-3 font-mono text-[10px] tracking-wide text-lab-muted uppercase">
-              Static fallback · start (dashed) → end (filled)
+              {pick(
+                "Static fallback · start (dashed) → end (filled)",
+                "جایگزین ایستا · شروع (خط‌چین) → پایان (توپر)",
+              )}
             </p>
           ) : null}
         </>
@@ -112,7 +129,7 @@ export function TimingPlayground() {
         <>
           <div
             role="group"
-            aria-label="Duration presets"
+            aria-label={pick("Duration presets", "پیش‌تنظیم‌های مدت")}
             className="flex flex-wrap items-center gap-2"
           >
             {PRESETS.map((preset) => (
@@ -120,7 +137,10 @@ export function TimingPlayground() {
                 key={preset.value}
                 pressed={duration === preset.value}
                 variant="outline"
-                aria-label={`Set duration to ${preset.label}`}
+                aria-label={pick(
+                  `Set duration to ${preset.label}`,
+                  `تنظیم مدت روی ${preset.label}`,
+                )}
                 onClick={() => {
                   setDuration(preset.value);
                   if (!reducedMotion) {
@@ -132,7 +152,7 @@ export function TimingPlayground() {
               </LabButton>
             ))}
           </div>
-          <LabReadout className="ms-auto" label="duration:" value={duration} />
+          <LabReadout className="ms-auto" label={pick("duration:", "مدت:")} value={duration} />
         </>
       }
       code={{ language: "js", value: codeValue }}

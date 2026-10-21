@@ -6,17 +6,23 @@ import { useRef, useState } from "react";
 import { PlaygroundShell } from "@/components/playground";
 import { LabButton, LabReadout } from "@/components/ui";
 import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
+import { useLocale } from "@/i18n/locale";
 import { formatSnippet } from "@/lib/playground";
 
 gsap.registerPlugin(useGSAP);
 
 type Scene = 0 | 1 | 2;
 
-const SNIPPET = `// Same circle motif returns in every scene — meaning accrues
+const SNIPPET_EN = `// Same circle motif returns in every scene — meaning accrues
 motif.className = "circle accent";
 // Scene {{scene}}: {{role}}`;
 
+const SNIPPET_FA = `// همان موتیف دایره در هر صحنه بازمی‌گردد — معنا انباشته می‌شود
+motif.className = "circle accent";
+// صحنه {{scene}}: {{role}}`;
+
 export function MotifPlayground() {
+  const { fa, pick } = useLocale();
   const reducedMotion = usePrefersReducedMotion();
   const [scene, setScene] = useState<Scene>(0);
   const [useMotif, setUseMotif] = useState(true);
@@ -25,9 +31,9 @@ export function MotifPlayground() {
   const stageRef = useRef<HTMLDivElement>(null);
 
   const roles = [
-    "packaging mark",
-    "hero aperture",
-    "CTA badge",
+    pick("packaging mark", "نشان بسته‌بندی"),
+    pick("hero aperture", "روزنهٔ هیرو"),
+    pick("CTA badge", "نشان CTA"),
   ] as const;
 
   useGSAP(
@@ -73,15 +79,18 @@ export function MotifPlayground() {
     { dependencies: [scene, useMotif, replayKey, reducedMotion] },
   );
 
-  const codeValue = formatSnippet(SNIPPET, {
+  const codeValue = formatSnippet(fa ? SNIPPET_FA : SNIPPET_EN, {
     scene: scene + 1,
     role: roles[scene],
   });
 
   return (
     <PlaygroundShell
-      title="Motif Continuity"
-      description="Three scenes. With motif ON, the yellow circle returns in a new role each time. Turn it OFF — scenes feel unrelated."
+      title={pick("Motif Continuity", "تداوم موتیف")}
+      description={pick(
+        "Three scenes. With motif ON, the yellow circle returns in a new role each time. Turn it OFF — scenes feel unrelated.",
+        "سه صحنه. با موتیف روشن، دایرهٔ زرد هر بار در نقشی تازه بازمی‌گردد. خاموشش کن — صحنه‌ها بی‌ربط به‌نظر می‌رسند.",
+      )}
       onReset={() => {
         setScene(0);
         setUseMotif(true);
@@ -97,7 +106,7 @@ export function MotifPlayground() {
               window.setTimeout(() => setScene(2), 1400);
             }
       }
-      stageLabel="Motif continuity stage"
+      stageLabel={pick("Motif continuity stage", "صحنه تداوم موتیف")}
       stageClassName="h-64 sm:h-72"
       stage={
         <div
@@ -107,7 +116,7 @@ export function MotifPlayground() {
           {/* scene chrome */}
           <div className="absolute inset-6 border border-lab-line/50" />
           <p className="absolute top-3 left-4 font-mono text-[10px] tracking-wide text-lab-muted uppercase">
-            Scene {scene + 1} · {roles[scene]}
+            {pick(`Scene ${scene + 1}`, `صحنه ${scene + 1}`)} · {roles[scene]}
           </p>
           {scene === 0 ? (
             <div className="h-24 w-16 bg-zinc-600" aria-hidden />
@@ -117,7 +126,7 @@ export function MotifPlayground() {
           ) : null}
           {scene === 2 ? (
             <div className="flex h-12 w-36 items-center justify-center bg-zinc-800 font-mono text-xs text-lab-muted">
-              Buy now
+              {pick("Buy now", "اکنون بخر")}
             </div>
           ) : null}
           <div
@@ -130,7 +139,11 @@ export function MotifPlayground() {
       }
       controls={
         <div className="flex w-full flex-col gap-3">
-          <div role="group" aria-label="Scene" className="flex flex-wrap gap-2">
+          <div
+            role="group"
+            aria-label={pick("Scene", "صحنه")}
+            className="flex flex-wrap gap-2"
+          >
             {([0, 1, 2] as Scene[]).map((s) => (
               <LabButton
                 key={s}
@@ -138,7 +151,7 @@ export function MotifPlayground() {
                 pressed={scene === s}
                 onClick={() => setScene(s)}
               >
-                Scene {s + 1}
+                {pick(`Scene ${s + 1}`, `صحنه ${s + 1}`)}
               </LabButton>
             ))}
             <LabButton
@@ -146,10 +159,16 @@ export function MotifPlayground() {
               pressed={useMotif}
               onClick={() => setUseMotif((v) => !v)}
             >
-              Motif {useMotif ? "on" : "off"}
+              {pick(
+                `Motif ${useMotif ? "on" : "off"}`,
+                `موتیف ${useMotif ? "روشن" : "خاموش"}`,
+              )}
             </LabButton>
           </div>
-          <LabReadout label="role:" value={useMotif ? roles[scene] : "none"} />
+          <LabReadout
+            label={pick("role:", "نقش:")}
+            value={useMotif ? roles[scene] : pick("none", "هیچ")}
+          />
         </div>
       }
       code={{ language: "js", value: codeValue }}

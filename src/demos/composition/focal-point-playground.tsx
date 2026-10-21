@@ -3,6 +3,7 @@
 import { useCallback, useRef, useState } from "react";
 import { PlaygroundShell } from "@/components/playground";
 import { LabButton, LabReadout, LabSlider } from "@/components/ui";
+import { useLocale } from "@/i18n/locale";
 import { formatSnippet } from "@/lib/playground";
 
 type FocalTools = {
@@ -12,12 +13,19 @@ type FocalTools = {
 };
 
 const DEFAULT: FocalTools = { size: 56, contrast: 0.85, blurBg: 0 };
-const SNIPPET = `// Focal point = size + contrast + isolation
+
+const SNIPPET_EN = `// Focal point = size + contrast + isolation
+subject.style.width = "{{size}}px";
+subject.style.filter = "contrast({{contrast}})";
+background.style.filter = "blur({{blurBg}}px)";`;
+
+const SNIPPET_FA = `// نقطه کانونی = اندازه + کنتراست + جداسازی
 subject.style.width = "{{size}}px";
 subject.style.filter = "contrast({{contrast}})";
 background.style.filter = "blur({{blurBg}}px)";`;
 
 export function FocalPointPlayground() {
+  const { pick } = useLocale();
   const stageRef = useRef<HTMLDivElement>(null);
   const [pos, setPos] = useState({ x: 58, y: 42 });
   const [tools, setTools] = useState<FocalTools>({ ...DEFAULT });
@@ -50,21 +58,38 @@ export function FocalPointPlayground() {
     drag.current = null;
   }, []);
 
-  const codeValue = formatSnippet(SNIPPET, {
+  const codeValue = formatSnippet(pick(SNIPPET_EN, SNIPPET_FA), {
     size: tools.size,
     contrast: tools.contrast.toFixed(2),
     blurBg: tools.blurBg,
   });
 
+  const presets = [
+    { id: "center", label: pick("Center", "مرکز"), x: 50, y: 50 },
+    { id: "thirds", label: pick("Rule ⅓", "قانون ⅓"), x: 33, y: 33 },
+    {
+      id: "lower-right",
+      label: pick("Lower right", "پایین راست"),
+      x: 68,
+      y: 62,
+    },
+  ];
+
   return (
     <PlaygroundShell
-      title="Focal Point Lab"
-      description="Drag the subject. Size, contrast, and background blur compete to own the eye."
+      title={pick("Focal Point Lab", "آزمایشگاه نقطه کانونی")}
+      description={pick(
+        "Drag the subject. Size, contrast, and background blur compete to own the eye.",
+        "سوژه را بکش. اندازه، کنتراست و بلور پس‌زمینه برای جلب چشم رقابت می‌کنند.",
+      )}
       onReset={() => {
         setPos({ x: 58, y: 42 });
         setTools({ ...DEFAULT });
       }}
-      stageLabel="Draggable focal point stage"
+      stageLabel={pick(
+        "Draggable focal point stage",
+        "صحنهٔ نقطه کانونی قابل‌کشیدن",
+      )}
       stageClassName="h-72 sm:h-80"
       stage={
         <div
@@ -97,7 +122,7 @@ export function FocalPointPlayground() {
               height: tools.size * 0.75,
               filter: `contrast(${tools.contrast})`,
             }}
-            aria-label="Drag focal subject"
+            aria-label={pick("Drag focal subject", "کشیدن سوژهٔ کانونی")}
             onPointerDown={onPointerDown}
             onPointerMove={onPointerMove}
             onPointerUp={onPointerUp}
@@ -107,14 +132,14 @@ export function FocalPointPlayground() {
       }
       controls={
         <div className="flex w-full flex-col gap-3">
-          <div role="group" aria-label="Position presets" className="flex flex-wrap gap-2">
-            {[
-              { label: "Center", x: 50, y: 50 },
-              { label: "Rule ⅓", x: 33, y: 33 },
-              { label: "Lower right", x: 68, y: 62 },
-            ].map((p) => (
+          <div
+            role="group"
+            aria-label={pick("Position presets", "پیش‌تنظیم موقعیت")}
+            className="flex flex-wrap gap-2"
+          >
+            {presets.map((p) => (
               <LabButton
-                key={p.label}
+                key={p.id}
                 variant="outline"
                 pressed={Math.abs(pos.x - p.x) < 1 && Math.abs(pos.y - p.y) < 1}
                 onClick={() => setPos({ x: p.x, y: p.y })}
@@ -125,7 +150,7 @@ export function FocalPointPlayground() {
           </div>
           <div className="grid gap-3 sm:grid-cols-3">
             <LabSlider
-              label="Size"
+              label={pick("Size", "اندازه")}
               unit="px"
               min={28}
               max={96}
@@ -134,7 +159,7 @@ export function FocalPointPlayground() {
               onChange={(size) => setTools((t) => ({ ...t, size }))}
             />
             <LabSlider
-              label="Contrast"
+              label={pick("Contrast", "کنتراست")}
               min={0.4}
               max={1.4}
               step={0.05}
@@ -142,7 +167,7 @@ export function FocalPointPlayground() {
               onChange={(contrast) => setTools((t) => ({ ...t, contrast }))}
             />
             <LabSlider
-              label="BG blur"
+              label={pick("BG blur", "بلور پس‌زمینه")}
               unit="px"
               min={0}
               max={12}
@@ -152,7 +177,7 @@ export function FocalPointPlayground() {
             />
           </div>
           <LabReadout
-            label="pos:"
+            label={pick("pos:", "موقعیت:")}
             value={`${pos.x.toFixed(0)}%, ${pos.y.toFixed(0)}%`}
           />
         </div>

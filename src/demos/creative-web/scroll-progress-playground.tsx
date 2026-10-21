@@ -7,11 +7,21 @@ import { useEffect, useRef, useState } from "react";
 import { PlaygroundShell } from "@/components/playground";
 import { LabButton, LabReadout } from "@/components/ui";
 import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
+import { useLocale } from "@/i18n/locale";
 import { formatSnippet } from "@/lib/playground";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
-const SNIPPET = `ScrollTrigger.create({
+const SNIPPET_EN = `ScrollTrigger.create({
+  trigger: section,
+  start: "top top",
+  end: "bottom bottom",
+  scrub: true,
+  onUpdate: (self) => setProgress(self.progress),
+});`;
+
+const SNIPPET_FA = `// اسکراب: پیشرفت اسکرول، نشانگر را حرکت می‌دهد
+ScrollTrigger.create({
   trigger: section,
   start: "top top",
   end: "bottom bottom",
@@ -20,6 +30,7 @@ const SNIPPET = `ScrollTrigger.create({
 });`;
 
 export function ScrollProgressPlayground() {
+  const { pick } = useLocale();
   const reducedMotion = usePrefersReducedMotion();
   const scrollerRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
@@ -65,25 +76,31 @@ export function ScrollProgressPlayground() {
     el.scrollTop = 0;
   }, [replayKey]);
 
-  const codeValue = formatSnippet(SNIPPET, {});
+  const codeValue = formatSnippet(pick(SNIPPET_EN, SNIPPET_FA), {});
 
   return (
     <PlaygroundShell
-      title="ScrollTrigger Progress"
+      title={pick("ScrollTrigger Progress", "پیشرفت ScrollTrigger")}
       description={
         reducedMotion
-          ? "Reduced motion: scroll container shown without scrub binding."
-          : "Scroll inside the stage — progress drives the yellow marker (scrubbed)."
+          ? pick(
+              "Reduced motion: scroll container shown without scrub binding.",
+              "حرکت کاهش‌یافته: محفظه اسکرول بدون اتصال scrub نمایش داده می‌شود.",
+            )
+          : pick(
+              "Scroll inside the stage — progress drives the yellow marker (scrubbed).",
+              "داخل صحنه اسکرول کن؛ پیشرفت، نشانگر زرد را حرکت می‌دهد (با scrub).",
+            )
       }
       onReset={() => setReplayKey((k) => k + 1)}
-      stageLabel="Scroll progress stage"
+      stageLabel={pick("Scroll progress stage", "صحنه پیشرفت اسکرول")}
       stageClassName="h-80"
       stage={
         <div
           ref={scrollerRef}
           className="h-full overflow-y-auto overscroll-contain bg-[#0c0c0e]"
           tabIndex={0}
-          aria-label="Scrollable demo region"
+          aria-label={pick("Scrollable demo region", "ناحیه نمایشیِ قابل اسکرول")}
         >
           <div ref={trackRef} className="relative min-h-[220%]">
             <div className="sticky top-0 flex h-48 items-center justify-center border-b border-lab-line bg-[#101012]/p-4">
@@ -94,14 +111,27 @@ export function ScrollProgressPlayground() {
                 />
               </div>
               <p className="ml-6 max-w-[12rem] font-mono text-xs text-lab-muted">
-                Sticky readout while the tall track scrolls underneath.
+                {pick(
+                  "Sticky readout while the tall track scrolls underneath.",
+                  "نمایشگر چسبان، درحالی‌که مسیر بلند زیر آن اسکرول می‌شود.",
+                )}
               </p>
             </div>
             <div className="space-y-8 p-6 font-mono text-xs text-lab-muted">
-              <p>Keep scrolling…</p>
-              <p>Progress maps 0 → 1 across this track.</p>
-              <p>Use scrub for scroll-linked motion; avoid fighting native scroll.</p>
-              <p>End of track.</p>
+              <p>{pick("Keep scrolling…", "به اسکرول ادامه بده…")}</p>
+              <p>
+                {pick(
+                  "Progress maps 0 → 1 across this track.",
+                  "پیشرفت در سراسر این مسیر از 0 تا 1 نگاشت می‌شود.",
+                )}
+              </p>
+              <p>
+                {pick(
+                  "Use scrub for scroll-linked motion; avoid fighting native scroll.",
+                  "از scrub برای حرکتِ متصل به اسکرول استفاده کن و با اسکرول بومی درگیر نشو.",
+                )}
+              </p>
+              <p>{pick("End of track.", "پایان مسیر.")}</p>
             </div>
           </div>
         </div>
@@ -109,9 +139,9 @@ export function ScrollProgressPlayground() {
       controls={
         <div className="flex w-full flex-col gap-3">
           <LabButton variant="outline" onClick={() => setReplayKey((k) => k + 1)}>
-            Reset scroll
+            {pick("Reset scroll", "بازنشانی اسکرول")}
           </LabButton>
-          <LabReadout label="progress:" value={progress.toFixed(3)} />
+          <LabReadout label={pick("progress:", "پیشرفت:")} value={progress.toFixed(3)} />
         </div>
       }
       code={{ language: "js", value: codeValue }}

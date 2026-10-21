@@ -6,6 +6,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { PlaygroundShell } from "@/components/playground";
 import { LabButton, LabReadout, LabSlider } from "@/components/ui";
 import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
+import { useLocale } from "@/i18n/locale";
 import { formatSnippet } from "@/lib/playground";
 import {
   approxFocusDistance,
@@ -17,19 +18,24 @@ import {
   type DofParams,
 } from "./dof-math";
 
+function SceneLoading() {
+  const { common } = useLocale();
+  return (
+    <div className="flex h-full items-center justify-center font-mono text-xs text-lab-muted">
+      {common.loadingWebgl}
+    </div>
+  );
+}
+
 const DofScene = dynamic(
   () => import("./dof-scene").then((m) => m.DofScene),
   {
     ssr: false,
-    loading: () => (
-      <div className="flex h-full items-center justify-center font-mono text-xs text-lab-muted">
-        Loading WebGL stage…
-      </div>
-    ),
+    loading: SceneLoading,
   },
 );
 
-const SNIPPET = `// Approx. DOF via postprocessing (not a physical lens)
+const SNIPPET_EN = `// Approx. DOF via postprocessing (not a physical lens)
 // Focus plane at world Z = {{focusZ}}
 const focusTarget = [0, 0.55, {{focusZ}}];
 
@@ -40,7 +46,25 @@ const focusTarget = [0, 0.55, {{focusZ}}];
   worldFocusRange={{focusRange}}
 />`;
 
+const SNIPPET_FA = `// تقریب عمق میدان با postprocessing (نه لنز فیزیکی)
+// صفحه فوکوس در world Z = {{focusZ}}
+const focusTarget = [0, 0.55, {{focusZ}}];
+
+<DepthOfField
+  target={focusTarget}
+  focalLength={0.02}
+  bokehScale={{bokehScale}}
+  worldFocusRange={{focusRange}}
+/>`;
+
+const PLANE_LABEL: Record<DofFocusPlane, { en: string; fa: string }> = {
+  near: { en: "Near", fa: "نزدیک" },
+  mid: { en: "Mid", fa: "میانی" },
+  far: { en: "Far", fa: "دور" },
+};
+
 export function DofPlayground() {
+  const { locale, fa, pick } = useLocale();
   const reducedMotion = usePrefersReducedMotion();
   const [params, setParams] = useState<DofParams>({ ...DEFAULT_DOF });
   const [enabled, setEnabled] = useState(true);
@@ -108,30 +132,41 @@ export function DofPlayground() {
     setParams({ ...DEFAULT_DOF });
   }
 
-  const codeValue = formatSnippet(SNIPPET, {
+  const codeValue = formatSnippet(fa ? SNIPPET_FA : SNIPPET_EN, {
     focusZ: Number(params.focusZ.toFixed(2)),
     bokehScale: Number(params.bokehScale.toFixed(1)),
     focusRange: Number(params.focusRange.toFixed(2)),
   });
 
   const description = reducedMotion
-    ? "Reduced motion: rack animation jumps. DOF here is a post-process approximation — teach focus distance, not physical lens math."
-    : "Rack focus moves the sharp plane between Near → Far. This is a post-process approximation, not a real thin-lens simulation.";
+    ? pick(
+        "Reduced motion: rack animation jumps. DOF here is a post-process approximation — teach focus distance, not physical lens math.",
+        "حرکت کاهش‌یافته: انیمیشن تغییر فوکوس می‌پرد. عمق میدان اینجا تقریب پست‌پروسس است — فاصله فوکوس را آموزش بده، نه ریاضی لنز فیزیکی.",
+      )
+    : pick(
+        "Rack focus moves the sharp plane between Near → Far. This is a post-process approximation, not a real thin-lens simulation.",
+        "تغییر فوکوس صفحهٔ شارپ را بین نزدیک → دور جابه‌جا می‌کند. این تقریب پست‌پروسس است، نه شبیه‌سازی واقعی لنز نازک.",
+      );
+
+  const planeLabel = PLANE_LABEL[activePlane][locale];
 
   return (
     <PlaygroundShell
-      title="Depth of Field / Rack Focus"
+      title={pick(
+        "Depth of Field / Rack Focus",
+        "عمق میدان / تغییر فوکوس",
+      )}
       description={description}
       onReset={handleReset}
       onReplay={reducedMotion ? undefined : startRack}
-      stageLabel="Depth of field 3D stage"
+      stageLabel={pick("Depth of field 3D stage", "صحنه سه‌بعدی عمق میدان")}
       stageClassName="h-72 sm:h-80"
       stage={<DofScene params={params} enabled={enabled} />}
       controls={
         <div className="flex w-full flex-col gap-3">
           <div
             role="group"
-            aria-label="Focus plane presets"
+            aria-label={pick("Focus plane presets", "پیش‌تنظیم‌های صفحه فوکوس")}
             className="flex flex-wrap items-center gap-2"
           >
             {(Object.keys(DOF_SUBJECTS) as DofFocusPlane[]).map((plane) => (
@@ -142,7 +177,7 @@ export function DofPlayground() {
                 onClick={() => jumpPlane(plane)}
                 disabled={racking}
               >
-                {DOF_SUBJECTS[plane].label}
+                {PLANE_LABEL[plane][locale]}
               </LabButton>
             ))}
             <LabButton
@@ -151,7 +186,9 @@ export function DofPlayground() {
               onClick={startRack}
               disabled={racking}
             >
-              {reducedMotion ? "Jump focus" : "Rack focus"}
+              {reducedMotion
+                ? pick("Jump focus", "پرش فوکوس")
+                : pick("Rack focus", "تغییر فوکوس")}
             </LabButton>
             <LabButton
               pressed={!enabled}
@@ -161,12 +198,14 @@ export function DofPlayground() {
                 setEnabled((v) => !v);
               }}
             >
-              {enabled ? "DOF on" : "DOF off"}
+              {enabled
+                ? pick("DOF on", "عمق میدان روشن")
+                : pick("DOF off", "عمق میدان خاموش")}
             </LabButton>
           </div>
           <div className="grid w-full gap-3 sm:grid-cols-3">
             <LabSlider
-              label="Focus Z"
+              label={pick("Focus Z", "فوکوس Z")}
               min={-9}
               max={0.5}
               step={0.05}
@@ -175,7 +214,7 @@ export function DofPlayground() {
               disabled={racking}
             />
             <LabSlider
-              label="Bokeh"
+              label={pick("Bokeh", "بوکه")}
               min={0}
               max={10}
               step={0.1}
@@ -184,7 +223,7 @@ export function DofPlayground() {
               disabled={!enabled}
             />
             <LabSlider
-              label="Focus range"
+              label={pick("Focus range", "بازه فوکوس")}
               min={0.2}
               max={4}
               step={0.05}
@@ -194,11 +233,21 @@ export function DofPlayground() {
             />
           </div>
           <div className="flex flex-wrap gap-4">
-            <LabReadout label="plane:" value={DOF_SUBJECTS[activePlane].label} />
-            <LabReadout label="≈ distance:" value={`${distance.toFixed(2)} u`} />
             <LabReadout
-              label="effect:"
-              value={enabled ? "postprocess DOF" : "off (sharp)"}
+              label={pick("plane:", "صفحه:")}
+              value={planeLabel}
+            />
+            <LabReadout
+              label={pick("≈ distance:", "≈ فاصله:")}
+              value={`${distance.toFixed(2)} u`}
+            />
+            <LabReadout
+              label={pick("effect:", "اثر:")}
+              value={
+                enabled
+                  ? pick("postprocess DOF", "عمق میدان پست‌پروسس")
+                  : pick("off (sharp)", "خاموش (شارپ)")
+              }
             />
           </div>
         </div>

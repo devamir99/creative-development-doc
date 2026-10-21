@@ -6,16 +6,23 @@ import { useRef, useState } from "react";
 import { PlaygroundShell } from "@/components/playground";
 import { LabButton, LabReadout, LabSlider } from "@/components/ui";
 import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
+import { useLocale } from "@/i18n/locale";
 import { formatSnippet } from "@/lib/playground";
 
 gsap.registerPlugin(useGSAP);
 
-const SNIPPET = `// Layers move at different rates along one progress
+const SNIPPET_EN = `// Layers move at different rates along one progress
+far.x = progress * {{far}};
+mid.x = progress * {{mid}};
+near.x = progress * {{near}};`;
+
+const SNIPPET_FA = `// لایه‌ها با نرخ‌های متفاوت در امتداد یک پیشرفت حرکت می‌کنند
 far.x = progress * {{far}};
 mid.x = progress * {{mid}};
 near.x = progress * {{near}};`;
 
 export function ParallaxPlayground() {
+  const { pick } = useLocale();
   const reducedMotion = usePrefersReducedMotion();
   const [progress, setProgress] = useState(0.35);
   const [near, setNear] = useState(80);
@@ -72,15 +79,25 @@ export function ParallaxPlayground() {
     });
   }
 
-  const codeValue = formatSnippet(SNIPPET, { far, mid, near });
+  const codeValue = formatSnippet(pick(SNIPPET_EN, SNIPPET_FA), {
+    far,
+    mid,
+    near,
+  });
 
   return (
     <PlaygroundShell
-      title="Parallax"
+      title={pick("Parallax", "پارالاکس")}
       description={
         reducedMotion
-          ? "Reduced motion: scrub layers without auto-play."
-          : "One progress value — far/mid/near move at different rates (depth cue)."
+          ? pick(
+              "Reduced motion: scrub layers without auto-play.",
+              "حرکت کاهش‌یافته: لایه‌ها را بدون پخش خودکار اسکراب کن.",
+            )
+          : pick(
+              "One progress value — far/mid/near move at different rates (depth cue).",
+              "یک مقدار پیشرفت — دور/میانی/نزدیک با نرخ‌های متفاوت حرکت می‌کنند (نشانهٔ عمق).",
+            )
       }
       onReset={() => {
         gsap.killTweensOf(proxy.current);
@@ -91,7 +108,7 @@ export function ParallaxPlayground() {
         setFar(16);
       }}
       onReplay={reducedMotion ? undefined : autoPlay}
-      stageLabel="Parallax layer stage"
+      stageLabel={pick("Parallax layer stage", "صحنهٔ لایه‌های پارالاکس")}
       stageClassName="h-56 sm:h-64"
       stage={
         <div className="relative h-full overflow-hidden bg-[#0c0c0e]">
@@ -116,11 +133,11 @@ export function ParallaxPlayground() {
         <div className="flex w-full flex-col gap-3">
           <div className="flex flex-wrap gap-2">
             <LabButton variant="outline" onClick={autoPlay} disabled={playing}>
-              Play progress
+              {pick("Play progress", "پخش پیشرفت")}
             </LabButton>
           </div>
           <LabSlider
-            label="Progress"
+            label={pick("Progress", "پیشرفت")}
             min={0}
             max={1}
             step={0.01}
@@ -129,11 +146,35 @@ export function ParallaxPlayground() {
             disabled={playing}
           />
           <div className="grid gap-3 sm:grid-cols-3">
-            <LabSlider label="Far amp" min={0} max={60} step={1} value={far} onChange={setFar} disabled={playing} />
-            <LabSlider label="Mid amp" min={0} max={100} step={1} value={mid} onChange={setMid} disabled={playing} />
-            <LabSlider label="Near amp" min={0} max={140} step={1} value={near} onChange={setNear} disabled={playing} />
+            <LabSlider
+              label={pick("Far amp", "دامنهٔ دور")}
+              min={0}
+              max={60}
+              step={1}
+              value={far}
+              onChange={setFar}
+              disabled={playing}
+            />
+            <LabSlider
+              label={pick("Mid amp", "دامنهٔ میانی")}
+              min={0}
+              max={100}
+              step={1}
+              value={mid}
+              onChange={setMid}
+              disabled={playing}
+            />
+            <LabSlider
+              label={pick("Near amp", "دامنهٔ نزدیک")}
+              min={0}
+              max={140}
+              step={1}
+              value={near}
+              onChange={setNear}
+              disabled={playing}
+            />
           </div>
-          <LabReadout label="p:" value={progress.toFixed(2)} />
+          <LabReadout label={pick("p:", "پیشرفت (p):")} value={progress.toFixed(2)} />
         </div>
       }
       code={{ language: "js", value: codeValue }}

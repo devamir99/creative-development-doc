@@ -6,6 +6,7 @@ import { useRef, useState } from "react";
 import { PlaygroundShell } from "@/components/playground";
 import { LabButton, LabReadout, LabSlider } from "@/components/ui";
 import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
+import { useLocale } from "@/i18n/locale";
 import { formatSnippet } from "@/lib/playground";
 
 gsap.registerPlugin(useGSAP);
@@ -20,6 +21,7 @@ const SNIPPET = `gsap.from(".item", {
 });`;
 
 export function StaggerPlayground() {
+  const { pick } = useLocale();
   const reducedMotion = usePrefersReducedMotion();
   const rootRef = useRef<HTMLDivElement>(null);
   const [stagger, setStagger] = useState(0.08);
@@ -56,11 +58,17 @@ export function StaggerPlayground() {
 
   return (
     <PlaygroundShell
-      title="Stagger"
+      title={pick("Stagger", "پلکانی (Stagger)")}
       description={
         reducedMotion
-          ? "Reduced motion: items shown in final state."
-          : "Same tween on many elements — only the start times fan out."
+          ? pick(
+              "Reduced motion: items shown in final state.",
+              "حرکت کاهش‌یافته: آیتم‌ها در حالت نهایی نمایش داده می‌شوند.",
+            )
+          : pick(
+              "Same tween on many elements — only the start times fan out.",
+              "همان تویین روی چند عنصر — فقط زمان‌های شروع پخش می‌شوند.",
+            )
       }
       onReset={() => {
         setStagger(0.08);
@@ -68,7 +76,7 @@ export function StaggerPlayground() {
         setReplayKey((k) => k + 1);
       }}
       onReplay={reducedMotion ? undefined : () => setReplayKey((k) => k + 1)}
-      stageLabel="Stagger motion stage"
+      stageLabel={pick("Stagger motion stage", "صحنهٔ حرکت پلکانی")}
       stageClassName="h-56 sm:h-64"
       stage={
         <div
@@ -87,7 +95,11 @@ export function StaggerPlayground() {
       }
       controls={
         <div className="flex w-full flex-col gap-3">
-          <div role="group" aria-label="Stagger presets" className="flex flex-wrap gap-2">
+          <div
+            role="group"
+            aria-label={pick("Stagger presets", "پیش‌تنظیم‌های پلکانی")}
+            className="flex flex-wrap gap-2"
+          >
             {[0, 0.05, 0.1, 0.2].map((v) => (
               <LabButton
                 key={v}
@@ -95,13 +107,13 @@ export function StaggerPlayground() {
                 pressed={Math.abs(stagger - v) < 0.001}
                 onClick={() => setStagger(v)}
               >
-                {v === 0 ? "None" : `${v}s`}
+                {v === 0 ? pick("None", "هیچ") : `${v}s`}
               </LabButton>
             ))}
           </div>
           <div className="grid gap-3 sm:grid-cols-2">
             <LabSlider
-              label="Stagger"
+              label={pick("Stagger", "پلکانی")}
               unit="s"
               min={0}
               max={0.35}
@@ -110,7 +122,7 @@ export function StaggerPlayground() {
               onChange={setStagger}
             />
             <LabSlider
-              label="Duration"
+              label={pick("Duration", "مدت")}
               unit="s"
               min={0.2}
               max={1}
@@ -119,7 +131,10 @@ export function StaggerPlayground() {
               onChange={setDuration}
             />
           </div>
-          <LabReadout label="items:" value={`${COUNT}`} />
+          <LabReadout
+            label={pick("items:", "آیتم‌ها:")}
+            value={`${COUNT}`}
+          />
         </div>
       }
       code={{ language: "js", value: codeValue }}

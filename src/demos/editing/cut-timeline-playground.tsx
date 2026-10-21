@@ -6,20 +6,21 @@ import { useMemo, useRef, useState } from "react";
 import { PlaygroundShell } from "@/components/playground";
 import { LabButton, LabReadout, LabSlider } from "@/components/ui";
 import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
+import { useLocale } from "@/i18n/locale";
 import { formatSnippet } from "@/lib/playground";
 
 gsap.registerPlugin(useGSAP);
 
 export type CutMode = "hard" | "dissolve" | "jump" | "match";
 
-const MODES: { id: CutMode; label: string }[] = [
-  { id: "hard", label: "Hard cut" },
-  { id: "dissolve", label: "Dissolve" },
-  { id: "jump", label: "Jump cut" },
-  { id: "match", label: "Match cut" },
+const MODES: { id: CutMode }[] = [
+  { id: "hard" },
+  { id: "dissolve" },
+  { id: "jump" },
+  { id: "match" },
 ];
 
-const SNIPPET = `// Conceptual edit, not a video API
+const SNIPPET_EN = `// Conceptual edit, not a video API
 const mode = "{{mode}}";
 const cutAt = {{cutAt}}; // 0–1 along the timeline
 const dissolve = {{dissolve}}; // seconds of overlap (dissolve only)
@@ -29,7 +30,18 @@ const dissolve = {{dissolve}}; // seconds of overlap (dissolve only)
 // Jump: same framing language, time skips (A→A′)
 // Match: shared shape/motion bridges A→B`;
 
+const SNIPPET_FA = `// ویرایش مفهومی، نه یک API ویدیویی
+const mode = "{{mode}}";
+const cutAt = {{cutAt}}; // 0–1 در امتداد خط زمانی
+const dissolve = {{dissolve}}; // ثانیه‌های هم‌پوشانی (فقط برای dissolve)
+
+// Hard: نمای A تمام می‌شود و B از cutAt شروع می‌شود
+// Dissolve: محو تدریجی A→B به‌اندازهٔ dissolve پیرامون cutAt
+// Jump: همان زبان قاب‌بندی، با پرش زمانی (A→A′)
+// Match: شکل یا حرکت مشترک، پل بین A→B می‌شود`;
+
 export function CutTimelinePlayground() {
+  const { pick } = useLocale();
   const reducedMotion = usePrefersReducedMotion();
   const [mode, setMode] = useState<CutMode>("hard");
   const [cutAt, setCutAt] = useState(0.45);
@@ -42,20 +54,36 @@ export function CutTimelinePlayground() {
   const shotARef = useRef<HTMLDivElement>(null);
   const shotBRef = useRef<HTMLDivElement>(null);
 
+  const modeLabel = (id: CutMode) => {
+    switch (id) {
+      case "hard":
+        return pick("Hard cut", "برش سخت");
+      case "dissolve":
+        return pick("Dissolve", "دیزالو");
+      case "jump":
+        return pick("Jump cut", "برش پرشی");
+      case "match":
+        return pick("Match cut", "برش تطبیقی");
+    }
+  };
+
   const cutLabel = useMemo(() => {
     switch (mode) {
       case "hard":
-        return "Instant A→B";
+        return pick("Instant A→B", "A→B آنی");
       case "dissolve":
-        return `Crossfade ~${dissolve.toFixed(2)}s`;
+        return pick(
+          `Crossfade ~${dissolve.toFixed(2)}s`,
+          `محو تدریجی ~${dissolve.toFixed(2)}s`,
+        );
       case "jump":
-        return "Same space, time skips";
+        return pick("Same space, time skips", "همان فضا، با پرش زمانی");
       case "match":
-        return "Shared graphic bridge";
+        return pick("Shared graphic bridge", "پل گرافیکی مشترک");
       default:
         return "";
     }
-  }, [mode, dissolve]);
+  }, [mode, dissolve, pick]);
 
   useGSAP(
     () => {
@@ -147,23 +175,32 @@ export function CutTimelinePlayground() {
     setReplayKey((k) => k + 1);
   }
 
-  const codeValue = formatSnippet(SNIPPET, {
+  const codeValue = formatSnippet(pick(SNIPPET_EN, SNIPPET_FA), {
     mode,
     cutAt: Number(cutAt.toFixed(2)),
     dissolve: Number(dissolve.toFixed(2)),
   });
 
   const description = reducedMotion
-    ? "Reduced motion: timeline shows the post-cut relationship without playing through."
-    : "Watch the viewer and the timeline together — the cut point is where meaning flips.";
+    ? pick(
+        "Reduced motion: timeline shows the post-cut relationship without playing through.",
+        "حرکت کاهش‌یافته: خط زمانی رابطهٔ بعد از برش را بدون پخش کامل نشان می‌دهد.",
+      )
+    : pick(
+        "Watch the viewer and the timeline together — the cut point is where meaning flips.",
+        "نما و خط زمانی را با هم ببین — نقطهٔ برش همان‌جایی است که معنا برمی‌گردد.",
+      );
 
   return (
     <PlaygroundShell
-      title="Cut Visualizer"
+      title={pick("Cut Visualizer", "نمایش‌گر برش")}
       description={description}
       onReset={handleReset}
       onReplay={reducedMotion ? undefined : handleReplay}
-      stageLabel="Editing cut comparison stage"
+      stageLabel={pick(
+        "Editing cut comparison stage",
+        "صحنهٔ مقایسهٔ برش‌های تدوین",
+      )}
       stageClassName="h-auto min-h-72"
       stage={
         <div className="flex h-full min-h-72 flex-col gap-3 p-3 sm:p-4">
@@ -174,7 +211,7 @@ export function CutTimelinePlayground() {
               aria-hidden
             >
               <span className="absolute top-2 left-2 font-mono text-[10px] tracking-wide text-lab-muted uppercase">
-                Shot A
+                {pick("Shot A", "نمای A")}
               </span>
               {mode === "match" ? (
                 <div className="size-16 rounded-full border-2 border-lab-accent bg-lab-accent/20" />
@@ -194,13 +231,17 @@ export function CutTimelinePlayground() {
               aria-hidden
             >
               <span className="absolute top-2 left-2 font-mono text-[10px] tracking-wide text-lab-muted uppercase">
-                Shot B{mode === "jump" ? " (unused)" : ""}
+                {pick("Shot B", "نمای B")}
+                {mode === "jump" ? pick(" (unused)", " (استفاده‌نشده)") : ""}
               </span>
               {mode === "match" ? (
                 <div className="size-20 rounded-full border-2 border-zinc-300 bg-zinc-300/15" />
               ) : mode === "jump" ? (
                 <p className="px-4 text-center font-mono text-[10px] text-lab-muted">
-                  Jump stays in Shot A&apos;s world
+                  {pick(
+                    "Jump stays in Shot A's world",
+                    "برش پرشی در دنیای نمای A می‌ماند",
+                  )}
                 </p>
               ) : (
                 <div className="h-20 w-16 rotate-6 bg-zinc-400" />
@@ -224,7 +265,7 @@ export function CutTimelinePlayground() {
                   left: `calc(${cutAt * 100}% - ${dissolve * 12}%)`,
                   width: `${Math.max(8, dissolve * 24)}%`,
                 }}
-                title="Dissolve overlap"
+                title={pick("Dissolve overlap", "هم‌پوشانی دیزالو")}
               />
             ) : null}
             <div
@@ -234,7 +275,12 @@ export function CutTimelinePlayground() {
             />
             <div className="absolute inset-0 flex items-center justify-between px-2 font-mono text-[10px] text-lab-muted">
               <span>A</span>
-              <span>cut @ {(cutAt * 100).toFixed(0)}%</span>
+              <span>
+                {pick(
+                  `cut @ ${(cutAt * 100).toFixed(0)}%`,
+                  `برش در ${(cutAt * 100).toFixed(0)}%`,
+                )}
+              </span>
               <span>B</span>
             </div>
           </div>
@@ -244,7 +290,7 @@ export function CutTimelinePlayground() {
         <div className="flex w-full flex-col gap-3">
           <div
             role="group"
-            aria-label="Cut type"
+            aria-label={pick("Cut type", "نوع برش")}
             className="flex flex-wrap items-center gap-2"
           >
             {MODES.map((m) => (
@@ -255,13 +301,13 @@ export function CutTimelinePlayground() {
                 onClick={() => setMode(m.id)}
                 disabled={playing && !reducedMotion}
               >
-                {m.label}
+                {modeLabel(m.id)}
               </LabButton>
             ))}
           </div>
           <div className="grid w-full gap-3 sm:grid-cols-2">
             <LabSlider
-              label="Cut position"
+              label={pick("Cut position", "موقعیت برش")}
               min={0.15}
               max={0.85}
               step={0.01}
@@ -270,7 +316,7 @@ export function CutTimelinePlayground() {
               disabled={playing && !reducedMotion}
             />
             <LabSlider
-              label="Dissolve length"
+              label={pick("Dissolve length", "طول دیزالو")}
               unit="s"
               min={0.1}
               max={1}
@@ -281,9 +327,9 @@ export function CutTimelinePlayground() {
             />
           </div>
           <div className="flex flex-wrap gap-4">
-            <LabReadout label="mode:" value={cutLabel} />
+            <LabReadout label={pick("mode:", "حالت:")} value={cutLabel} />
             <LabReadout
-              label="playhead:"
+              label={pick("playhead:", "نشانگر پخش:")}
               value={`${(progress * 100).toFixed(0)}%`}
             />
           </div>

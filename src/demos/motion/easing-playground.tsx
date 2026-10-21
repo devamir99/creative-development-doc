@@ -7,19 +7,25 @@ import { useMemo, useRef, useState, type RefObject } from "react";
 import { PlaygroundShell } from "@/components/playground";
 import { LabButton, LabReadout } from "@/components/ui";
 import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
+import { useLocale } from "@/i18n/locale";
 import { formatSnippet } from "@/lib/playground";
 
 gsap.registerPlugin(useGSAP);
+
+function EasingSceneLoading() {
+  const { common } = useLocale();
+  return (
+    <div className="flex h-40 items-center justify-center font-mono text-xs text-lab-muted">
+      {common.loadingWebgl}
+    </div>
+  );
+}
 
 const EasingScene = dynamic(
   () => import("./easing-scene").then((m) => m.EasingScene),
   {
     ssr: false,
-    loading: () => (
-      <div className="flex h-40 items-center justify-center font-mono text-xs text-lab-muted">
-        Loading WebGL stage…
-      </div>
-    ),
+    loading: () => <EasingSceneLoading />,
   },
 );
 
@@ -109,19 +115,23 @@ function MotionLane({
 }
 
 function EaseCurve({ ease }: { ease: string }) {
+  const { pick } = useLocale();
   const primary = useMemo(() => sampleEasePath(ease), [ease]);
   const linear = useMemo(() => sampleEasePath("none"), []);
 
   return (
     <div className="border-b border-lab-line px-4 py-2">
       <p className="mb-1 font-mono text-[10px] tracking-wide text-lab-muted uppercase">
-        Curve · progress vs time
+        {pick("Curve · progress vs time", "منحنی · پیشرفت در برابر زمان")}
       </p>
       <svg
         viewBox={`0 0 ${CURVE_W} ${CURVE_H}`}
         className="h-24 w-full max-w-md text-lab-accent"
         role="img"
-        aria-label={`Easing curve for ${ease}`}
+        aria-label={pick(
+          `Easing curve for ${ease}`,
+          `منحنی ایزینگ برای ${ease}`,
+        )}
       >
         <path
           d={linear}
@@ -144,6 +154,7 @@ function EaseCurve({ ease }: { ease: string }) {
 }
 
 export function EasingPlayground() {
+  const { pick } = useLocale();
   const primaryRef = useRef<HTMLDivElement>(null);
   const linearRef = useRef<HTMLDivElement>(null);
   const [ease, setEase] = useState<string>(DEFAULT_EASE);
@@ -183,15 +194,21 @@ export function EasingPlayground() {
 
   return (
     <PlaygroundShell
-      title="Easing Playground"
-      description="Yellow solid = selected ease. Wire box = linear. Same distance & duration — only the curve changes character. Curve graph mirrors the runway."
+      title={pick("Easing Playground", "دموی ایزینگ")}
+      description={pick(
+        "Yellow solid = selected ease. Wire box = linear. Same distance & duration — only the curve changes character. Curve graph mirrors the runway.",
+        "جعبهٔ زرد توپر = ایزینگ انتخاب‌شده. جعبهٔ خطی = خطی. همان فاصله و مدت — فقط منحنی شخصیت حرکت را عوض می‌کند. نمودار، باند مقایسه را بازتاب می‌دهد.",
+      )}
       onReplay={reducedMotion ? undefined : bump}
       onReset={() => {
         setEase(DEFAULT_EASE);
         setDuration(DEFAULT_DURATION);
         bump();
       }}
-      stageLabel="Easing WebGL runway and comparison lanes"
+      stageLabel={pick(
+        "Easing WebGL runway and comparison lanes",
+        "باند WebGL ایزینگ و خطوط مقایسه",
+      )}
       stageClassName="min-h-0"
       stage={
         <>
@@ -204,13 +221,13 @@ export function EasingPlayground() {
             />
           </div>
           <MotionLane
-            label={`A · ${ease}`}
+            label={pick(`A · ${ease}`, `الف · ${ease}`)}
             boxRef={primaryRef}
             reducedMotion={reducedMotion}
             tone="accent"
           />
           <MotionLane
-            label="B · none (linear)"
+            label={pick("B · none (linear)", "ب · none (خطی)")}
             boxRef={linearRef}
             reducedMotion={reducedMotion}
             tone="muted"
@@ -222,7 +239,7 @@ export function EasingPlayground() {
         <div className="flex w-full flex-col gap-3">
           <div
             role="group"
-            aria-label="Ease presets"
+            aria-label={pick("Ease presets", "پیش‌تنظیم‌های ایزینگ")}
             className="flex flex-wrap items-center gap-2"
           >
             {EASE_PRESETS.map((preset) => (
@@ -253,7 +270,7 @@ export function EasingPlayground() {
                 {preset.label}
               </LabButton>
             ))}
-            <LabReadout className="ms-auto" label="ease:" value={ease} />
+            <LabReadout className="ms-auto" label={pick("ease:", "ایزینگ:")} value={ease} />
           </div>
         </div>
       }
