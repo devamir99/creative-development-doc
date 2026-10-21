@@ -9,15 +9,15 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { getMDXComponents } from "@/components/mdx";
+import { isLocale } from "@/lib/i18n";
 import { source } from "@/lib/source";
 
-async function DocsContent({
-  params,
-}: {
-  params: Promise<{ slug?: string[] }>;
-}) {
-  const { slug } = await params;
-  const page = source.getPage(slug);
+type DocsParams = Promise<{ lang: string; slug?: string[] }>;
+
+async function DocsContent({ params }: { params: DocsParams }) {
+  const { lang, slug } = await params;
+  if (!isLocale(lang)) notFound();
+  const page = source.getPage(slug, lang);
   if (!page) notFound();
 
   const MDX = page.data.body;
@@ -37,7 +37,7 @@ async function DocsContent({
   );
 }
 
-export default function Page(props: PageProps<"/docs/[[...slug]]">) {
+export default function Page(props: PageProps<"/[lang]/docs/[[...slug]]">) {
   return (
     <Suspense fallback={null}>
       <DocsContent params={props.params} />
@@ -46,18 +46,37 @@ export default function Page(props: PageProps<"/docs/[[...slug]]">) {
 }
 
 export async function generateStaticParams() {
-  return source.generateParams();
+  return source.generateParams("slug", "lang");
 }
 
 export async function generateMetadata(
-  props: PageProps<"/docs/[[...slug]]">,
+  props: PageProps<"/[lang]/docs/[[...slug]]">,
 ): Promise<Metadata> {
-  const params = await props.params;
-  const page = source.getPage(params.slug);
+  const { lang, slug } = await props.params;
+  if (!isLocale(lang)) notFound();
+  const page = source.getPage(slug, lang);
   if (!page) notFound();
+
+  const slugPath = slug?.length ? `/${slug.join("/")}` : "";
+  const pathFor = (locale: string) => `/${locale}/docs${slugPath}`;
 
   return {
     title: page.data.title,
     description: page.data.description,
+    alternates: {
+      canonical: pathFor(lang),
+      languages: {
+        en: pathFor("en"),
+        fa: pathFor("fa"),
+        "x-default": pathFor("en"),
+      },
+    },
+    openGraph: {
+      title: page.data.title,
+      description: page.data.description,
+      url: pathFor(lang),
+      locale: lang === "fa" ? "fa_IR" : "en_US",
+      alternateLocale: lang === "fa" ? ["en_US"] : ["fa_IR"],
+    },
   };
 }

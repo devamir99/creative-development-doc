@@ -36,6 +36,11 @@ body {
   color: var(--lab-fg);
 }
 
+html[lang="fa"] body {
+  font-family:
+    var(--font-vazir), ui-sans-serif, system-ui, sans-serif;
+}
+
 /* Isolate code / playground stages as LTR even if a parent sets RTL later */
 :where(pre, code, kbd, samp),
 :where(.lab-ltr) {

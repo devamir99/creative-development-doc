@@ -1,6 +1,7 @@
 import type { BaseLayoutProps } from "fumadocs-ui/layouts/shared";
+import type { Locale } from "./i18n";
 
-export function baseOptions(): BaseLayoutProps {
+export function baseOptions(lang: Locale = "en"): BaseLayoutProps {
   return {
     nav: {
       title: (
@@ -11,8 +12,8 @@ export function baseOptions(): BaseLayoutProps {
     },
     links: [
       {
-        text: "Roadmap",
-        url: "/docs",
+        text: lang === "fa" ? "نقشه راه" : "Roadmap",
+        url: `/${lang}/docs`,
         active: "nested-url",
       },
     ],
