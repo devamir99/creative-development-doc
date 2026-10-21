@@ -1,7 +1,7 @@
 # Project Status — Creative Lab
 
 **Last updated:** 2026-10-21
-**State:** Bilingual EN/FA program (ADR-006) complete — FA-0…FA-7 done; awaiting user commits
+**State:** Bilingual EN/FA (ADR-006) + FarsiUI adoption (ADR-007) complete; awaiting user commits
 
 ## Snapshot
 
@@ -14,6 +14,8 @@
 | Search | Locale-filtered (`?locale=en|fa`); multilingual tokenizer |
 | SEO | `sitemap.xml`, `robots.txt`, per-page canonical + hreflang (`en`, `fa`, `x-default`) |
 | Parity QA | `npm run check:fa-parity` |
+| FA UI kit | FarsiUI in `src/components/farsiui/` (button/card/badge/separator), tokens remapped to lab dark/yellow |
+| FA polish | Typeset rhythm (leading 2.05), FarsiUI home, polished FA index texts, FarsiUI agent skills in `.cursor/` |
 | Docs sidebar | Section folders open by default (`defaultOpenLevel: 1`) |
 | Video references | ~42 visual lessons have a curated YouTube link |
 

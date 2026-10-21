@@ -92,6 +92,7 @@ Optional later: shot types, blocking, scroll cameras.
 | FA-5 content story/light/web | `COMPLETED` (2026-10-21) |
 | FA-6 content direction/projects/reference | `COMPLETED` (2026-10-21) |
 | FA-7 search/SEO/QA | `COMPLETED` (2026-10-21) |
+| FUI-1 FarsiUI adoption (ADR-007) | `COMPLETED` (2026-10-21) |
 
 ---
 
@@ -99,6 +100,6 @@ Optional later: shot types, blocking, scroll cameras.
 
 | Field | Value |
 | --- | --- |
-| **ID** | _(none — FA program complete)_ |
-| **Title** | User commits FA Batches 0–7; optional QA-002 browser/WebGL pass |
+| **ID** | _(none — FA + FarsiUI complete)_ |
+| **Title** | User commits FA Batches 0–7 + FarsiUI batch; optional QA-002 browser/WebGL pass |
 | **Blocked?** | No |

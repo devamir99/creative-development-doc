@@ -92,6 +92,17 @@ Validation: `npm run check:fa-parity` OK; tsc + ESLint passed; search `locale=fa
 
 ---
 
+## FarsiUI Batch — FarsiUI adoption for /fa (2026-10-21, ADR-007)
+
+```bash
+git add package.json package-lock.json components.json src/lib/utils.ts src/components/farsiui src/app/globals.css "src/app/[lang]/page.tsx" .cursor/skills .cursor/rules/persian-typography.mdc .cursor/rules/agents-md-persian.mdc docs/decisions/ADR-007-farsiui-adoption.md content/docs/index.fa.mdx content/docs/camera/index.fa.mdx content/docs/editing/index.fa.mdx content/docs/composition/index.fa.mdx content/docs/motion/index.fa.mdx content/docs/storytelling/index.fa.mdx content/docs/lighting/index.fa.mdx content/docs/creative-web/index.fa.mdx content/docs/direction/index.fa.mdx content/docs/projects/index.fa.mdx content/docs/reference/index.fa.mdx docs/progress docs/roadmap/TASK_BACKLOG.md
+git commit -m "feat(fa): adopt FarsiUI components, Persian typeset, and polished FA entry texts"
+```
+
+Validation: tsc + ESLint passed; parity 65/65 OK; `/fa` renders new FarsiUI home (Cards/Badges/Buttons), `/en` untouched; FA/EN docs 200.
+
+---
+
 ## Batch G — Cinematic interactive demos (2026-10-20)
 
 ```bash

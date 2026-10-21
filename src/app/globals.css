@@ -1,6 +1,10 @@
 @import "tailwindcss";
 @import "fumadocs-ui/css/neutral.css";
 @import "fumadocs-ui/css/preset.css";
+@import "tw-animate-css";
+@import "farsiui/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
 
 :root {
   --lab-bg: #09090b;
@@ -12,8 +16,88 @@
   --lab-accent-fg: #09090b;
   --lab-line: #27272a;
   --lab-panel: color-mix(in srgb, var(--lab-bg) 80%, black);
-  --background: var(--lab-bg);
-  --foreground: var(--lab-fg);
+  --background: #ffffff;
+  --foreground: #1a2433;
+  --card: #ffffff;
+  --card-foreground: #1a2433;
+  --popover: #ffffff;
+  --popover-foreground: #1a2433;
+  --primary: hsl(208 74% 43%);
+  --primary-foreground: #f4f8fc;
+  --secondary: #f4f4f5;
+  --secondary-foreground: #1a2433;
+  --muted: #f4f4f5;
+  --muted-foreground: #52525b;
+  --accent: #f4f4f5;
+  --accent-foreground: #1a2433;
+  --destructive: #c44b4b;
+  --border: #1a243314;
+  --input: #1a243333;
+  --ring: hsl(208 74% 43%);
+  --chart-1: hsl(210 48% 40%);
+  --chart-2: hsl(208 42% 48%);
+  --chart-3: hsl(205 38% 55%);
+  --chart-4: hsl(212 36% 46%);
+  --chart-5: hsl(200 34% 52%);
+  --radius: 1rem;
+  --sidebar: #ffffff;
+  --sidebar-foreground: #1a2433;
+  --sidebar-primary: hsl(208 74% 43%);
+  --sidebar-primary-foreground: #f4f8fc;
+  --sidebar-accent: #f4f4f5;
+  --sidebar-accent-foreground: #1a2433;
+  --sidebar-border: #1a243314;
+  --sidebar-ring: hsl(208 74% 43%);
+  --vega-primary: hsl(208 74% 43%);
+  --vega-primary-foreground: #f4f8fc;
+  --vega-ring: hsl(208 74% 43%);
+  --vega-brand: #5a7aa0;
+  --vega-brand-foreground: #f5f8fc;
+  --vega-chart-1: hsl(210 48% 40%);
+  --vega-chart-2: hsl(208 42% 48%);
+  --vega-chart-3: hsl(205 38% 55%);
+  --vega-chart-4: hsl(212 36% 46%);
+  --vega-chart-5: hsl(200 34% 52%);
+  --chart-up: #16a34a;
+  --chart-down: #e11d48;
+  --chart-mute: #52525b;
+  --color-chart-1: hsl(210 48% 40%);
+  --color-chart-2: hsl(208 42% 48%);
+  --color-chart-3: hsl(205 38% 55%);
+  --color-chart-4: hsl(212 36% 46%);
+  --color-chart-5: hsl(200 34% 52%);
+  --radius-field: 0.875rem;
+  --radius-surface: 1.25rem;
+  --radius-overlay: 1.125rem;
+  --radius-control: 0.875rem;
+  --radius-4xl: 1.5rem;
+  --radius-3xl: 1.25rem;
+  --radius-2xl: 1rem;
+  --radius-xl: 0.875rem;
+  --radius-lg: 0.75rem;
+  --radius-md: 0.625rem;
+  --radius-sm: 0.5rem;
+  --surface: #ffffff;
+  --surface-muted: #f4f4f5;
+  --surface-border: #1a243314;
+  --surface-filter: none;
+  --surface-opacity: 1;
+  --surface-foreground: #1a2433;
+  --field: #ffffff;
+  --field-border: #1a24331f;
+  --field-shadow: 0 1px 2px 0 #1a243308;
+  --control: #ffffff;
+  --control-border: #1a243314;
+  --control-shadow: 0 1px 2px 0 #1a24330a;
+  --overlay: #ffffff;
+  --overlay-shadow: 0 18px 40px -24px #1a243333;
+  --shadow-surface: 0 1px 2px 0 #1a243308, 0 8px 24px -18px #1a243314;
+  --shadow-field: 0 1px 2px 0 #1a243308;
+  --shadow-overlay: 0 18px 40px -24px #1a243333;
+  --shadow-control: 0 1px 2px 0 #1a24330a;
+  --shadow-press: inset 0 1px 2px #1a243314;
+  --motion-fast: 200ms;
+  --motion-ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 @theme inline {
@@ -29,6 +113,108 @@
   --color-lab-muted: var(--lab-muted);
   --color-lab-line: var(--lab-line);
   --color-lab-panel: var(--lab-panel);
+  --control-h-xs: 1.75rem;
+  --control-h-sm: 2.25rem;
+  --control-h-md: 2.5rem;
+  --control-h-lg: 2.75rem;
+  --control-icon: 1.125rem;
+  --control-icon-sm: 0.875rem;
+  --space-control-x: 0.875rem;
+  --space-control-y: 0.375rem;
+  --space-stack: 1.5rem;
+  --space-inline: 0.5rem;
+  --text-control: 0.875rem;
+  --text-control-sm: 0.8125rem;
+  --leading-control: 1.35;
+  --radius-control: var(--radius-xl);
+  --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --duration-fast: 100ms;
+  --duration-normal: 200ms;
+  --duration-slow: 300ms;
+  --ease-standard: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-linear: linear;
+  --font-heading: var(--font-sans);
+  --motion-ease: var(--motion-ease);
+  --motion-fast: var(--motion-fast);
+  --shadow-press: var(--shadow-press);
+  --shadow-control: var(--shadow-control);
+  --shadow-overlay: var(--shadow-overlay);
+  --shadow-field: var(--shadow-field);
+  --shadow-surface: var(--shadow-surface);
+  --overlay-shadow: var(--overlay-shadow);
+  --color-overlay: var(--overlay);
+  --control-shadow: var(--control-shadow);
+  --color-control-border: var(--control-border);
+  --color-control: var(--control);
+  --field-shadow: var(--field-shadow);
+  --color-field-border: var(--field-border);
+  --color-field: var(--field);
+  --color-surface-foreground: var(--surface-foreground);
+  --surface-opacity: var(--surface-opacity);
+  --surface-filter: var(--surface-filter);
+  --color-surface-border: var(--surface-border);
+  --color-surface-muted: var(--surface-muted);
+  --color-surface: var(--surface);
+  --radius-overlay: var(--radius-overlay);
+  --radius-surface: var(--radius-surface);
+  --radius-field: var(--radius-field);
+  --color-color-chart-5: var(--color-chart-5);
+  --color-color-chart-4: var(--color-chart-4);
+  --color-color-chart-3: var(--color-chart-3);
+  --color-color-chart-2: var(--color-chart-2);
+  --color-color-chart-1: var(--color-chart-1);
+  --color-chart-mute: var(--chart-mute);
+  --color-chart-down: var(--chart-down);
+  --color-chart-up: var(--chart-up);
+  --color-vega-chart-5: var(--vega-chart-5);
+  --color-vega-chart-4: var(--vega-chart-4);
+  --color-vega-chart-3: var(--vega-chart-3);
+  --color-vega-chart-2: var(--vega-chart-2);
+  --color-vega-chart-1: var(--vega-chart-1);
+  --color-vega-brand-foreground: var(--vega-brand-foreground);
+  --color-vega-brand: var(--vega-brand);
+  --color-vega-ring: var(--vega-ring);
+  --color-vega-primary-foreground: var(--vega-primary-foreground);
+  --color-vega-primary: var(--vega-primary);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
 }
 
 body {
@@ -72,4 +258,183 @@ html[lang="fa"] body {
       color-mix(in srgb, var(--lab-accent) 8%, transparent),
       transparent
     );
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.97 0.01 250);
+  --card: oklch(0.205 0.012 250);
+  --card-foreground: oklch(0.97 0.01 250);
+  --popover: oklch(0.205 0.012 250);
+  --popover-foreground: oklch(0.97 0.01 250);
+  --primary: hsl(208 70% 66%);
+  --primary-foreground: oklch(0.16 0.02 250);
+  --secondary: oklch(0.269 0.016 250);
+  --secondary-foreground: oklch(0.97 0.01 250);
+  --muted: oklch(0.269 0.016 250);
+  --muted-foreground: oklch(0.72 0.02 250);
+  --accent: oklch(0.34 0.028 250);
+  --accent-foreground: oklch(0.97 0.01 250);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(0.78 0.03 250 / 16%);
+  --input: oklch(0.78 0.03 250 / 20%);
+  --ring: hsl(208 70% 66%);
+  --chart-1: hsl(210 52% 68%);
+  --chart-2: hsl(208 46% 72%);
+  --chart-3: hsl(205 42% 76%);
+  --chart-4: hsl(212 40% 70%);
+  --chart-5: hsl(200 38% 74%);
+  --sidebar: oklch(0.205 0.012 250);
+  --sidebar-foreground: oklch(0.97 0.01 250);
+  --sidebar-primary: hsl(208 70% 66%);
+  --sidebar-primary-foreground: oklch(0.16 0.02 250);
+  --sidebar-accent: oklch(0.269 0.016 250);
+  --sidebar-accent-foreground: oklch(0.97 0.01 250);
+  --sidebar-border: oklch(0.78 0.03 250 / 16%);
+  --sidebar-ring: hsl(208 70% 66%);
+  --vega-primary: hsl(208 70% 66%);
+  --vega-primary-foreground: oklch(0.16 0.02 250);
+  --vega-ring: hsl(208 70% 66%);
+  --vega-brand: #8aafd1;
+  --vega-brand-foreground: oklch(0.16 0.02 250);
+  --vega-chart-1: hsl(210 52% 68%);
+  --vega-chart-2: hsl(208 46% 72%);
+  --vega-chart-3: hsl(205 42% 76%);
+  --vega-chart-4: hsl(212 40% 70%);
+  --vega-chart-5: hsl(200 38% 74%);
+  --chart-up: #4ADE80;
+  --chart-down: #F25F70;
+  --chart-mute: #d4d4d8;
+  --color-chart-1: hsl(210 52% 68%);
+  --color-chart-2: hsl(208 46% 72%);
+  --color-chart-3: hsl(205 42% 76%);
+  --color-chart-4: hsl(212 40% 70%);
+  --color-chart-5: hsl(200 38% 74%);
+  --surface: oklch(0.2 0.012 250);
+  --surface-muted: oklch(0.269 0.016 250);
+  --surface-border: oklch(0.78 0.03 250 / 16%);
+  --surface-filter: none;
+  --surface-opacity: 1;
+  --surface-foreground: oklch(0.72 0.02 250);
+  --field: oklch(0.205 0.012 250);
+  --field-border: oklch(0.78 0.03 250 / 18%);
+  --field-shadow: inset 0 1px 0 0 oklch(0.85 0.02 250 / 5%);
+  --control: oklch(0.205 0.012 250);
+  --control-border: oklch(0.78 0.03 250 / 16%);
+  --control-shadow: 0 1px 0 0 oklch(0.85 0.02 250 / 6%) inset;
+  --overlay: oklch(0.205 0.012 250);
+  --overlay-shadow: 0 24px 48px -28px oklch(0.12 0.02 250 / 55%);
+  --shadow-surface: 0 1px 0 0 oklch(0.85 0.02 250 / 5%) inset,
+    0 12px 28px -20px oklch(0.1 0.02 250 / 42%);
+  --shadow-field: inset 0 1px 0 0 oklch(0.85 0.02 250 / 5%);
+  --shadow-overlay: 0 24px 48px -28px oklch(0.12 0.02 250 / 55%);
+  --shadow-control: 0 1px 0 0 oklch(0.85 0.02 250 / 6%) inset;
+  --shadow-press: inset 0 1px 2px oklch(0.1 0.02 250 / 30%);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans;
+  }
+}
+
+/*
+ * Creative Lab identity over FarsiUI tokens (ADR-007).
+ * FarsiUI `init` ships a light/blue theme; this product is always dark
+ * with an electric-yellow accent, so semantic tokens are remapped here —
+ * FarsiUI components (src/components/farsiui) inherit the lab look.
+ */
+:root,
+.dark {
+  --background: var(--lab-bg);
+  --foreground: var(--lab-fg);
+  --card: var(--lab-panel);
+  --card-foreground: var(--lab-fg);
+  --popover: #101013;
+  --popover-foreground: var(--lab-fg);
+  --primary: var(--lab-accent);
+  --primary-foreground: var(--lab-accent-fg);
+  --secondary: #1d1d20;
+  --secondary-foreground: var(--lab-fg);
+  --muted: #1d1d20;
+  --muted-foreground: var(--lab-muted);
+  --accent: var(--lab-accent-dim);
+  --accent-foreground: var(--lab-fg);
+  --destructive: #f87171;
+  --border: var(--lab-line);
+  --input: #2c2c30;
+  --ring: var(--lab-accent);
+  --surface: var(--lab-panel);
+  --surface-muted: #1d1d20;
+  --surface-border: var(--lab-line);
+  --surface-foreground: var(--lab-fg);
+  --field: #101013;
+  --field-border: var(--lab-line);
+  --control: #101013;
+  --control-border: var(--lab-line);
+  --overlay: #101013;
+  --sidebar: var(--lab-bg);
+  --sidebar-foreground: var(--lab-fg);
+  --sidebar-primary: var(--lab-accent);
+  --sidebar-primary-foreground: var(--lab-accent-fg);
+  --sidebar-accent: var(--lab-accent-dim);
+  --sidebar-accent-foreground: var(--lab-fg);
+  --sidebar-border: var(--lab-line);
+  --sidebar-ring: var(--lab-accent);
+}
+
+/*
+ * Persian typeset (FarsiUI Typeset model, scoped to /fa — ADR-007).
+ * Three knobs — size / leading / flow — drive FA reading rhythm.
+ * Code and playground shells remain LTR-isolated above.
+ */
+html[lang="fa"] {
+  --typeset-size: 1.0625rem;
+  --typeset-leading: 2.05;
+  --typeset-flow: 1.15em;
+}
+
+html[lang="fa"] h1,
+html[lang="fa"] h2,
+html[lang="fa"] h3,
+html[lang="fa"] h4 {
+  font-family:
+    var(--font-vazir), ui-sans-serif, system-ui, sans-serif;
+  letter-spacing: 0;
+}
+
+html[lang="fa"] .prose {
+  font-family:
+    var(--font-vazir), ui-sans-serif, system-ui, sans-serif;
+  font-size: var(--typeset-size);
+  line-height: var(--typeset-leading);
+}
+
+html[lang="fa"] .prose p,
+html[lang="fa"] .prose li {
+  line-height: var(--typeset-leading);
+  margin-block: var(--typeset-flow);
+}
+
+html[lang="fa"] .prose h2 {
+  font-weight: 800;
+  line-height: 1.7;
+  margin-block: 1.6em 0.7em;
+}
+
+html[lang="fa"] .prose h3 {
+  font-weight: 700;
+  line-height: 1.8;
+  margin-block: 1.4em 0.6em;
+}
+
+html[lang="fa"] .prose strong {
+  color: var(--lab-fg);
+  font-weight: 700;
 }
