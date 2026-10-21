@@ -16,7 +16,6 @@ import { isLocale, type Locale } from "@/lib/i18n";
 type Phase = {
   id: string;
   title: string;
-  status: string;
   href: string;
   desc?: string;
 };
@@ -29,8 +28,11 @@ type Copy = {
   titleB: string;
   intro: string;
   primary: string;
+  primaryHref: string;
   secondary: string;
+  secondaryHref: string;
   curriculum: string;
+  enterSection: string;
   phases: Phase[];
   otherLang: string;
   otherHref: string;
@@ -38,86 +40,85 @@ type Copy = {
 
 const COPY: Record<Locale, Copy> = {
   en: {
-    eyebrow: "Development Handbook",
-    openDocs: "Open docs →",
+    eyebrow: "Documentation",
+    openDocs: "Browse docs →",
     brand: "Creative Lab",
-    titleA: "Learn cinematic craft.",
-    titleB: "Ship interactive demos.",
+    titleA: "Cinematic craft,",
+    titleB: "documented.",
     intro:
-      "Personal operating manual for camera, composition, motion, and creative web — each lesson with docs, playground, and reusable code.",
-    primary: "Continue: Timing",
-    secondary: "Review Composition",
-    curriculum: "Curriculum",
+      "A handbook for camera, composition, motion, and creative web — every lesson pairs clear writing with an interactive playground and reusable code.",
+    primary: "Browse documentation",
+    primaryHref: "/docs",
+    secondary: "Start with Camera",
+    secondaryHref: "/docs/camera",
+    curriculum: "Sections",
+    enterSection: "Open section →",
     phases: [
-      { id: "01", title: "Camera", status: "Done", href: "/docs/camera" },
-      { id: "02", title: "Editing", status: "Done", href: "/docs/editing" },
-      { id: "03", title: "Composition", status: "Done", href: "/docs/composition" },
-      { id: "04", title: "Motion Design", status: "Now", href: "/docs/motion/timing" },
-      { id: "05", title: "Storytelling", status: "Done", href: "/docs/storytelling" },
-      { id: "06", title: "Light & Color", status: "Done", href: "/docs/lighting" },
-      { id: "07", title: "Creative Web", status: "Done", href: "/docs/creative-web" },
+      { id: "01", title: "Camera", href: "/docs/camera" },
+      { id: "02", title: "Editing", href: "/docs/editing" },
+      { id: "03", title: "Composition", href: "/docs/composition" },
+      { id: "04", title: "Motion Design", href: "/docs/motion" },
+      { id: "05", title: "Storytelling", href: "/docs/storytelling" },
+      { id: "06", title: "Light & Color", href: "/docs/lighting" },
+      { id: "07", title: "Creative Web", href: "/docs/creative-web" },
     ],
     otherLang: "فارسی",
     otherHref: "/fa",
   },
   fa: {
-    eyebrow: "دفترچهٔ توسعهٔ خلاقانه",
-    openDocs: "باز کردن داکیومنت ←",
+    eyebrow: "مستندات",
+    openDocs: "مشاهدهٔ مستندات ←",
     brand: "Creative Lab",
-    titleA: "سینما را مثل یک سازنده یاد بگیر.",
-    titleB: "هر درس، یک دموی زنده.",
+    titleA: "هنر سینمایی،",
+    titleB: "مستند شده.",
     intro:
-      "Creative Lab دفترچهٔ شخصی دوربین، تدوین، ترکیب‌بندی، حرکت و وب خلاقانه است؛ هر درس یک متن روشن، یک دموی تعاملی و کدی دارد که می‌توانی همان روز در پروژه‌ات به کار ببری.",
-    primary: "شروع از زمان‌بندی حرکت",
-    secondary: "مرور ترکیب‌بندی",
-    curriculum: "نقشهٔ راه یادگیری",
+      "مرجع دوربین، تدوین، ترکیب‌بندی، حرکت و وب خلاقانه — هر درس با متن روشن، دموی تعاملی و کدی که می‌توانی در پروژه‌ات به کار ببری.",
+    primary: "مشاهدهٔ مستندات",
+    primaryHref: "/docs",
+    secondary: "شروع از دوربین",
+    secondaryHref: "/docs/camera",
+    curriculum: "بخش‌ها",
+    enterSection: "باز کردن بخش ←",
     phases: [
       {
         id: "۰۱",
         title: "دوربین",
-        status: "آماده",
         href: "/docs/camera",
         desc: "حرکت دوربین، عمق میدان و اندازهٔ نما",
       },
       {
         id: "۰۲",
         title: "تدوین",
-        status: "آماده",
         href: "/docs/editing",
         desc: "برش، ریتم و گذار بین صحنه‌ها",
       },
       {
         id: "۰۳",
         title: "ترکیب‌بندی",
-        status: "آماده",
         href: "/docs/composition",
         desc: "تعادل، نقطهٔ کانونی و هدایت چشم",
       },
       {
         id: "۰۴",
         title: "طراحی حرکت",
-        status: "شروع از اینجا",
-        href: "/docs/motion/timing",
-        desc: "زمان‌بندی، ایزینگ و فنر؛ قلب تجربهٔ کاربر",
+        href: "/docs/motion",
+        desc: "زمان‌بندی، ایزینگ و فنر",
       },
       {
         id: "۰۵",
         title: "داستان‌گویی",
-        status: "آماده",
         href: "/docs/storytelling",
         desc: "ریتم روایت، موتیف و آشکارسازی",
       },
       {
         id: "۰۶",
         title: "نور و رنگ",
-        status: "آماده",
         href: "/docs/lighting",
         desc: "نورپردازی سه‌نقطه‌ای، دمای رنگ و مه",
       },
       {
         id: "۰۷",
         title: "وب خلاقانه",
-        status: "آماده",
         href: "/docs/creative-web",
         desc: "GSAP، اسکرول و WebGL در مرورگر",
       },
@@ -172,7 +173,7 @@ function FaHome({ t, docs }: { t: Copy; docs: (href: string) => string }) {
           <Button
             size="lg"
             nativeButton={false}
-            render={<Link href={docs("/docs/motion/timing")} />}
+            render={<Link href={docs(t.primaryHref)} />}
           >
             {t.primary}
           </Button>
@@ -180,7 +181,7 @@ function FaHome({ t, docs }: { t: Copy; docs: (href: string) => string }) {
             size="lg"
             variant="outline"
             nativeButton={false}
-            render={<Link href={docs("/docs/composition")} />}
+            render={<Link href={docs(t.secondaryHref)} />}
           >
             {t.secondary}
           </Button>
@@ -197,18 +198,7 @@ function FaHome({ t, docs }: { t: Copy; docs: (href: string) => string }) {
               <Link key={phase.id} href={docs(phase.href)} className="group">
                 <Card className="h-full border-lab-line bg-lab-panel transition-colors group-hover:border-lab-accent/50">
                   <CardHeader>
-                    <div className="flex items-center justify-between gap-3">
-                      <span className="text-xs text-lab-muted">{phase.id}</span>
-                      <Badge
-                        variant={
-                          phase.status === "شروع از اینجا"
-                            ? "default"
-                            : "secondary"
-                        }
-                      >
-                        {phase.status}
-                      </Badge>
-                    </div>
+                    <span className="text-xs text-lab-muted">{phase.id}</span>
                     <CardTitle className="text-lg text-lab-fg">
                       {phase.title}
                     </CardTitle>
@@ -220,7 +210,7 @@ function FaHome({ t, docs }: { t: Copy; docs: (href: string) => string }) {
                   </CardHeader>
                   <CardContent>
                     <span className="text-sm text-lab-accent">
-                      ورود به بخش ←
+                      {t.enterSection}
                     </span>
                   </CardContent>
                 </Card>
@@ -316,13 +306,13 @@ export default async function Home({
 
         <div className="mt-10 flex flex-wrap gap-4">
           <Link
-            href={docs("/docs/motion/timing")}
+            href={docs(t.primaryHref)}
             className="inline-flex h-12 items-center bg-lab-accent px-6 text-sm font-medium text-lab-accent-fg transition-opacity hover:opacity-90"
           >
             {t.primary}
           </Link>
           <Link
-            href={docs("/docs/composition")}
+            href={docs(t.secondaryHref)}
             className="inline-flex h-12 items-center border border-lab-line px-6 text-sm text-lab-fg transition-colors hover:border-lab-accent/40"
           >
             {t.secondary}
@@ -346,8 +336,8 @@ export default async function Home({
                     </span>
                     <span className="text-lg tracking-tight">{phase.title}</span>
                   </span>
-                  <span className="font-mono text-xs text-lab-muted">
-                    {phase.status}
+                  <span className="font-mono text-xs text-lab-muted opacity-0 transition-opacity group-hover:opacity-100">
+                    {t.enterSection}
                   </span>
                 </Link>
               </li>
