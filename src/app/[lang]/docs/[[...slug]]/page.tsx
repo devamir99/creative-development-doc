@@ -37,7 +37,15 @@ async function DocsContent({ params }: { params: DocsParams }) {
   );
 }
 
-export default function Page(props: PageProps<"/[lang]/docs/[[...slug]]">) {
+export default async function Page(
+  props: PageProps<"/[lang]/docs/[[...slug]]">,
+) {
+  // Resolve the page BEFORE the Suspense boundary so unknown slugs throw
+  // notFound() before streaming starts (real 404, not a soft-404 200).
+  const { lang, slug } = await props.params;
+  if (!isLocale(lang)) notFound();
+  if (!source.getPage(slug, lang)) notFound();
+
   return (
     <Suspense fallback={null}>
       <DocsContent params={props.params} />

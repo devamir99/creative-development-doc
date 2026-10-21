@@ -56,12 +56,15 @@ strength = {{strength}};`,
     const main = mainRef.current,
       trail = trailRef.current,
       text = textRef.current;
-    if (!main) return;
-    gsap.killTweensOf([main, trail, text]);
-    gsap.set(main, { x: 0, scale: 1, borderRadius: "8%", rotate: 0 });
+    if (mode !== "kinetic" && !main) return;
+    if (mode === "kinetic" && !text) return;
+    gsap.killTweensOf(
+      [main, trail, text].filter((el): el is HTMLDivElement => el !== null),
+    );
+    if (main) gsap.set(main, { x: 0, scale: 1, borderRadius: "8%", rotate: 0 });
     if (trail) gsap.set(trail, { x: 0, opacity: 0.7 });
     if (reduced) {
-      gsap.set(main, { x: 150 });
+      if (main) gsap.set(main, { x: 150 });
       if (text) gsap.set(text.querySelectorAll("[data-letter]"), { y: 0, opacity: 1 });
       return;
     }

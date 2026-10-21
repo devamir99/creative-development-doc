@@ -1,6 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
+import { useLocale } from "@/i18n/locale";
 import { PlaygroundCodePanel } from "./playground-code-panel";
 import { PlaygroundErrorBoundary } from "./playground-error-boundary";
 import { PlaygroundStage } from "./playground-stage";
@@ -36,6 +37,8 @@ export function PlaygroundShell({
   code,
   className = "",
 }: PlaygroundShellProps) {
+  const { fa } = useLocale();
+  const chromeDir = fa ? "rtl" : "ltr";
   return (
     <div
       dir="ltr"
@@ -47,9 +50,18 @@ export function PlaygroundShell({
         .join(" ")}
     >
       <PlaygroundErrorBoundary onReset={onReset}>
-        <div className="flex flex-wrap items-start justify-between gap-3 border-b border-lab-line px-4 py-3">
+        <div
+          dir={chromeDir}
+          className="flex flex-wrap items-start justify-between gap-3 border-b border-lab-line px-4 py-3"
+        >
           <div className="min-w-0 flex-1">
-            <p className="font-mono text-[10px] tracking-[0.2em] text-lab-accent uppercase">
+            <p
+              className={
+                fa
+                  ? "text-xs font-bold text-lab-accent"
+                  : "font-mono text-[10px] tracking-[0.2em] text-lab-accent uppercase"
+              }
+            >
               {title}
             </p>
             {description ? (
@@ -69,7 +81,10 @@ export function PlaygroundShell({
         </PlaygroundStage>
 
         {controls ? (
-          <div className="flex flex-wrap items-center gap-2 px-4 py-4">
+          <div
+            dir={chromeDir}
+            className="flex flex-wrap items-center gap-2 px-4 py-4"
+          >
             {controls}
           </div>
         ) : null}

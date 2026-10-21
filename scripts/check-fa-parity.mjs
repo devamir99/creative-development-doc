@@ -2,14 +2,17 @@
  * FA parity QA (ADR-006): every EN MDX page must have a Persian twin.
  * Checks:
  *  1. Every `*.mdx` (EN) has a sibling `*.fa.mdx`; every `meta.json` has `meta.fa.json`.
- *  2. Every `meta.fa.json` has the same `pages` order as its `meta.json`.
- *  3. No absolute `/docs/...` links in `*.fa.mdx` (relative links only).
- *  4. Playground component tags are preserved between EN and FA twins.
- *  5. FA files have frontmatter title.
- * Run: node scripts/check-fa-parity.mjs
+ *  2. Every `meta.fa.json` has the same `pages` order as its `meta.json`
+ *     (separator labels are translated; page order + separator count compared).
+ *  3. Playground component tags are preserved between EN and FA twins.
+ *  4. FA files have frontmatter title.
+ *  5. Every in-content link in every MDX (EN + FA) resolves the way Fumadocs
+ *     `resolveHref` does: file-relative with `.mdx` extension, looked up by
+ *     logical file path. Absolute `/docs/...` and extensionless links fail.
+ * Run: npm run check:fa-parity
  */
 import { readdirSync, readFileSync, existsSync } from "node:fs";
-import { join, dirname } from "node:path";
+import { join, dirname, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..", "content", "docs");
@@ -27,6 +30,7 @@ function walk(dir) {
 const files = walk(root);
 const enPages = files.filter((f) => f.endsWith(".mdx") && !f.endsWith(".fa.mdx"));
 const faPages = files.filter((f) => f.endsWith(".fa.mdx"));
+const allPages = files.filter((f) => f.endsWith(".mdx"));
 const enMetas = files.filter((f) => f.endsWith("meta.json") && !f.endsWith("meta.fa.json"));
 
 const errors = [];
@@ -54,11 +58,6 @@ for (const en of enPages) {
 }
 
 for (const fa of faPages) {
-  const text = readFileSync(fa, "utf8");
-  const absolute = text.match(/\]\(\/docs[^)]*\)|href="\/docs[^"]*"/g);
-  if (absolute) {
-    errors.push(`absolute /docs link in ${fa}: ${absolute[0]}`);
-  }
   const enTwin = fa.replace(/\.fa\.mdx$/, ".mdx");
   if (!existsSync(enTwin)) {
     errors.push(`FA page without EN source: ${fa}`);
@@ -86,12 +85,55 @@ for (const meta of enMetas) {
   }
 }
 
+// --- Link resolution (mirrors fumadocs-core resolveHref) ---
+const logicalOf = (abs) =>
+  relative(root, abs).split("\\").join("/").replace(/\.fa\.mdx$/, ".mdx");
+const logicalSet = new Set(enPages.map(logicalOf));
+
+function posixResolve(dir, rel) {
+  const out = [];
+  for (const p of (dir ? dir.split("/") : []).concat(rel.split("/"))) {
+    if (p === "" || p === ".") continue;
+    if (p === "..") out.pop();
+    else out.push(p);
+  }
+  return out.join("/");
+}
+
+let linksChecked = 0;
+for (const page of allPages) {
+  const text = readFileSync(page, "utf8");
+  const logical = logicalOf(page);
+  const slash = logical.lastIndexOf("/");
+  const dir = slash === -1 ? "" : logical.slice(0, slash);
+  for (const m of text.matchAll(/\]\(([^)\s]+)\)|href="([^"]+)"/g)) {
+    const href = m[1] ?? m[2];
+    if (/^(https?:|mailto:|#)/.test(href)) continue;
+    linksChecked++;
+    if (href.startsWith("/")) {
+      errors.push(`absolute link in ${logical}: ${href}`);
+      continue;
+    }
+    if (!href.startsWith("./") && !href.startsWith("../")) {
+      errors.push(`non-relative link in ${logical}: ${href}`);
+      continue;
+    }
+    const pathPart = href.split("#", 2)[0];
+    const target = posixResolve(dir, pathPart);
+    if (!logicalSet.has(target)) {
+      errors.push(`unresolved link in ${logical}: ${href} -> ${target}`);
+    }
+  }
+}
+
 console.log(
-  `FA parity: EN pages=${enPages.length} FA pages=${faPages.length} metas=${enMetas.length}`,
+  `FA parity: EN pages=${enPages.length} FA pages=${faPages.length} metas=${enMetas.length} links=${linksChecked}`,
 );
 if (errors.length) {
   console.error(`FAILED (${errors.length}):`);
   for (const e of errors) console.error(` - ${e}`);
   process.exit(1);
 }
-console.log("FA parity: OK — 65/65 style parity, relative links, tags preserved.");
+console.log(
+  `FA parity: OK — ${enPages.length}/${enPages.length} pages, links resolve, tags preserved.`,
+);

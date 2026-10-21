@@ -18,7 +18,7 @@ export function PlaygroundStage({
   const { common } = useLocale();
   return (
     <div
-      role="img"
+      role="group"
       aria-label={label ?? common.demoStage}
       className={[
         "relative min-h-36 border-b border-lab-line bg-lab-bg/40",

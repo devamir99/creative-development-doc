@@ -35,9 +35,18 @@ function OrbitCamera({
   const invalidate = useThree((s) => s.invalidate);
   const azimuthRef = useRef(params.azimuthDeg);
   const wasAuto = useRef(autoRotate);
+  const prevParamsAzimuthRef = useRef(params.azimuthDeg);
 
   useLayoutEffect(() => {
-    if (!autoRotate) {
+    const prevParamsAzimuth = prevParamsAzimuthRef.current;
+    prevParamsAzimuthRef.current = params.azimuthDeg;
+    // Only sync from the slider when its value actually changed. When
+    // auto-rotate simply toggles off, params.azimuthDeg is unchanged, so
+    // azimuthRef keeps the current animated azimuth instead of snapping
+    // back; the commit effect below then catches the slider up to it.
+    // A preset/slider change made in the same render as stopping does
+    // change the value, so it still takes over as before.
+    if (!autoRotate && prevParamsAzimuth !== params.azimuthDeg) {
       azimuthRef.current = params.azimuthDeg;
     }
   }, [params.azimuthDeg, autoRotate]);

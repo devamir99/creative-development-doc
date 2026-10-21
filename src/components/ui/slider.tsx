@@ -33,6 +33,8 @@ export function LabSlider({
 }: LabSliderProps) {
   const autoId = useId();
   const inputId = id ?? autoId;
+  const decimals = String(step).split(".")[1]?.length ?? 0;
+  const displayValue = Number(value.toFixed(decimals));
 
   return (
     <div className={["flex min-w-[12rem] flex-col gap-2", className].join(" ")}>
@@ -41,7 +43,7 @@ export function LabSlider({
           {label}
         </label>
         <span className="font-mono text-xs text-lab-fg tabular-nums">
-          {value}
+          {displayValue}
           {unit ? unit : null}
         </span>
       </div>

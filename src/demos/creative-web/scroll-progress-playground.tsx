@@ -46,7 +46,7 @@ export function ScrollProgressPlayground() {
       if (!scroller || !track || !marker) return;
 
       if (reducedMotion) {
-        gsap.set(marker, { yPercent: 0 });
+        gsap.set(marker, { y: 0 });
         setProgress(0);
         return;
       }
@@ -59,7 +59,10 @@ export function ScrollProgressPlayground() {
         scrub: true,
         onUpdate: (self) => {
           setProgress(self.progress);
-          gsap.set(marker, { yPercent: self.progress * 100 });
+          const parentHeight =
+            marker.parentElement?.clientHeight ?? marker.clientHeight;
+          const travel = Math.max(0, parentHeight - marker.clientHeight);
+          gsap.set(marker, { y: self.progress * travel });
         },
       });
 
@@ -103,7 +106,7 @@ export function ScrollProgressPlayground() {
           aria-label={pick("Scrollable demo region", "ناحیه نمایشیِ قابل اسکرول")}
         >
           <div ref={trackRef} className="relative min-h-[220%]">
-            <div className="sticky top-0 flex h-48 items-center justify-center border-b border-lab-line bg-[#101012]/p-4">
+            <div className="sticky top-0 flex h-48 items-center justify-center border-b border-lab-line bg-[#101012]/90 p-4">
               <div className="relative h-32 w-4 rounded-sm bg-zinc-800">
                 <div
                   ref={markerRef}

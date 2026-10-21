@@ -71,13 +71,16 @@ export function BalancePlayground() {
               {[0, 60, 120, 180, 240, 300].map((deg) => (
                 <div
                   key={deg}
-                  className="absolute top-1/2 left-1/2 size-6 -translate-x-1/2 -translate-y-1/2 rounded-sm bg-zinc-500"
+                  className="absolute top-1/2 left-1/2 size-6 rounded-sm bg-zinc-500"
                   style={{
                     transform: `translate(-50%, -50%) rotate(${deg}deg) translateY(-56px)`,
                   }}
                 />
               ))}
-              <div className="absolute top-1/2 left-1/2 size-10 -translate-x-1/2 -translate-y-1/2 rounded-full bg-lab-accent" />
+              <div
+                className="absolute top-1/2 left-1/2 size-10 rounded-full bg-lab-accent"
+                style={{ transform: "translate(-50%, -50%)" }}
+              />
             </div>
           ) : mode === "sym" ? (
             <div className="flex w-full max-w-md items-center justify-between px-10">

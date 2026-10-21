@@ -104,19 +104,24 @@ function MovementCamera({
   const tRef = useRef(0);
 
   useLayoutEffect(() => {
+    // Reset only when the mode (or reduced-motion pose) changes — not on
+    // play/pause toggles, so pausing keeps the current pose and resuming
+    // continues from it instead of jumping back to t = 0.
     tRef.current = 0;
     const cam = ref.current;
     if (!cam) return;
     applyPose(cam, mode, reducedMotion ? 0.65 : 0);
     invalidate();
-  }, [mode, playing, reducedMotion, invalidate]);
+  }, [mode, reducedMotion, invalidate]);
 
   useFrame((_, delta) => {
     const cam = ref.current;
     if (!cam) return;
     if (!playing || reducedMotion) return;
     tRef.current += delta;
-    const cycle = (Math.sin(tRef.current * 1.15) + 1) / 2;
+    // Starts at 0 (matching the layout pose) and loops smoothly:
+    // (1 - cos) / 2 is 0 at t = 0 with zero slope at both turnarounds.
+    const cycle = (1 - Math.cos(tRef.current * 1.15)) / 2;
     applyPose(cam, mode, cycle);
   });
 

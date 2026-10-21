@@ -56,7 +56,7 @@ export function CenterPlayground() {
         <div className="relative flex h-full items-center bg-[#101012]">
           <div className="pointer-events-none absolute inset-y-0 left-1/2 w-px bg-lab-line/50" />
           <div
-            className="absolute top-1/2 flex -translate-y-1/2 items-center gap-1"
+            className="absolute top-1/2 flex items-center gap-1"
             style={{
               left: `${x}%`,
               transform: `translate(-50%, -50%) scaleX(${facing === "left" ? -1 : 1})`,

@@ -103,6 +103,18 @@ Validation: tsc + ESLint passed; parity 65/65 OK; `/fa` renders new FarsiUI home
 
 ---
 
+## Audit-Fix Batch — Claude audit fixes (2026-10-21)
+
+```bash
+git add .gitignore content/docs src scripts/check-fa-parity.mjs docs/i18n/TRANSLATION_GUIDE.md docs/progress docs/roadmap/TASK_BACKLOG.md
+git commit -m "fix(audit): repair FA links, real 404s, RTL shell chrome, demo bugs, and FA search normalization"
+```
+
+Fixes: #1 all 578 in-content links → file-relative `.mdx` (EN+FA) + parity resolves links; #2 production build requires `NEXT_PUBLIC_SITE_URL`; #3/#4 shell chrome follows locale dir, Persian chrome drops mono/tracking; #5 dark theme forced; #6 unknown slugs → real 404; #7–#12 demo bugs (kinetic, J/L marker, scroll marker, translate stacking, orbit commit, camera pause); #13–#15 FarsiUI leaks scoped (radius/tabular/FA headings); #16 stage `role=group`; #17 touch-none drag; #18 FA search normalization (ي/ك/ZWNJ); #19 localized home metadata; #21 `nativeButton={false}`; #22 slider readout rounding; #24 localized transition readout.
+Validation: tsc + ESLint passed; parity links=578 OK; HTTP — `/fa/docs/nope` 404, FA index links 200, Arabic/ZWNJ-less search hits, FA home metadata/hreflang present. Production build not run (OOM risk noted in audit; run with `NEXT_PUBLIC_SITE_URL` set).
+
+---
+
 ## Batch G — Cinematic interactive demos (2026-10-20)
 
 ```bash

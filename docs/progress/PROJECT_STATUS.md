@@ -36,9 +36,12 @@ Camera (10) · Editing (5) · Composition (10) · Motion (10) · Storytelling (5
 | Legacy redirects | passed — `/` and `/docs/*` → 308 `/en…` |
 | FA content routes | passed — sample FA pages 200 with Persian |
 
+## Audit fixes (2026-10-21 — AUDIT-FIX-1)
+
+Claude full-audit findings #1–#19/#21–#24 fixed: 578 MDX links → `.mdx` file-relative (parity now resolves links), production build requires `NEXT_PUBLIC_SITE_URL`, shell chrome is locale-directed with Persian typography, dark theme forced, real 404s, demo bugs (kinetic/J-L/scroll/translate/orbit/camera-pause), FarsiUI leaks scoped, `role=group` stages, FA search normalization (ي/ك/ZWNJ), localized home metadata. Validated: tsc/ESLint/parity + HTTP (404s, FA links, Arabic search, home hreflang).
+
 ## Remaining (optional only)
 
-- Browser/WebGL interactive spot-check across all demos
-- Fix Turbopack Google Fonts resolution / self-host fonts if it persists
-- Formal a11y audit (QA-003)
-- Set `NEXT_PUBLIC_SITE_URL` in production for correct absolute sitemap/canonical URLs
+- Production build with `NEXT_PUBLIC_SITE_URL` set (not run — machine OOM risk during audit)
+- Browser/WebGL interactive spot-check across all demos (QA-002)
+- Formal a11y audit (QA-003); nice-to-haves from audit (lazy playground registry, frameloop demand)

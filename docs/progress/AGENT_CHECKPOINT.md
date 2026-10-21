@@ -7,14 +7,14 @@
 
 | Field | Value |
 |---|---|
-| Current batch | Complete — FarsiUI adoption (ADR-007) done |
-| Last completed | FUI-1 — FarsiUI installed, components/skills added, FA home + typeset, FA index polish |
-| Validation | tsc + ESLint passed; parity 65/65 OK; `/fa` new FarsiUI home 200, `/en` unchanged, FA/EN docs 200 |
-| Next | User runs commit blocks in `GIT_COMMIT_PLAN.md` (FA 0–7 + FarsiUI batch) |
+| Current batch | Complete — Claude audit fixes applied |
+| Last completed | AUDIT-FIX-1 — links/404/theme/shell/demos/FarsiUI-leaks/search/home-metadata |
+| Validation | tsc + ESLint passed; parity 65/65 links=578 OK; HTTP: real 404s, FA links 200, FA search normalization, FA home hreflang |
+| Next | User runs the Audit-Fix commit block in `GIT_COMMIT_PLAN.md`; production build with `NEXT_PUBLIC_SITE_URL` set (not run — OOM risk) |
 
 ## Notes
 
-- ADR-006 bilingual; ADR-007 FarsiUI in `src/components/farsiui/` with lab token remap
+- MDX links must be file-relative with `.mdx` (fumadocs resolveHref); parity enforces it
+- Production builds now throw without `NEXT_PUBLIC_SITE_URL`
+- Theme is forced dark; unknown docs slugs return real 404
 - Agent never runs git add/commit/push
-- npm: bypass Runflare mirror with `--registry=https://registry.npmjs.org/`
-- Vazirmatn single `arabic` subset + variable weight (Next 16 Turbopack constraint)

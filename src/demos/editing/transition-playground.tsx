@@ -220,7 +220,7 @@ export function TransitionPlayground() {
             onChange={setDuration}
             disabled={kind === "cut"}
           />
-          <LabReadout label={pick("kind:", "نوع:")} value={kind} />
+          <LabReadout label={pick("kind:", "نوع:")} value={kindLabels[kind]} />
         </div>
       }
       code={{ language: "js", value: codeValue }}

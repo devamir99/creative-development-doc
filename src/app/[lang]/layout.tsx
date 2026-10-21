@@ -63,8 +63,9 @@ export default async function RootLayout({
           dir={dirFor(lang)}
           i18n={i18nUI.provider(lang)}
           theme={{
-            enabled: true,
+            enabled: false,
             defaultTheme: "dark",
+            forcedTheme: "dark",
           }}
         >
           <LocaleProvider locale={lang}>{children}</LocaleProvider>

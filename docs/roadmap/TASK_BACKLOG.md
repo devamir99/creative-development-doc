@@ -93,6 +93,7 @@ Optional later: shot types, blocking, scroll cameras.
 | FA-6 content direction/projects/reference | `COMPLETED` (2026-10-21) |
 | FA-7 search/SEO/QA | `COMPLETED` (2026-10-21) |
 | FUI-1 FarsiUI adoption (ADR-007) | `COMPLETED` (2026-10-21) |
+| AUDIT-FIX-1 Claude audit fix-now/fix-next (#1–#19, #21–#24) | `COMPLETED` (2026-10-21) |
 
 ---
 

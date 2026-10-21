@@ -188,7 +188,7 @@ export function JlCutPlayground() {
             />
             <div
               className="absolute top-0 bottom-0 w-0.5 bg-lab-accent"
-              style={{ left: `${Math.min(95, Math.max(5, soundCut)) * 100}%` }}
+              style={{ left: `${Math.min(0.95, Math.max(0.05, soundCut)) * 100}%` }}
               title={pick("Sound cut", "برش صدا")}
             />
             <p className="relative z-10 font-mono text-xs text-lab-fg">

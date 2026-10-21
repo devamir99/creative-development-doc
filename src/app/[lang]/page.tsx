@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Badge } from "@/components/farsiui/badge";
@@ -66,7 +67,7 @@ const COPY: Record<Locale, Copy> = {
     titleA: "سینما را مثل یک سازنده یاد بگیر.",
     titleB: "هر درس، یک دموی زنده.",
     intro:
-      "Creative Lab دفترچهٔ شخصی دوربین، تدوین، ترکیب‌بندی، حرکت و وب خلاقانه است؛ هر درس یک متن روشن، یک دمو تعاملی و کدی دارد که می‌توانی همان روز در پروژه‌ات به کار ببری.",
+      "Creative Lab دفترچهٔ شخصی دوربین، تدوین، ترکیب‌بندی، حرکت و وب خلاقانه است؛ هر درس یک متن روشن، یک دموی تعاملی و کدی دارد که می‌توانی همان روز در پروژه‌ات به کار ببری.",
     primary: "شروع از زمان‌بندی حرکت",
     secondary: "مرور ترکیب‌بندی",
     curriculum: "نقشهٔ راه یادگیری",
@@ -163,13 +164,14 @@ function FaHome({ t, docs }: { t: Copy; docs: (href: string) => string }) {
 
         <div className="mt-6 flex flex-wrap gap-2">
           <Badge variant="outline">۶۵ درس</Badge>
-          <Badge variant="outline">۳۶ دمو تعاملی</Badge>
+          <Badge variant="outline">۳۶ دموی تعاملی</Badge>
           <Badge variant="outline">فارسی و English</Badge>
         </div>
 
         <div className="mt-10 flex flex-wrap gap-4">
           <Button
             size="lg"
+            nativeButton={false}
             render={<Link href={docs("/docs/motion/timing")} />}
           >
             {t.primary}
@@ -177,6 +179,7 @@ function FaHome({ t, docs }: { t: Copy; docs: (href: string) => string }) {
           <Button
             size="lg"
             variant="outline"
+            nativeButton={false}
             render={<Link href={docs("/docs/composition")} />}
           >
             {t.secondary}
@@ -228,6 +231,35 @@ function FaHome({ t, docs }: { t: Copy; docs: (href: string) => string }) {
       </main>
     </div>
   );
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+  if (!isLocale(lang)) notFound();
+  const t = COPY[lang];
+  return {
+    title: `${t.titleA} ${t.titleB}`,
+    description: t.intro,
+    alternates: {
+      canonical: `/${lang}`,
+      languages: {
+        en: "/en",
+        fa: "/fa",
+        "x-default": "/en",
+      },
+    },
+    openGraph: {
+      title: `${t.titleA} ${t.titleB}`,
+      description: t.intro,
+      url: `/${lang}`,
+      locale: lang === "fa" ? "fa_IR" : "en_US",
+      alternateLocale: lang === "fa" ? ["en_US"] : ["fa_IR"],
+    },
+  };
 }
 
 export default async function Home({

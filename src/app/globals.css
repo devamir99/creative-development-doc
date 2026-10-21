@@ -352,6 +352,7 @@ html[lang="fa"] body {
  */
 :root,
 .dark {
+  --radius: 0.625rem;
   --background: var(--lab-bg);
   --foreground: var(--lab-fg);
   --card: var(--lab-panel);
@@ -437,4 +438,34 @@ html[lang="fa"] .prose h3 {
 html[lang="fa"] .prose strong {
   color: var(--lab-fg);
   font-weight: 700;
+}
+
+/*
+ * Persian playground chrome (shell stays LTR for canvas/code — ADR-006 —
+ * but localized labels must not inherit mono/tracking from Latin chrome).
+ */
+html[lang="fa"] .lab-ltr .font-mono:not(pre):not(code) {
+  font-family:
+    var(--font-vazir), ui-sans-serif, system-ui, sans-serif;
+}
+
+html[lang="fa"] .lab-ltr [class*="tracking-"] {
+  letter-spacing: 0;
+}
+
+/* FarsiUI headings resolve to the Syne stack; Persian needs Vazirmatn. */
+html[lang="fa"] .font-heading {
+  font-family:
+    var(--font-vazir), ui-sans-serif, system-ui, sans-serif;
+}
+
+/*
+ * FarsiUI globally disables tabular-nums (correct for Persian digits).
+ * English readouts/sliders keep tabular figures; FA keeps FarsiUI's pnum.
+ */
+html[lang="en"] .tabular-nums {
+  font-variant-numeric: tabular-nums !important;
+  font-feature-settings:
+    "tnum" 1,
+    "pnum" 0 !important;
 }

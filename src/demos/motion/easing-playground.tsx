@@ -103,7 +103,7 @@ function MotionLane({
       <div
         ref={boxRef}
         aria-hidden
-        className={`absolute top-[62%] left-4 size-7 -translate-y-1/2 ${fill}`}
+        className={`absolute top-[62%] left-4 size-7 ${fill}`}
         style={
           reducedMotion
             ? { transform: `translate(${TRAVEL_X}px, -50%)` }
@@ -169,7 +169,7 @@ export function EasingPlayground() {
       const linear = linearRef.current;
       if (!primary || !linear) return;
 
-      gsap.set([primary, linear], { x: 0 });
+      gsap.set([primary, linear], { x: 0, yPercent: -50 });
       gsap.to(primary, {
         x: TRAVEL_X,
         duration,

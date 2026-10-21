@@ -28,7 +28,7 @@ export type LabButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
 export function LabButton({
   variant = "outline",
   size = "sm",
-  pressed = false,
+  pressed,
   className = "",
   type = "button",
   disabled,
@@ -41,7 +41,7 @@ export function LabButton({
     <button
       type={type}
       disabled={disabled}
-      aria-pressed={pressed || undefined}
+      aria-pressed={pressed}
       className={[
         "inline-flex items-center justify-center font-mono transition-colors disabled:pointer-events-none disabled:opacity-40",
         sizes[size],

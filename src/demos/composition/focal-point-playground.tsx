@@ -114,7 +114,7 @@ export function FocalPointPlayground() {
           </div>
           <button
             type="button"
-            className="absolute -translate-x-1/2 -translate-y-1/2 cursor-grab rounded-sm border border-lab-accent/80 bg-lab-accent shadow-[0_0_0_999px_transparent] active:cursor-grabbing focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lab-accent"
+            className="absolute -translate-x-1/2 -translate-y-1/2 cursor-grab touch-none rounded-sm border border-lab-accent/80 bg-lab-accent shadow-[0_0_0_999px_transparent] active:cursor-grabbing focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lab-accent"
             style={{
               left: `${pos.x}%`,
               top: `${pos.y}%`,
