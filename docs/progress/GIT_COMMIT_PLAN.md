@@ -6,6 +6,92 @@ Historical per-batch commands below are **logical groupings of the final working
 
 ---
 
+## FA Batch 0 — ADR-006 + glossary + guide (2026-10-21)
+
+```bash
+git add docs/decisions/ADR-006-bilingual-en-fa.md docs/architecture/CONTENT_SYSTEM.md docs/architecture/ARCHITECTURE.md docs/i18n docs/progress docs/roadmap/TASK_BACKLOG.md
+git commit -m "docs(i18n): ADR-006 bilingual en/fa strategy, glossary, and translation guide"
+```
+
+---
+
+## FA Batch 1 — /en + /fa routing, RTL, pilot FA pages (2026-10-21)
+
+```bash
+git add src/lib/i18n.ts src/lib/source.ts src/lib/layout.shared.tsx src/proxy.ts src/app src/app/globals.css content/docs/index.fa.mdx content/docs/meta.fa.json content/docs/camera/movement.fa.mdx content/docs/camera/meta.fa.json content/docs/motion/easing.fa.mdx content/docs/motion/meta.fa.json docs/progress docs/roadmap/TASK_BACKLOG.md
+git commit -m "feat(i18n): add /en and /fa routes, RTL chrome, and legacy /docs redirects"
+```
+
+Validation: `next typegen` + `tsc --noEmit` passed; HTTP smoke — `/`→308 `/en`, `/docs/*`→308 `/en/docs/*`, `/fa/docs/camera/movement` RTL+Persian 200, `/en` pages English 200.
+
+---
+
+## FA Batch 2 — Playground localization (2026-10-21)
+
+```bash
+git add src/i18n src/components/playground src/demos docs/progress docs/roadmap/TASK_BACKLOG.md
+git commit -m "feat(i18n): localize all playground chrome, labels, and educational code comments"
+```
+
+Validation: `tsc --noEmit` passed; ESLint on `src/i18n src/components/playground src/demos src/app src/lib` passed; all 36 playground files consume `useLocale`; FA movement page renders Persian toolbar.
+
+---
+
+## FA Batch 3 — FA root + camera + editing content (2026-10-21)
+
+```bash
+git add content/docs/index.fa.mdx content/docs/meta.fa.json content/docs/camera content/docs/editing docs/progress docs/roadmap/TASK_BACKLOG.md
+git commit -m "docs(fa): translate handbook root, camera, and editing curriculum"
+```
+
+Validation: 0 absolute `/docs/` links in camera+editing `*.fa.mdx`; `/fa/docs/camera`, `/fa/docs/camera/fundamentals`, `/fa/docs/editing`, `/fa/docs/editing/cuts` all 200 with Persian content.
+
+---
+
+## FA Batch 4 — FA composition + motion content (2026-10-21)
+
+```bash
+git add content/docs/composition content/docs/motion docs/progress docs/roadmap/TASK_BACKLOG.md
+git commit -m "docs(fa): translate composition and motion curriculum"
+```
+
+Validation: 0 absolute `/docs/` links in composition+motion `*.fa.mdx`; `/fa/docs/composition/rule-of-thirds`, `/fa/docs/motion`, `/fa/docs/motion/timing` 200.
+
+---
+
+## FA Batch 5 — FA storytelling + lighting + creative-web (2026-10-21)
+
+```bash
+git add content/docs/storytelling content/docs/lighting content/docs/creative-web docs/progress docs/roadmap/TASK_BACKLOG.md
+git commit -m "docs(fa): translate storytelling, lighting, and creative-web curriculum"
+```
+
+Validation: 0 absolute links in new FA files; storytelling/pacing, lighting/three-point, creative-web/scroll-trigger FA routes 200.
+
+---
+
+## FA Batch 6 — FA direction + projects + reference (2026-10-21)
+
+```bash
+git add content/docs/direction content/docs/projects content/docs/reference docs/progress docs/roadmap/TASK_BACKLOG.md
+git commit -m "docs(fa): translate direction, projects, and reference section"
+```
+
+Validation: parity EN 65 / FA 65, meta 11/11, 0 absolute `/docs/` links in all FA MDX; direction/critique, projects/showroom, reference/glossary FA routes 200.
+
+---
+
+## FA Batch 7 — Search locale, SEO/hreflang, parity QA (2026-10-21)
+
+```bash
+git add src/app/api/search src/app/sitemap.ts src/app/robots.ts "src/app/[lang]/docs" "src/app/[lang]/layout.tsx" src/lib/site.ts scripts/check-fa-parity.mjs package.json docs/progress docs/roadmap/TASK_BACKLOG.md
+git commit -m "feat(i18n): fa search locale filtering, hreflang SEO, and parity QA"
+```
+
+Validation: `npm run check:fa-parity` OK; tsc + ESLint passed; search `locale=fa` isolates `/fa`; sitemap+robots 200; canonical + hreflang (`en`/`fa`/`x-default`) present on docs pages.
+
+---
+
 ## Batch G — Cinematic interactive demos (2026-10-20)
 
 ```bash

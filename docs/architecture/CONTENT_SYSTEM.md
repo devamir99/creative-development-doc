@@ -10,17 +10,17 @@
 
 ## Language policy
 
-Per **ADR-005**, product UI and lesson prose default to **English**.
+Per **ADR-006**, product is bilingual `en`/`fa`.
 
 | Surface | Language |
 | --- | --- |
-| Instructional prose | Clear English |
-| Technical terms | Keep standard English (Timing, Easing, FOV, …) |
-| UI chrome / `meta.json` titles | English |
+| Instructional prose | English (`*.mdx`) and Persian (`*.fa.mdx`) |
+| Technical terms | Locked glossary in `docs/i18n/GLOSSARY.md` |
+| UI chrome / `meta*.json` titles | Localized per locale |
 | Code, paths, CLI, APIs | LTR English |
-| Direction | LTR root; playground/code stay `lab-ltr` |
+| Direction | Locale root (`rtl` for fa); playground/code stay `lab-ltr` |
 
-**Migration rule:** Ship one lesson per DOC task; do not mass-rewrite the curriculum in a single run.
+**Migration rule:** Translate in curriculum phases (Camera/Editing, Composition/Motion, Story/Light/Web, Direction/Projects/Reference), keeping slug parity 1:1 and links relative in FA files.
 
 ## Default lesson skeleton
 

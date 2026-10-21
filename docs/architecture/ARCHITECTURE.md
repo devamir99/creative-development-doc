@@ -9,9 +9,9 @@ Creative Lab is a **handbook + interactive laboratory**: Fumadocs lessons (MDX) 
 ```text
 ┌─────────────────────────────────────────────────────────┐
 │  Next.js App Router                                      │
-│  /          → marketing / curriculum landing             │
-│  /docs/**   → Fumadocs DocsLayout + MDX pages            │
-│  /api/search→ fumadocs-core search from source loader    │
+│  /[lang]    → localized landing (en | fa)                │
+│  /[lang]/docs/** → Fumadocs DocsLayout + MDX pages       │
+│  /api/search→ locale-aware search from source loader     │
 └───────────────┬─────────────────────────────────────────┘
                 │
                 ▼
@@ -66,7 +66,7 @@ Creative Lab is a **handbook + interactive laboratory**: Fumadocs lessons (MDX) 
 ## Config notes (current)
 
 - `next.config.mjs`: `createMDX()`, `cacheComponents`, `partialPrefetching`, Tailwind via Turbopack CSS loader.
-- Fonts: Syne (display) + IBM Plex Mono; body uses display as sans via CSS variables.
+- Fonts: Syne (display/Latin) + IBM Plex Mono (code) + Vazirmatn (Persian fa).
 - Theme: Fumadocs `RootProvider`, default dark.
 
 ## Evolution path

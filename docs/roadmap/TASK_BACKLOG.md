@@ -78,10 +78,27 @@ Optional later: shot types, blocking, scroll cameras.
 
 ---
 
+---
+
+## Bilingual FA (ADR-006, 8 phases / 8 commits)
+
+| ID | Status |
+| --- | --- |
+| FA-0 ADR/glossary/guide | `COMPLETED` (2026-10-21) |
+| FA-1 routing/RTL/proxy | `COMPLETED` (2026-10-21) |
+| FA-2 playground localization | `COMPLETED` (2026-10-21) |
+| FA-3 content camera/editing | `COMPLETED` (2026-10-21) |
+| FA-4 content composition/motion | `COMPLETED` (2026-10-21) |
+| FA-5 content story/light/web | `COMPLETED` (2026-10-21) |
+| FA-6 content direction/projects/reference | `COMPLETED` (2026-10-21) |
+| FA-7 search/SEO/QA | `COMPLETED` (2026-10-21) |
+
+---
+
 ## Next executable task
 
 | Field | Value |
 | --- | --- |
-| **ID** | `QA-002` |
-| **Title** | Manual browser / WebGL verification of playgrounds |
-| **Blocked?** | Needs human or browser tooling |
+| **ID** | _(none — FA program complete)_ |
+| **Title** | User commits FA Batches 0–7; optional QA-002 browser/WebGL pass |
+| **Blocked?** | No |
