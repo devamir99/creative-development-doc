@@ -103,6 +103,19 @@ Validation: tsc + ESLint passed; parity 65/65 OK; `/fa` renders new FarsiUI home
 
 ---
 
+## GitHub Actions + Pages (2026-10-24)
+
+```bash
+git add .github next.config.mjs src/app/page.tsx docs/progress/GIT_COMMIT_PLAN.md
+git commit -m "ci: add GitHub Actions CI and static GitHub Pages deploy"
+```
+
+After push: Settings → Pages → Source = GitHub Actions. Site:
+`https://devamir99.github.io/creative-development-doc/`
+Note: Pages build excludes `/api/search` (static host).
+
+---
+
 ## Audit-Fix Batch — Claude audit fixes (2026-10-21)
 
 ```bash
