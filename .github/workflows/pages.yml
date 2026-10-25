@@ -24,11 +24,12 @@ permissions:
 
 concurrency:
   group: pages
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -38,13 +39,18 @@ jobs:
         with:
           node-version: 22
           cache: npm
+          registry-url: https://registry.npmjs.org
 
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
 
+      # Prefer a resilient install — bare `npm ci` has hung/crashed on Actions
+      # with "Exit handler never called!" for this heavy three.js tree.
       - name: Install
-        run: npm ci
+        run: npm ci --no-audit --no-fund --fetch-retries=5 --fetch-retry-mintimeout=20000
+        env:
+          NPM_CONFIG_LEGACY_PEER_DEPS: "true"
 
       # Static export cannot ship Route Handlers (/api/*).
       - name: Exclude API routes for static export
