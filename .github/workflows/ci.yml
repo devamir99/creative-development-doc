@@ -29,6 +29,8 @@ jobs:
         run: |
           npm install -g npm@10.9.2
           npm ci --ignore-scripts --no-audit --no-fund
+        env:
+          NPM_CONFIG_REGISTRY: https://registry.npmjs.org/
 
       - name: Generate MDX source
         run: npx fumadocs-mdx
