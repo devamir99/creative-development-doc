@@ -34,22 +34,23 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # Do NOT set registry-url — setup-node then injects NODE_AUTH_TOKEN + a
+      # temp .npmrc that breaks public registry.npmjs.org installs.
+      # Do NOT enable npm cache until install is stable (corrupt cache →
+      # "Exit handler never called!").
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 22
-          cache: npm
-          registry-url: https://registry.npmjs.org
+          node-version: 20
 
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
 
-      # npm on Actions often dies with "Exit handler never called!" when
-      # postinstall (fumadocs-mdx) runs inside `npm ci`. Install deps without
-      # scripts, then run the MDX codegen as its own step.
       - name: Install
-        run: npm ci --ignore-scripts --no-audit --no-fund --fetch-retries=5 --fetch-retry-mintimeout=20000
+        run: |
+          npm install -g npm@10.9.2
+          npm ci --ignore-scripts --no-audit --no-fund
 
       - name: Generate MDX source
         run: npx fumadocs-mdx
