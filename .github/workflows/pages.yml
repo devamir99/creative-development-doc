@@ -45,12 +45,20 @@ jobs:
         id: pages
         uses: actions/configure-pages@v5
 
-      # Prefer a resilient install — bare `npm ci` has hung/crashed on Actions
-      # with "Exit handler never called!" for this heavy three.js tree.
+      # npm on Actions often dies with "Exit handler never called!" when
+      # postinstall (fumadocs-mdx) runs inside `npm ci`. Install deps without
+      # scripts, then run the MDX codegen as its own step.
       - name: Install
-        run: npm ci --no-audit --no-fund --fetch-retries=5 --fetch-retry-mintimeout=20000
-        env:
-          NPM_CONFIG_LEGACY_PEER_DEPS: "true"
+        run: npm ci --ignore-scripts --no-audit --no-fund --fetch-retries=5 --fetch-retry-mintimeout=20000
+
+      - name: Generate MDX source
+        run: npx fumadocs-mdx
+
+      - name: Dump npm log on failure
+        if: failure()
+        run: |
+          ls -la "$HOME/.npm/_logs" || true
+          tail -n 200 "$HOME/.npm/_logs/"*-debug-0.log || true
 
       # Static export cannot ship Route Handlers (/api/*).
       - name: Exclude API routes for static export

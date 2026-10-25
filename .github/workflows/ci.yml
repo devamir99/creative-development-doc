@@ -25,10 +25,18 @@ jobs:
           cache: npm
           registry-url: https://registry.npmjs.org
 
+      # Avoid npm "Exit handler never called!" when postinstall runs inside ci.
       - name: Install
-        run: npm ci --no-audit --no-fund --fetch-retries=5 --fetch-retry-mintimeout=20000
-        env:
-          NPM_CONFIG_LEGACY_PEER_DEPS: "true"
+        run: npm ci --ignore-scripts --no-audit --no-fund --fetch-retries=5 --fetch-retry-mintimeout=20000
+
+      - name: Generate MDX source
+        run: npx fumadocs-mdx
+
+      - name: Dump npm log on failure
+        if: failure()
+        run: |
+          ls -la "$HOME/.npm/_logs" || true
+          tail -n 200 "$HOME/.npm/_logs/"*-debug-0.log || true
 
       - name: Typecheck
         run: npx tsc --noEmit
