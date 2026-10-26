@@ -94,6 +94,7 @@ Optional later: shot types, blocking, scroll cameras.
 | FA-7 search/SEO/QA | `COMPLETED` (2026-10-21) |
 | FUI-1 FarsiUI adoption (ADR-007) | `COMPLETED` (2026-10-21) |
 | AUDIT-FIX-1 Claude audit fix-now/fix-next (#1–#19, #21–#24) | `COMPLETED` (2026-10-21) |
+| FIX-INSTANT-001 docs `[[...slug]]` Blocking Route / URL-data Suspense | `COMPLETED` (2026-10-26: params inside Suspense + skeleton fallback) |
 
 ---
 
@@ -101,6 +102,6 @@ Optional later: shot types, blocking, scroll cameras.
 
 | Field | Value |
 | --- | --- |
-| **ID** | _(none — FA + FarsiUI complete)_ |
-| **Title** | User commits FA Batches 0–7 + FarsiUI batch; optional QA-002 browser/WebGL pass |
+| **ID** | _(none — FA + FarsiUI + instant-nav docs fix complete)_ |
+| **Title** | User commits pending batches; optional QA-002 browser/WebGL pass |
 | **Blocked?** | No |

@@ -1,7 +1,7 @@
 # Project Status — Creative Lab
 
-**Last updated:** 2026-10-21
-**State:** Bilingual EN/FA (ADR-006) + FarsiUI adoption (ADR-007) complete; awaiting user commits
+**Last updated:** 2026-10-26
+**State:** Bilingual EN/FA (ADR-006) + FarsiUI adoption (ADR-007) complete; Instant Navigations Suspense fix on docs slug route; awaiting user commits
 
 ## Snapshot
 
@@ -40,8 +40,13 @@ Camera (10) · Editing (5) · Composition (10) · Motion (10) · Storytelling (5
 
 Claude full-audit findings #1–#19/#21–#24 fixed: 578 MDX links → `.mdx` file-relative (parity now resolves links), production build requires `NEXT_PUBLIC_SITE_URL`, shell chrome is locale-directed with Persian typography, dark theme forced, real 404s, demo bugs (kinetic/J-L/scroll/translate/orbit/camera-pause), FarsiUI leaks scoped, `role=group` stages, FA search normalization (ي/ك/ZWNJ), localized home metadata. Validated: tsc/ESLint/parity + HTTP (404s, FA links, Arabic search, home hreflang).
 
+## Instant Navigations fix (2026-10-26 — FIX-INSTANT-001)
+
+Docs catch-all `src/app/[lang]/docs/[[...slug]]/page.tsx` no longer awaits `params` outside `<Suspense>`. Dynamic MDX body streams behind a title/body skeleton fallback so Cache Components / Partial Prefetching can prerender a shared shell. Dev overlay Blocking Route + `instant-shell-url-data` cleared on `/fa/docs/*` and `/en/docs/*` reloads. Trade-off: unknown slugs soft-404 (HTTP 200 + `noindex`) because `notFound()` runs inside the streamed boundary.
+
 ## Remaining (optional only)
 
 - Production build with `NEXT_PUBLIC_SITE_URL` set (not run — machine OOM risk during audit)
 - Browser/WebGL interactive spot-check across all demos (QA-002)
 - Formal a11y audit (QA-003); nice-to-haves from audit (lazy playground registry, frameloop demand)
+- Optional: proxy-level unknown-slug 404 if hard status codes are required again

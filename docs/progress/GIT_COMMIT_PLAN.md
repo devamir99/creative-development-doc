@@ -6,6 +6,17 @@ Historical per-batch commands below are **logical groupings of the final working
 
 ---
 
+## FIX-INSTANT-001 — Docs slug Suspense (2026-10-26)
+
+```bash
+git add src/app/[lang]/docs/[[...slug]]/page.tsx docs/progress/PROJECT_STATUS.md docs/progress/AGENT_CHECKPOINT.md docs/progress/GIT_COMMIT_PLAN.md docs/roadmap/TASK_BACKLOG.md
+git commit -m "fix(docs): stream slug page behind Suspense for Instant Navigations"
+```
+
+Validation: reload `/fa/docs/*` and `/en/docs/*` — Blocking Route / `instant-shell-url-data` gone; content still renders; unknown slugs soft-404 with `noindex`.
+
+---
+
 ## FA Batch 0 — ADR-006 + glossary + guide (2026-10-21)
 
 ```bash

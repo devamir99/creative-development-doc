@@ -1,20 +1,19 @@
 # Agent Checkpoint
 
 **Mode:** AUTONOMOUS
-**Updated:** 2026-10-21
+**Updated:** 2026-10-26
 
 ## State
 
 | Field | Value |
 |---|---|
-| Current batch | Complete — Claude audit fixes applied |
-| Last completed | AUDIT-FIX-1 — links/404/theme/shell/demos/FarsiUI-leaks/search/home-metadata |
-| Validation | tsc + ESLint passed; parity 65/65 links=578 OK; HTTP: real 404s, FA links 200, FA search normalization, FA home hreflang |
-| Next | User runs the Audit-Fix commit block in `GIT_COMMIT_PLAN.md`; production build with `NEXT_PUBLIC_SITE_URL` set (not run — OOM risk) |
+| Current batch | FIX-INSTANT-001 — docs slug Suspense for Instant Navigations |
+| Last completed | Moved `params` await into `<DocsContent>` behind Suspense + skeleton fallback; cleared Blocking Route / URL-data insights |
+| Validation | Dev server reload: `/fa/docs/camera`, `/fa/docs/composition`, `/en/docs/camera/fundamentals`, siblings — 200, no Blocking Route / instant-shell-url-data in terminal after compile; page HTML contains lesson content; unknown slug soft-404 with `noindex` |
+| Next | User commits FIX-INSTANT-001 (and prior FA/audit blocks still uncommitted as needed); optional QA-002 / hard-404 via proxy |
 
 ## Notes
 
-- MDX links must be file-relative with `.mdx` (fumadocs resolveHref); parity enforces it
-- Production builds now throw without `NEXT_PUBLIC_SITE_URL`
-- Theme is forced dark; unknown docs slugs return real 404
+- Do not await `props.params` in the page body when `cacheComponents` + `partialPrefetching` are on — pass the promise into a child wrapped by `<Suspense>`
+- `fallback={null}` fails the “empty shell” check; use a deterministic skeleton
 - Agent never runs git add/commit/push

@@ -14,6 +14,21 @@ import { source } from "@/lib/source";
 
 type DocsParams = Promise<{ lang: string; slug?: string[] }>;
 
+function DocsContentFallback() {
+  return (
+    <div className="flex flex-1 flex-col gap-4 px-4 py-8 md:px-8" aria-hidden>
+      <div className="h-9 w-2/3 max-w-xl rounded-md bg-muted" />
+      <div className="h-5 w-full max-w-2xl rounded-md bg-muted/70" />
+      <div className="mt-6 flex flex-col gap-3">
+        <div className="h-4 w-full rounded-md bg-muted/50" />
+        <div className="h-4 w-[92%] rounded-md bg-muted/50" />
+        <div className="h-4 w-[85%] rounded-md bg-muted/50" />
+        <div className="h-4 w-[70%] rounded-md bg-muted/50" />
+      </div>
+    </div>
+  );
+}
+
 async function DocsContent({ params }: { params: DocsParams }) {
   const { lang, slug } = await params;
   if (!isLocale(lang)) notFound();
@@ -37,17 +52,11 @@ async function DocsContent({ params }: { params: DocsParams }) {
   );
 }
 
-export default async function Page(
+export default function Page(
   props: PageProps<"/[lang]/docs/[[...slug]]">,
 ) {
-  // Resolve the page BEFORE the Suspense boundary so unknown slugs throw
-  // notFound() before streaming starts (real 404, not a soft-404 200).
-  const { lang, slug } = await props.params;
-  if (!isLocale(lang)) notFound();
-  if (!source.getPage(slug, lang)) notFound();
-
   return (
-    <Suspense fallback={null}>
+    <Suspense fallback={<DocsContentFallback />}>
       <DocsContent params={props.params} />
     </Suspense>
   );
