@@ -26,6 +26,18 @@ git commit -m "ci(pages): sync lockfile for npm 10.9.2 used on Actions"
 git push origin main
 ```
 
+## FIX-PAGES-003 — Typecheck + static export (2026-10-26)
+
+Install now passes. Next blockers: `PageProps`/`LayoutProps` need `.next/dev` types (missing on CI), and `robots.txt`/`sitemap` need `dynamic = "force-static"` for `output: "export"`.
+
+```powershell
+git add "src/app/[lang]/docs/[[...slug]]/page.tsx" "src/app/[lang]/docs/layout.tsx" src/app/robots.ts src/app/sitemap.ts docs/progress/GIT_COMMIT_PLAN.md
+git commit -m "fix(pages): explicit route props and force-static robots/sitemap for export"
+git push origin main
+```
+
+Validation: `tsc --noEmit` exit 0; local `GITHUB_PAGES=1` build (api excluded) exit 0 and writes `out/`.
+
 ---
 
 ## FIX-INSTANT-001 — Docs slug Suspense (2026-10-26)

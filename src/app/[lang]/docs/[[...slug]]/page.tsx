@@ -52,9 +52,7 @@ async function DocsContent({ params }: { params: DocsParams }) {
   );
 }
 
-export default function Page(
-  props: PageProps<"/[lang]/docs/[[...slug]]">,
-) {
+export default function Page(props: { params: DocsParams }) {
   return (
     <Suspense fallback={<DocsContentFallback />}>
       <DocsContent params={props.params} />
@@ -66,9 +64,9 @@ export async function generateStaticParams() {
   return source.generateParams("slug", "lang");
 }
 
-export async function generateMetadata(
-  props: PageProps<"/[lang]/docs/[[...slug]]">,
-): Promise<Metadata> {
+export async function generateMetadata(props: {
+  params: DocsParams;
+}): Promise<Metadata> {
   const { lang, slug } = await props.params;
   if (!isLocale(lang)) notFound();
   const page = source.getPage(slug, lang);
