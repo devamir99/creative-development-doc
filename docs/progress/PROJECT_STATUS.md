@@ -1,7 +1,7 @@
 # Project Status — Creative Lab
 
 **Last updated:** 2026-10-26
-**State:** Bilingual EN/FA (ADR-006) + FarsiUI adoption (ADR-007) complete; Instant Navigations Suspense fix on docs slug route; awaiting user commits
+**State:** Pages/CI blocked by out-of-sync lockfile + conflicting `nextjs.yml`; FIX-PAGES-001 prepared (lockfile repair + docs) — user must commit/push and set Pages source
 
 ## Snapshot
 
@@ -44,8 +44,13 @@ Claude full-audit findings #1–#19/#21–#24 fixed: 578 MDX links → `.mdx` fi
 
 Docs catch-all `src/app/[lang]/docs/[[...slug]]/page.tsx` no longer awaits `params` outside `<Suspense>`. Dynamic MDX body streams behind a title/body skeleton fallback so Cache Components / Partial Prefetching can prerender a shared shell. Dev overlay Blocking Route + `instant-shell-url-data` cleared on `/fa/docs/*` and `/en/docs/*` reloads. Trade-off: unknown slugs soft-404 (HTTP 200 + `noindex`) because `notFound()` runs inside the streamed boundary.
 
+## Pages / Actions (2026-10-26 — FIX-PAGES-001)
+
+Root cause of failing CI + Deploy: `package-lock.json` out of sync (`npm ci` EUSAGE — missing `@emnapi/*`). Conflicting sample `.github/workflows/nextjs.yml` raced with `pages.yml`. Lockfile repaired (`npm ci` clean install OK); `nextjs.yml` removed; deploy guide at `docs/deploy/GITHUB_PAGES.md`.
+
 ## Remaining (optional only)
 
+- User: commit FIX-PAGES-001, push `main`, set Pages source to GitHub Actions, confirm green Deploy
 - Production build with `NEXT_PUBLIC_SITE_URL` set (not run — machine OOM risk during audit)
 - Browser/WebGL interactive spot-check across all demos (QA-002)
 - Formal a11y audit (QA-003); nice-to-haves from audit (lazy playground registry, frameloop demand)

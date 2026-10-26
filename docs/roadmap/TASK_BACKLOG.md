@@ -95,6 +95,7 @@ Optional later: shot types, blocking, scroll cameras.
 | FUI-1 FarsiUI adoption (ADR-007) | `COMPLETED` (2026-10-21) |
 | AUDIT-FIX-1 Claude audit fix-now/fix-next (#1–#19, #21–#24) | `COMPLETED` (2026-10-21) |
 | FIX-INSTANT-001 docs `[[...slug]]` Blocking Route / URL-data Suspense | `COMPLETED` (2026-10-26: params inside Suspense + skeleton fallback) |
+| FIX-PAGES-001 lockfile sync + drop conflicting nextjs.yml + deploy docs | `COMPLETED` (2026-10-26: awaiting user push / Pages source setting) |
 
 ---
 
@@ -102,6 +103,6 @@ Optional later: shot types, blocking, scroll cameras.
 
 | Field | Value |
 | --- | --- |
-| **ID** | _(none — FA + FarsiUI + instant-nav docs fix complete)_ |
-| **Title** | User commits pending batches; optional QA-002 browser/WebGL pass |
+| **ID** | _(user ops)_ |
+| **Title** | Commit/push FIX-PAGES-001; Settings → Pages → GitHub Actions; confirm deploy green |
 | **Blocked?** | No |

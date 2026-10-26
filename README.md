@@ -1,36 +1,48 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Creative Lab
 
-## Getting Started
+Personal handbook and interactive playground for cinematic creative development — camera, composition, motion, and WebGL.
 
-First, run the development server:
+Bilingual **English / Persian** (`/en`, `/fa`). Curriculum and demos live under Fumadocs + Next.js.
+
+## Local development
 
 ```bash
+npm ci
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) (or the port Next prints). Prefer `npm ci` so the lockfile stays the source of truth (same as GitHub Actions).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Useful checks:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npx tsc --noEmit
+npm run lint
+npm run check:fa-parity
+```
 
-## Learn More
+Production build (non-Pages) requires a public site URL:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+# PowerShell
+$env:NEXT_PUBLIC_SITE_URL="https://example.com"
+npm run build
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Deploy (GitHub Pages + Actions)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+This repo already ships the deploy workflow. Follow:
 
-## Deploy on Vercel
+**[docs/deploy/GITHUB_PAGES.md](./docs/deploy/GITHUB_PAGES.md)**
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Short version:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. GitHub → **Settings → Pages → Source = GitHub Actions**
+2. Push to `main` (or run **Deploy GitHub Pages** manually)
+3. Site: [https://devamir99.github.io/creative-development-doc/](https://devamir99.github.io/creative-development-doc/)
+
+Only use `.github/workflows/pages.yml` for Pages — do not add a second sample `nextjs.yml`.
+
+## Project docs
+
+See [docs/README.md](./docs/README.md) for architecture, roadmap, and agent continuity files.

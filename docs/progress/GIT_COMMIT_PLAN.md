@@ -6,6 +6,18 @@ Historical per-batch commands below are **logical groupings of the final working
 
 ---
 
+## FIX-PAGES-001 — Unlock Actions deploy (2026-10-26)
+
+```powershell
+git add package-lock.json .github/workflows/nextjs.yml README.md docs/deploy/GITHUB_PAGES.md docs/README.md docs/progress docs/roadmap/TASK_BACKLOG.md
+git commit -m "ci(pages): repair lockfile sync and drop conflicting nextjs workflow"
+git push origin main
+```
+
+Then: GitHub → Settings → Pages → Source = GitHub Actions. Watch **Actions → Deploy GitHub Pages**. Site: `https://devamir99.github.io/creative-development-doc/`
+
+---
+
 ## FIX-INSTANT-001 — Docs slug Suspense (2026-10-26)
 
 ```bash

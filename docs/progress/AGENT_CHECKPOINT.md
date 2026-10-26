@@ -7,13 +7,13 @@
 
 | Field | Value |
 |---|---|
-| Current batch | FIX-INSTANT-001 — docs slug Suspense for Instant Navigations |
-| Last completed | Moved `params` await into `<DocsContent>` behind Suspense + skeleton fallback; cleared Blocking Route / URL-data insights |
-| Validation | Dev server reload: `/fa/docs/camera`, `/fa/docs/composition`, `/en/docs/camera/fundamentals`, siblings — 200, no Blocking Route / instant-shell-url-data in terminal after compile; page HTML contains lesson content; unknown slug soft-404 with `noindex` |
-| Next | User commits FIX-INSTANT-001 (and prior FA/audit blocks still uncommitted as needed); optional QA-002 / hard-404 via proxy |
+| Current batch | FIX-PAGES-001 — unlock GitHub Pages / Actions |
+| Last completed | Repaired `package-lock.json` (emnapi sync); deleted conflicting `nextjs.yml`; added `docs/deploy/GITHUB_PAGES.md` + README deploy section |
+| Validation | Clean-dir `npm ci --ignore-scripts` exit 0 (~877 packages); Actions previously failed at Install with lockfile EUSAGE |
+| Next | User commits + pushes; Settings → Pages → GitHub Actions; confirm Deploy workflow green |
 
 ## Notes
 
-- Do not await `props.params` in the page body when `cacheComponents` + `partialPrefetching` are on — pass the promise into a child wrapped by `<Suspense>`
-- `fallback={null}` fails the “empty shell” check; use a deterministic skeleton
+- Keep only `.github/workflows/pages.yml` for Pages (plus `ci.yml` for checks)
+- Never commit Iran mirror URLs into repo `.npmrc` / lockfile `resolved` fields
 - Agent never runs git add/commit/push

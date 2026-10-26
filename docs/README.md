@@ -14,5 +14,6 @@
 | [architecture/UI_PRIMITIVES.md](./architecture/UI_PRIMITIVES.md) | Playground control primitives |
 | [inventory/CURRICULUM_INVENTORY.md](./inventory/CURRICULUM_INVENTORY.md) | Lesson/demo coverage matrix |
 | [decisions/](./decisions/) | ADRs |
+| [deploy/GITHUB_PAGES.md](./deploy/GITHUB_PAGES.md) | GitHub Actions → GitHub Pages |
 
 Agent entry: continue from `PROJECT_STATUS.md`. Product rules: root `MASTER_PROMPT.md`.
