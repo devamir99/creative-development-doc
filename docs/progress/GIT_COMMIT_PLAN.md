@@ -16,6 +16,16 @@ git push origin main
 
 Then: GitHub → Settings → Pages → Source = GitHub Actions. Watch **Actions → Deploy GitHub Pages**. Site: `https://devamir99.github.io/creative-development-doc/`
 
+## FIX-PAGES-002 — Lockfile for npm 10.9.2 on Actions (2026-10-26)
+
+CI pins `npm@10.9.2`; lockfile from npm 11 still omitted `@emnapi/core` / `@emnapi/runtime`. Regenerated so `npm@10.9.2 ci` succeeds. Do **not** click Pages → “Configure” Next.js sample (recreates conflicting workflow).
+
+```powershell
+git add package-lock.json .github/workflows/ci.yml .github/workflows/pages.yml docs/progress/GIT_COMMIT_PLAN.md
+git commit -m "ci(pages): sync lockfile for npm 10.9.2 used on Actions"
+git push origin main
+```
+
 ---
 
 ## FIX-INSTANT-001 — Docs slug Suspense (2026-10-26)
